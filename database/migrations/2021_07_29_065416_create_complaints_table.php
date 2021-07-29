@@ -25,7 +25,7 @@ class CreateComplaintsTable extends Migration
             $table->date('acknowledged_at');
             $table->string('nature');
             $table->json('tier');
-            $table->text('notes');
+            $table->text('notes')->nullable();
 
             $table->timestamps();
         });
