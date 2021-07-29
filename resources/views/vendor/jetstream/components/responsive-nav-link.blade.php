@@ -1,9 +1,12 @@
-@props(['active'])
+@props(['active', 'icon'])
 
 @php
-$classes = $active ?? false ? 'block pl-3 pr-4 py-2 border-l-4 border-dsgreen text-base font-medium text-white bg-lmara focus:outline-none focus:bg-tblue focus:border-shark transition' : 'block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-shark hover:bg-gray-50 hover:border-shark focus:outline-none focus:bg-gray-50 focus:border-shark transition';
+$classes = 'group flex items-center px-2 py-2 text-base font-medium rounded-md ' . ($active ?? false ? 'bg-lmara text-white' : 'text-tblue hover:bg-dsgreen hover:text-white');
+$iconClasses = 'mr-4 flex-shrink-0 h-6 w-6 ' . ($active ?? false ? 'text-white' : 'text-tblue group-hover:text-white');
 @endphp
 
 <a {{ $attributes->merge(['class' => $classes]) }}>
+  <x-nav-icon name="{{ $icon }}"
+    class="{{ $iconClasses }}" />
   {{ $slot }}
 </a>
