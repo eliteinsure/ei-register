@@ -39,6 +39,7 @@ class ComplaintFactory extends Factory
                     'resulted_at' => $this->faker->date(),
                 ],
             ],
+            'notes' => $this->faker->sentence,
         ];
     }
 
