@@ -12,7 +12,7 @@ return [
     | location for this type of information, allowing packages to have
     | a conventional file to locate the various service credentials.
     |
-    */
+     */
 
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
@@ -28,6 +28,65 @@ return [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+    ],
+
+    'complaint' => [
+        'labels' => [
+            'Client',
+            'Prospect',
+            'Adviser',
+            'Business Partner',
+            'Employee',
+            'Contractor',
+            'Government',
+            'External Broker',
+            'N/A',
+            'Others',
+        ],
+        'insurers' => [
+            'AIA',
+            'Fidelity Life',
+            'Partners Life',
+            'CIGNA',
+            'Accuro',
+            'NZFunds',
+            'N/A',
+        ],
+        'natures' => [
+            'Service (Adviser)',
+            'Service (Admin)',
+            'Service (Marketer)',
+            'Service (Management)',
+            'Contract',
+            'Conduct',
+        ],
+        'tier' => [
+            '1' => [
+                'results' => [
+                    'Success',
+                    'Failed',
+                    'Retracted',
+                    'Invalid',
+                ],
+            ],
+            '2' => [
+                'staffPositions' => [
+                    'Managing Director',
+                    'Executive Admin',
+                    'Relationship Manager',
+                    'Admin. ADR',
+                    'SADR',
+                ],
+                'results' => [
+                    'Success',
+                    'Failed',
+                    'Retracted',
+                    'Invalid',
+                    'Deadlock',
+                ],
+            ],
+        ],
+
     ],
 
 ];
