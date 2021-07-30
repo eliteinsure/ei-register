@@ -17,4 +17,18 @@ class Complaint extends Model
         'acknowledged_at' => 'date:Y-m-d',
         'tier' => 'array',
     ];
+
+    public function getNumberAttribute()
+    {
+        return 'CMP' . str_pad($this->id, 5, '0', STR_PAD_LEFT);
+    }
+
+    public function getTierResultAttribute()
+    {
+        if ('Failed' == $this->tier['1']['result']) {
+            return 'Tier 2 - ' . $this->tier['2']['result'];
+        }
+
+        return 'Tier 1 - ' . $this->tier['1']['result'];
+    }
 }
