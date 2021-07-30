@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ComplaintController;
 use Faker\Provider\HtmlLorem;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +21,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::resource('complaints', ComplaintController::class)->only([
+        'index',
+    ]);
 });
