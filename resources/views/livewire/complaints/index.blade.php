@@ -17,39 +17,41 @@
                 <tr>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    Complaint Number
+                    <x-column-sorter column="id">
+                      Complaint Number
+                    </x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    Complainant
+                    <x-column-sorter column="complainant">Complainant</x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    Label
+                    <x-column-sorter column="label">Label</x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    Policy Number
+                    <x-column-sorter column="policy_number">Policy Number</x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    Insurer
+                    <x-column-sorter column="insurer">Insurer</x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    Date Received
+                    <x-column-sorter column="received_at">Date Received</x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    Date Registered
+                    <x-column-sorter column="registered_at">Date Registered</x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    Date Acknowledged
+                    <x-column-sorter column="acknowledged_at">Date Acknowledged</x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    Nature
+                    <x-column-sorter column="nature">Nature</x-column-sorter>
                   </th>
                   {{-- <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
