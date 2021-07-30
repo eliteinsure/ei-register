@@ -72,9 +72,9 @@
           Dashboard
         </x-jet-responsive-nav-link>
 
-        <x-jet-responsive-nav-link href="{{ route('profile.show') }}"
-          :active="request()->routeIs('profile.show')" icon="heroicon-o-users">
-          Profile
+        <x-jet-responsive-nav-link href="{{ route('complaints.index') }}"
+          :active="request()->routeIs('complaints.index')" icon="heroicon-o-users">
+          Complaints
         </x-jet-responsive-nav-link>
 
         <form method="POST" action="{{ route('logout') }}">

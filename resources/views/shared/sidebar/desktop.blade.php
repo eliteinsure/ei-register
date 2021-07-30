@@ -9,15 +9,17 @@
         </div>
 
         <nav class="mt-5 flex-1 px-2 bg-white space-y-1">
-          <p class="text-center text-shark text-opacity-50 font-bold tracking-widest mb-2">REGISTERS</p>
+          <p class="text-center text-tblue text-lg font-semibold tracking-widest mb-5">REGISTERS</p>
+
           <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')"
             icon="heroicon-o-home">
             Dashboard
           </x-jet-nav-link>
 
-          <x-jet-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')"
-            icon="heroicon-o-users">
-            Profile
+          <x-jet-nav-link href="{{ route('complaints.index') }}"
+            :active="request()->routeIs('complaints.index')"
+            icon="heroicon-o-shield-exclamation">
+            Complaints
           </x-jet-nav-link>
 
           <form method="POST" action="{{ route('logout') }}">
