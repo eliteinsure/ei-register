@@ -52,9 +52,13 @@
       });
 
       tagify_{{ $id }}.on('change', (event) => {
-        var data = JSON.parse(event.detail.value);
+        if (event.detail.value) {
+          var data = JSON.parse(event.detail.value);
 
-        @this.set('{{ $model }}', data[0].value);
+          @this.set('{{ $model }}', data[0].value);
+        } else {
+          @this.set('{{ $model }}', null);
+        }
       });
     }
   </script>
