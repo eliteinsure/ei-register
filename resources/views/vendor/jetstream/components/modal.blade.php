@@ -22,7 +22,7 @@ $maxWidth = [
         show: @entangle($attributes->wire('model')).defer,
         focusables() {
             // All focusable element types...
-            let selector = 'a, button, input:not([type=\'hidden\']), textarea, select, details, [tabindex]:not([tabindex=\'-1\'])'
+            let selector = '.tagify__input, a, button, input:not([type=\'hidden\']), textarea, select, details, [tabindex]:not([tabindex=\'-1\'])'
 
             return [...$el.querySelectorAll(selector)]
                 // All non-disabled elements...
