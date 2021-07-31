@@ -1,17 +1,22 @@
 <div>
   <div class="flex flex-col">
-    <div class="mb-4 flex items-end space-x-4">
-      <x-jet-input type="text" placeholder="Search..." wire:model.debounce="search" />
-      <x-jet-button type="button">
-        Create a New Complaint
-      </x-jet-button>
+    <div class="mb-4 flex flex-col md:flex-row md:items-end md:space-x-4 space-y-2 md:space-y-0">
+      <div>
+        <x-jet-input type="text" placeholder="Search..." wire:model.debounce="search" />
+      </div>
+      <div>
+        <x-jet-button type="button" wire:click="$emitTo('complaints.form', 'add')">
+          Create a New Complaint
+        </x-jet-button>
+      </div>
+
     </div>
 
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
         <div
           class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg bg-white divide-y divide-gray-200">
-          @if ($complaints)
+          @if ($complaints->count())
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
@@ -105,11 +110,10 @@
             </table>
             {{ $complaints->links() }}
           @else
-            No available complaints.
+            <p class="text-shark px-4 py-3">No available complaints.</p>
           @endif
         </div>
       </div>
     </div>
   </div>
-
 </div>
