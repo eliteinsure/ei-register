@@ -21,6 +21,7 @@
         "tailwindcss": "^2.2.2"
     },
     "dependencies": {
-        "@yaireo/tagify": "^4.6.0"
+        "@yaireo/tagify": "^4.6.0",
+        "flatpickr": "^4.6.9"
     }
 }
