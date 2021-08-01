@@ -9,7 +9,6 @@
           Create a New Complaint
         </x-jet-button>
       </div>
-
     </div>
 
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
