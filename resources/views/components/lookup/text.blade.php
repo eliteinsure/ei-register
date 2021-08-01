@@ -1,12 +1,17 @@
-@props(['id', 'model'])
+@props(['id'])
 
 {{-- @this.call: {{ $id }}LookupSearch --}}
 {{-- $this->dispatchBrowserEvent: {{ $id }}-lookup-list --}}
 
-<div wire:ignore x-data="{{ $id }}LookupText"
-  x-on:{{ $id }}-lookup-list.window="lookupList">
-  <x-jet-input id="{{ $id }}" type="hidden"
-    class="mt-1 block w-full lookup" x-ref="input" />
+<div wire:ignore.self x-data="{{ $id }}LookupText"
+  x-on:{{ $id }}-lookup-list.window="lookupList"
+  x-on:{{ $id }}-lookup-value.window="lookupValue">
+  <div wire:ignore>
+    <x-jet-input id="{{ $id }}" type="hidden"
+      class="{{ $attributes->class ?? 'block w-full mt-1' }} lookup"
+      x-ref="input" />
+  </div>
+  <input type="hidden" x-ref="hidden" {{ $attributes->whereStartsWith('wire:model') }} />
 </div>
 
 @push('scripts')
@@ -15,7 +20,7 @@
       Alpine.data('{{ $id }}LookupText', () => ({
         tagify: null,
         init() {
-          window.onload = () => {
+          document.addEventListener('DOMContentLoaded', () => {
             this.tagify = new window.Tagify(this.$refs.input, {
               dropdown: {
                 enabled: 1,
@@ -32,19 +37,16 @@
                   this.lookupSearch(event.detail.value);
                 }, 250),
                 'change': (event) => {
-                  var value = event.detail.value;
+                  this.$refs.hidden.value = event.detail.value;
 
-                  if (value) {
-                    var data = JSON.parse(value);
-
-                    this.$wire.set('{{ $model }}', data[0].value);
-                  } else {
-                    this.$wire.set('{{ $model }}', null);
-                  }
+                  this.$refs.hidden.dispatchEvent(new Event('input'));
                 }
               }
             });
-          }
+          });
+        },
+        lookupValue(event) {
+          this.tagify.addTags(JSON.parse(event.detail));
         },
         lookupSearch(search) {
           var controller;
