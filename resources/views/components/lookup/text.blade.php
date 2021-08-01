@@ -1,7 +1,17 @@
 @props(['id'])
 
-{{-- @this.call: {{ $id }}LookupSearch --}}
-{{-- $this->dispatchBrowserEvent: {{ $id }}-lookup-list --}}
+{{-- public function [id]LookupSearch($search = ''){
+  $this->dispatchBrowserEvent: [id]-lookup-list
+}
+
+public function edit(){
+  $value = json_encode([[
+    'value' => 'value',
+    'label' => 'label',
+  ]]);
+
+  $this->dispatchBrowserEvent('[id]-lookup-value', $value);
+} --}}
 
 <div wire:ignore.self x-data="{{ $id }}LookupText"
   x-on:{{ $id }}-lookup-list.window="lookupList"
