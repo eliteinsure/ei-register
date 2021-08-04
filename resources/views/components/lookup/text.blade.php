@@ -21,7 +21,7 @@ public function edit(){
       class="{{ $attributes->class ?? 'block w-full mt-1' }} lookup"
       x-ref="input" />
   </div>
-  <input type="hidden" x-ref="hidden" {{ $attributes->whereStartsWith('wire:model') }} />
+  <input type="hidden" x-ref="hidden" {{ $attributes->whereStartsWith('model') }} />
 </div>
 
 @push('scripts')
@@ -47,7 +47,13 @@ public function edit(){
                   this.lookupSearch(event.detail.value);
                 }, 250),
                 'change': (event) => {
-                  this.$refs.hidden.value = event.detail.value;
+                  var value = {};
+
+                  if (event.detail.value) {
+                    value = JSON.parse(event.detail.value);
+                  }
+
+                  this.$refs.hidden.value = value?.[0]?.value ?? '';
 
                   this.$refs.hidden.dispatchEvent(new Event('input'));
                 }
@@ -56,7 +62,11 @@ public function edit(){
           });
         },
         lookupValue(event) {
-          this.tagify.addTags(JSON.parse(event.detail));
+          if (Object.keys(event.detail).length) {
+            this.tagify.addTags(JSON.parse(event.detail));
+          } else {
+            this.tagify.removeTags();
+          }
         },
         lookupSearch(search) {
           var controller;
