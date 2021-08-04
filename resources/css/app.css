@@ -1,3 +1,49 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+@import '../../node_modules/@yaireo/tagify/dist/tagify.css';
+@import '../../node_modules/flatpickr/dist/flatpickr.min.css';
+
+/* Tagify */
+.lookup {
+    --tag-bg: #0081B8;
+    --tag-hover: #0F6497;
+    --tag-text-color: #ffffff;
+    --tag-remove-btn-color: #ffffff;
+    --tag-remove-bg: rgba(127, 29, 29);
+}
+
+.tagify--focus {
+    @apply border-dsgreen ring ring-lmara ring-opacity-50 !important;
+}
+
+.tagify__dropdown {
+    @apply bg-white py-1 rounded-md shadow-lg mt-1 ring-1 ring-black ring-opacity-5;
+}
+
+.tagify__dropdown__wrapper {
+    @apply border-none rounded-md !important;
+}
+
+.tagify__dropdown__item {
+    @apply block px-4 py-2 text-sm leading-5 text-shark transition !important;
+}
+
+.tagify__dropdown__item--active {
+    @apply bg-tblue text-white outline-none rounded-none !important;
+}
+
+/* Flatpickr */
+.flatpickr-day:hover {
+    @apply bg-tblue text-white border-none !important;
+}
+
+.flatpickr-day.selected {
+    @apply bg-lmara border-none !important;
+}
+
+.flatpickr-next-month:hover svg,
+.flatpickr-prev-month:hover svg {
+    @apply text-lmara fill-current !important;
+}
