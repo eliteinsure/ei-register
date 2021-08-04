@@ -12,8 +12,14 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                sans: ['Quattrocento Sans', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                'shark': { DEFAULT: '#2B3036' },
+                'lmara': { DEFAULT: '#0081B8' },
+                'tblue': { DEFAULT: '#0F6497' },
+                'dsgreen': { DEFAULT: '#0C4664' },
+            }
         },
     },
 
