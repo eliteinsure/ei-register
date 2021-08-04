@@ -66,8 +66,8 @@ class ComplaintFactory extends Factory
             $tier = $complaint->tier;
 
             $tier['2'] = [
-                'staffPosition' => Arr::random(config('services.complaint.tier.2.staffPositions')),
-                'staff' => $this->faker->name(),
+                'staff_position' => Arr::random(config('services.complaint.tier.2.staffPositions')),
+                'staff_name' => $this->faker->name(),
                 'handed_over_at' => $this->faker->date(),
                 'result' => Arr::random(config('services.complaint.tier.2.results')),
             ];
