@@ -19,6 +19,9 @@
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
+                  <th scope="col" class="relative px-4 py-3">
+                    <span class="sr-only">Actions</span>
+                  </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                     <x-column-sorter column="id">
@@ -27,7 +30,7 @@
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="complainant">Complainant</x-column-sorter>
+                    <x-column-sorter column="complainant">Complainant Name</x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
@@ -55,21 +58,30 @@
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="nature">Nature</x-column-sorter>
+                    <x-column-sorter column="nature">Nature of Complaint</x-column-sorter>
                   </th>
                   {{-- <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                     Tier Result
                   </th> --}}
-                  <th scope="col" class="relative px-4 py-3">
-                    <span class="sr-only">Actions</span>
-                  </th>
                 </tr>
               </thead>
               <tbody>
                 @foreach ($complaints as $index => $complaint)
                   <!-- Odd row -->
                   <tr class="{{ $index % 2 ? 'bg-gray-50' : 'bg-white' }}">
+                    <td class="px-4 py-2 whitespace-nowrap text-left text-sm font-medium">
+                      <div class="flex items-center space-x-2">
+                        <button type="button" class="text-lmara hover:text-dsgreen" title="View Details"
+                          wire:click="$emitTo('complaints.form', 'edit', {{ $complaint->id }})">
+                          <x-heroicon-o-eye class="h-6 w-6" />
+                        </button>
+                        <button type="button" class="text-red-500 hover:text-red-700" title="Delete"
+                          wire:click="confirmDelete({{ $complaint->id }})">
+                          <x-heroicon-o-trash class="h-6 w-6" />
+                        </button>
+                      </div>
+                    </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $complaint->number }}
                     </td>
@@ -100,9 +112,6 @@
                     {{-- <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $complaint->tier_result }}
                     </td> --}}
-                    <td class="px-4 py-2 whitespace-nowrap text-right text-sm font-medium">
-                      <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                    </td>
                   </tr>
                 @endforeach
               </tbody>
@@ -115,4 +124,14 @@
       </div>
     </div>
   </div>
+
+  <x-jet-confirmation-modal wire:model="showDelete">
+    <x-slot name="title">Delete Complaint</x-slot>
+    <x-slot name="content">Are you sure to delete this complaint?</x-slot>
+    <x-slot name="footer">
+      <x-jet-button type="button" wire:click="delete">Yes</x-jet-button>
+      <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showDelete', false)">No
+      </x-jet-secondary-button>
+    </x-slot>
+  </x-jet-confirmation-modal>
 </div>

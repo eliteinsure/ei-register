@@ -18,6 +18,10 @@ class Index extends Component
 
     public $search;
 
+    public $showDelete = false;
+
+    protected $listeners = ['render'];
+
     public function render()
     {
         $query = Complaint::when($this->search, function ($query) {
@@ -58,5 +62,24 @@ class Index extends Component
         $this->resetPage();
 
         $this->resetSort();
+    }
+
+    public function confirmDelete($id)
+    {
+        $this->complaintId = Complaint::findOrFail($id)->id;
+
+        $this->showDelete = true;
+    }
+
+    public function delete()
+    {
+        Complaint::findOrFail($this->complaintId)->delete();
+
+        $this->showDelete = false;
+
+        $this->dispatchBrowserEvent('banner-message', [
+            'style' => 'success',
+            'message' => 'Complaint has been deleted.',
+        ]);
     }
 }
