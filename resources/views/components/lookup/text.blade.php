@@ -21,7 +21,7 @@ public function edit(){
       class="{{ $attributes->class ?? 'block w-full mt-1' }} lookup"
       x-ref="input" />
   </div>
-  <input type="hidden" x-ref="hidden" {{ $attributes->whereStartsWith('model') }} />
+  <input type="hidden" x-ref="hidden" {{ $attributes->wire('model') }} />
 </div>
 
 @push('scripts')
