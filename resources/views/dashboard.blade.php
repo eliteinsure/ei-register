@@ -1,15 +1,35 @@
 <x-app-layout>
+  @section('title', 'Dashboard')
+
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
+      <x-page-header>
+        Dashboard
+      </x-page-header>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <x-jet-welcome />
-            </div>
+    <x-page-wrap>
+      {{-- <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+        <x-jet-welcome />
+      </div> --}}
+
+      {{-- <div class="space-y-6">
+        <label class="flex items-center">
+          <x-jet-checkbox />
+          <span class="ml-2">Checkbox</span>
+        </label>
+        <div class="flex items-center space-x-4">
+          <x-jet-secondary-button>
+            Secondary Button
+          </x-jet-secondary-button>
+          <x-jet-button>
+            Primary Button
+          </x-jet-button>
         </div>
-    </div>
-</x-app-layout>
+        <div>
+          @svg('heroicon-o-home', 'h-4 w-4')
+        </div>
+      </div> --}}
+
+      Welcome {{ auth()->user()->name }}
+    </x-page-wrap>
+  </x-app-layout>
