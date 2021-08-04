@@ -74,7 +74,7 @@ return [
                     'Managing Director',
                     'Executive Admin',
                     'Relationship Manager',
-                    'Admin. ADR',
+                    'Admin ADR',
                     'SADR',
                 ],
                 'results' => [
