@@ -3,10 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Complaint;
-use App\Models\User;
 use Faker\Generator as Faker;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Arr;
 
 class TestSeeder extends Seeder
 {
@@ -17,11 +15,6 @@ class TestSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        User::factory()->create([
-            'email' => 'admin@mail.com',
-            'name' => 'Administrator',
-        ]);
-
         $complainants = [];
 
         $advisers = [];
