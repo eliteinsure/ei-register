@@ -26,9 +26,12 @@ class TestSeeder extends Seeder
 
         $advisers = [];
 
+        $staffNames = [];
+
         foreach (range(1, 10) as $item) {
             array_push($complainants, $faker->name());
             array_push($advisers, $faker->name());
+            array_push($staffNames, $faker->name());
         }
 
         foreach (range(1, 100) as $item) {
@@ -37,6 +40,10 @@ class TestSeeder extends Seeder
             ])->toArray();
 
             $data['tier'][1]['adviser'] = $faker->randomElement($advisers);
+
+            if (isset($data['tier'][2]['staff_name'])) {
+                $data['tier'][2]['staff_name'] = $faker->randomElement($staffNames);
+            }
 
             Complaint::create($data);
         }
