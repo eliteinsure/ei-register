@@ -18,5 +18,5 @@
     });
   ">
   <x-jet-input x-ref="input" x-bind:value="value"
-    {{ $attributes->merge(['type' => 'text', 'class' => 'block w-full mt-1']) }} />
+    {{ $attributes->merge(['type' => 'text', 'class' => 'placeholder-gray-400 block w-full mt-1', 'placeholder' => 'DD/MM/YYYY']) }} />
 </div>
