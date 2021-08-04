@@ -10,5 +10,6 @@
     <x-page-wrap>
       @livewire('complaints.index')
       @livewire('complaints.form')
+      <x-focus-error />
     </x-page-wrap>
   </x-app-layout>

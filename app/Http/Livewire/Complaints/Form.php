@@ -5,11 +5,14 @@ namespace App\Http\Livewire\Complaints;
 use App\Actions\Complaint\CreateComplaint;
 use App\Actions\Complaint\UpdateComplaint;
 use App\Models\Complaint;
+use App\Traits\Validators\FocusError;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
 class Form extends Component
 {
+    use FocusError;
+
     public $complaintId;
 
     public $input;
@@ -170,6 +173,11 @@ class Form extends Component
         });
 
         $this->dispatchBrowserEvent('staff-lookup-list', $staffs);
+    }
+
+    public function dehydrate()
+    {
+        $this->focusError();
     }
 
     public function submit()
