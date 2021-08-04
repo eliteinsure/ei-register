@@ -1,5 +1,5 @@
 <div>
-  <x-form-modal wire:model="showModal" submit="submit" max-width="5xl">
+  <x-form-modal wire:model="showModal" submit="submit" max-width="5xl" focusable>
     <x-slot name="title">{{ isset($complaintId) ? 'Complaint Details' : 'Create a New Complaint' }}</x-slot>
     <x-slot name="content">
       <div class="md:flex md:space-x-6">
