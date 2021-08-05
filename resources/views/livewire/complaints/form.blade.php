@@ -117,6 +117,7 @@
     </x-slot>
     <x-slot name="footer">
       <x-jet-button type="submit">{{ isset($complaintId) ? 'Update' : 'Create' }}</x-jet-button>
+      <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showModal', false)">Cancel</x-jet-secondary-button>
     </x-slot>
   </x-form-modal>
 </div>
