@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ComplaintController;
-use Faker\Provider\HtmlLorem;
+use App\Http\Controllers\PdfController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,4 +25,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::resource('complaints', ComplaintController::class)->only([
         'index',
     ]);
+
+    Route::group(['as' => 'pdf.', 'prefix' => 'pdf', 'url' => 'pdf'], function () {
+        Route::get('complaint', [PdfController::class, 'complaint'])->name('complaint');
+    });
 });
