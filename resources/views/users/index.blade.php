@@ -8,6 +8,7 @@
   </x-slot>
 
   <x-page-wrap>
-    livewire components here...
+    @livewire('users.index')
+    @livewire('users.form')
   </x-page-wrap>
 </x-app-layout>
