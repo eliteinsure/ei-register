@@ -6,7 +6,7 @@
       </div>
       <div>
         <x-jet-button type="button" wire:click="$emitTo('complaints.form', 'add')">
-          Create a New Complaint
+          Register a Complaint
         </x-jet-button>
       </div>
     </div>

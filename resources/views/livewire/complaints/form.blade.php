@@ -1,6 +1,6 @@
 <div>
   <x-form-modal wire:model="showModal" submit="submit" max-width="5xl" focusable>
-    <x-slot name="title">{{ isset($complaintId) ? 'Complaint Details' : 'Create a New Complaint' }}</x-slot>
+    <x-slot name="title">{{ isset($complaintId) ? 'Complaint Details' : 'Register a Complaint' }}</x-slot>
     <x-slot name="content">
       <div class="md:flex md:space-x-6">
         <div class="md:w-1/3">
@@ -116,7 +116,7 @@
       </div>
     </x-slot>
     <x-slot name="footer">
-      <x-jet-button type="submit">{{ isset($complaintId) ? 'Update' : 'Create' }}</x-jet-button>
+      <x-jet-button type="submit">{{ isset($complaintId) ? 'Update' : 'Register' }}</x-jet-button>
       <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showModal', false)">Cancel</x-jet-secondary-button>
     </x-slot>
   </x-form-modal>
