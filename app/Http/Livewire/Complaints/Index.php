@@ -46,11 +46,7 @@ class Index extends Component
             });
         });
 
-        if ($this->sort['column'] && $this->sort['direction']) {
-            $query->orderBy($this->sort['column'], $this->sort['direction']);
-        } else {
-            $query->orderBy('id', 'desc');
-        }
+        $query = $this->sortQuery($query);
 
         $complaints = $query->paginate();
 
