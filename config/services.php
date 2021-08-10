@@ -35,6 +35,8 @@ return [
         'web' => env('COMPANY_WEB', 'www.eliteinsure.co.nz'),
     ],
 
+    'roles' => ['admin', 'user'],
+
     'complaint' => [
         'labels' => [
             'Client',
