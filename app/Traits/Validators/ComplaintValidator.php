@@ -2,7 +2,7 @@
 
 namespace App\Traits\Validators;
 
-trait ComplaintsValidator
+trait ComplaintValidator
 {
     public function complaintRules()
     {
