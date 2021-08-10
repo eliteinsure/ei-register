@@ -73,9 +73,16 @@
         </x-jet-responsive-nav-link>
 
         <x-jet-responsive-nav-link href="{{ route('complaints.index') }}"
-          :active="request()->routeIs('complaints.index')" icon="heroicon-o-users">
+          :active="request()->routeIs('complaints.index')" icon="heroicon-o-shield-exclamation">
           Complaints
         </x-jet-responsive-nav-link>
+
+        @role('admin')
+          <x-jet-responsive-nav-link href="{{ route('users.index') }}"
+            :active="request()->routeIs('users.index')" icon="heroicon-o-users">
+            Users
+          </x-jet-responsive-nav-link>
+        @endrole
 
         <form method="POST" action="{{ route('logout') }}">
           @csrf
