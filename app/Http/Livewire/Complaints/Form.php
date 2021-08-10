@@ -30,6 +30,11 @@ class Form extends Component
 
     protected $listeners = ['add', 'edit'];
 
+    public function getComplaintProperty()
+    {
+        return Complaint::findOrFail($this->complaintId);
+    }
+
     public function mount()
     {
         $this->resetInput();
@@ -78,6 +83,8 @@ class Form extends Component
 
     public function add()
     {
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+
         $this->complaintId = null;
 
         $this->resetInput();
@@ -95,7 +102,7 @@ class Form extends Component
     {
         $this->complaintId = $id;
 
-        $this->input = collect(Complaint::findOrFail($id))->except([
+        $this->input = collect($this->complaint)->except([
             'id',
             'created_at',
             'updated_at',
@@ -182,11 +189,15 @@ class Form extends Component
 
     public function submit()
     {
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+
         $this->complaintId ? $this->update(new UpdateComplaint()) : $this->create(new CreateComplaint());
     }
 
     public function create(CreateComplaint $action)
     {
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+
         $action->create($this->input);
 
         $this->emitTo('complaints.index', 'render');
@@ -201,7 +212,9 @@ class Form extends Component
 
     public function update(UpdateComplaint $action)
     {
-        $action->update($this->input, Complaint::findOrFail($this->complaintId));
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+
+        $action->update($this->input, $this->complaint);
 
         $this->emitTo('complaints.index', 'render');
 
