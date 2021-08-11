@@ -22,6 +22,11 @@ class Index extends Component
 
     protected $listeners = ['render'];
 
+    public function getComplaintProperty()
+    {
+        return Complaint::findOrFail($this->complaintId);
+    }
+
     public function render()
     {
         $query = Complaint::when($this->search, function ($query) {
@@ -46,11 +51,7 @@ class Index extends Component
             });
         });
 
-        if ($this->sort['column'] && $this->sort['direction']) {
-            $query->orderBy($this->sort['column'], $this->sort['direction']);
-        } else {
-            $query->orderBy('id', 'desc');
-        }
+        $query = $this->sortQuery($query);
 
         $complaints = $query->paginate();
 
@@ -66,14 +67,18 @@ class Index extends Component
 
     public function confirmDelete($id)
     {
-        $this->complaintId = Complaint::findOrFail($id)->id;
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+
+        $this->complaintId = $id;
 
         $this->showDelete = true;
     }
 
     public function delete()
     {
-        Complaint::findOrFail($this->complaintId)->delete();
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+
+        $this->complaint->delete();
 
         $this->showDelete = false;
 

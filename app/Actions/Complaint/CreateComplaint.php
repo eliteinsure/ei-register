@@ -3,12 +3,12 @@
 namespace App\Actions\Complaint;
 
 use App\Models\Complaint;
-use App\Traits\Validators\ComplaintsValidator;
+use App\Traits\Validators\ComplaintValidator;
 use Illuminate\Support\Facades\Validator;
 
 class CreateComplaint
 {
-    use ComplaintsValidator;
+    use ComplaintValidator;
 
     public function create($input)
     {

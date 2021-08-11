@@ -2,7 +2,9 @@
 
 namespace App\Traits\Validators;
 
-trait ComplaintsValidator
+use Illuminate\Validation\Rule;
+
+trait ComplaintValidator
 {
     public function complaintRules()
     {
@@ -17,7 +19,12 @@ trait ComplaintsValidator
             'nature' => ['required', 'in:' . implode(',', config('services.complaint.natures'))],
             'tier' => ['required', 'array'],
             'tier.1' => ['required', 'array'],
-            'tier.1.adviser' => ['required', 'string', 'max:255'],
+            'tier.1.adviser_id' => [
+                'required',
+                Rule::exists('advisers', 'id')->where(function ($query) {
+                    return $query->where('status', 'Active');
+                }),
+            ],
             'tier.1.handed_over_at' => ['required', 'date_format:Y-m-d'],
             'tier.1.result' => ['required', 'in:' . implode(',', config('services.complaint.tier.1.results'))],
             'tier.1.resulted_at' => ['required', 'date_format:Y-m-d'],
@@ -43,7 +50,7 @@ trait ComplaintsValidator
             'nature' => 'Nature of Complaint',
             'tier' => 'Tier',
             'tier.1' => 'Tier 1',
-            'tier.1.adviser' => 'Adviser',
+            'tier.1.adviser_id' => 'Adviser',
             'tier.1.handed_over_at' => 'Date Handed Over',
             'tier.1.result' => 'Result',
             'tier.1.resulted_at' => 'Results Date',
