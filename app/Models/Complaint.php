@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Adviser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
 
 class Complaint extends Model
 {
     use HasFactory;
+    use HasJsonRelationships;
 
     protected $guarded = [];
 
@@ -30,5 +33,10 @@ class Complaint extends Model
         }
 
         return 'Tier 1 - ' . $this->tier['1']['result'];
+    }
+
+    public function adviser()
+    {
+        return $this->belongsTo(Adviser::class, 'tier->1->adviser_id');
     }
 }
