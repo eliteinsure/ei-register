@@ -62,8 +62,6 @@ class Form extends Component
 
     public function edit($id)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
-
         $this->adviserId = $id;
 
         $this->input = collect($this->adviser)->except(['id', 'created_at', 'updated_at'])->all();
