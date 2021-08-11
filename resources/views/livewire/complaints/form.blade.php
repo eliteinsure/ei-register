@@ -57,8 +57,8 @@
             <div class="form-input">
               <p class="text-sm font-medium text-shark mt-6 md:mt-0 mb-2">TIER 1</p>
               <x-jet-label for="adviser" value="Adviser" />
-              <x-lookup.text id="adviser" wire:model.defer="input.tier.1.adviser" />
-              <x-jet-input-error for="tier.1.adviser" class="mt-2" />
+              <x-lookup.select id="adviser" wire:model.defer="input.tier.1.adviser_id" />
+              <x-jet-input-error for="tier.1.adviser_id" class="mt-2" />
             </div>
             <div class="form-input">
               <x-jet-label for="tier1_handed_over_at" value="Date Handed Over" />
