@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Adviser;
 use App\Models\Complaint;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
@@ -33,7 +34,7 @@ class ComplaintFactory extends Factory
             'nature' => Arr::random(config('services.complaint.natures')),
             'tier' => [
                 '1' => [
-                    'adviser' => $this->faker->name(),
+                    'adviser_id' => Adviser::factory(),
                     'handed_over_at' => $this->faker->date(),
                     'result' => Arr::random(config('services.complaint.tier.1.results')),
                     'resulted_at' => $this->faker->date(),

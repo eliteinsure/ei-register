@@ -1,6 +1,6 @@
 <div>
   <x-form-modal wire:model="showModal" submit="submit" max-width="5xl" focusable>
-    <x-slot name="title">{{ isset($complaintId) ? 'Complaint Details' : 'Create a New Complaint' }}</x-slot>
+    <x-slot name="title">{{ isset($complaintId) ? 'Complaint Details' : 'Register a Complaint' }}</x-slot>
     <x-slot name="content">
       <div class="md:flex md:space-x-6">
         <div class="md:w-1/3">
@@ -57,8 +57,8 @@
             <div class="form-input">
               <p class="text-sm font-medium text-shark mt-6 md:mt-0 mb-2">TIER 1</p>
               <x-jet-label for="adviser" value="Adviser" />
-              <x-lookup.text id="adviser" wire:model.defer="input.tier.1.adviser" />
-              <x-jet-input-error for="tier.1.adviser" class="mt-2" />
+              <x-lookup.select id="adviser" wire:model.defer="input.tier.1.adviser_id" />
+              <x-jet-input-error for="tier.1.adviser_id" class="mt-2" />
             </div>
             <div class="form-input">
               <x-jet-label for="tier1_handed_over_at" value="Date Handed Over" />
@@ -116,8 +116,16 @@
       </div>
     </x-slot>
     <x-slot name="footer">
-      <x-jet-button type="submit">{{ isset($complaintId) ? 'Update' : 'Create' }}</x-jet-button>
-      <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showModal', false)">Cancel</x-jet-secondary-button>
+      @role('admin')
+        <x-jet-button type="submit">{{ isset($complaintId) ? 'Update' : 'Register' }}</x-jet-button>
+      @endrole
+      <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showModal', false)">
+        @role('admin')
+          Cancel
+        @else
+          Close
+        @endrole
+      </x-jet-secondary-button>
     </x-slot>
   </x-form-modal>
 </div>

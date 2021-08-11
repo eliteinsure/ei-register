@@ -5,9 +5,11 @@
         <x-jet-input type="text" placeholder="Search..." wire:model.debounce="search" />
       </div>
       <div>
+        @role('admin')
         <x-jet-button type="button" wire:click="$emitTo('complaints.form', 'add')">
-          Create a New Complaint
+          Register a Complaint
         </x-jet-button>
+        @endrole
       </div>
     </div>
 
@@ -76,10 +78,12 @@
                           wire:click="$emitTo('complaints.form', 'edit', {{ $complaint->id }})">
                           <x-heroicon-o-eye class="h-6 w-6" />
                         </button>
+                        @role('admin')
                         <button type="button" class="text-red-500 hover:text-red-700" title="Delete"
                           wire:click="confirmDelete({{ $complaint->id }})">
                           <x-heroicon-o-trash class="h-6 w-6" />
                         </button>
+                        @endrole
                       </div>
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">

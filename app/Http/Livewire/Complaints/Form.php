@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Complaints;
 
 use App\Actions\Complaint\CreateComplaint;
 use App\Actions\Complaint\UpdateComplaint;
+use App\Models\Adviser;
 use App\Models\Complaint;
 use App\Traits\Validators\FocusError;
 use Illuminate\Support\Str;
@@ -29,6 +30,11 @@ class Form extends Component
     ];
 
     protected $listeners = ['add', 'edit'];
+
+    public function getComplaintProperty()
+    {
+        return Complaint::findOrFail($this->complaintId);
+    }
 
     public function mount()
     {
@@ -78,6 +84,8 @@ class Form extends Component
 
     public function add()
     {
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+
         $this->complaintId = null;
 
         $this->resetInput();
@@ -95,7 +103,7 @@ class Form extends Component
     {
         $this->complaintId = $id;
 
-        $this->input = collect(Complaint::findOrFail($id))->except([
+        $this->input = collect($this->complaint)->except([
             'id',
             'created_at',
             'updated_at',
@@ -108,9 +116,11 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('complainant-lookup-value', $complainant);
 
+        $adviser = Adviser::find($this->input['tier'][1]['adviser_id']);
+
         $adviser = json_encode([[
-            'value' => $this->input['tier'][1]['adviser'],
-            'label' => $this->input['tier'][1]['adviser'],
+            'value' => $adviser->id,
+            'label' => $adviser->name,
         ]]);
 
         $this->dispatchBrowserEvent('adviser-lookup-value', $adviser);
@@ -142,15 +152,15 @@ class Form extends Component
 
     public function adviserLookupSearch($search = '')
     {
-        $query = Complaint::select('tier->1->adviser as adviser')->groupBy('adviser')
+        $query = Adviser::where('status', 'Active')
             ->when($search, function ($query) use ($search) {
-                return $query->whereRaw('LOWER(json_unquote(json_extract(`tier`, \'$."1"."adviser"\'))) LIKE ?', '%' . Str::lower($search) . '%');
-            })->oldest('adviser');
+                return $query->where('name', 'like', '%' . $search . '%');
+            })->oldest('name');
 
-        $advisers = $query->get()->map(function ($complaint) {
+        $advisers = $query->get()->map(function ($adviser) {
             return [
-                'value' => $complaint['adviser'],
-                'label' => $complaint['adviser'],
+                'value' => $adviser['id'],
+                'label' => $adviser['name'],
             ];
         });
 
@@ -182,11 +192,15 @@ class Form extends Component
 
     public function submit()
     {
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+
         $this->complaintId ? $this->update(new UpdateComplaint()) : $this->create(new CreateComplaint());
     }
 
     public function create(CreateComplaint $action)
     {
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+
         $action->create($this->input);
 
         $this->emitTo('complaints.index', 'render');
@@ -201,7 +215,9 @@ class Form extends Component
 
     public function update(UpdateComplaint $action)
     {
-        $action->update($this->input, Complaint::findOrFail($this->complaintId));
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+
+        $action->update($this->input, $this->complaint);
 
         $this->emitTo('complaints.index', 'render');
 

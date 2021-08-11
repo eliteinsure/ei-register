@@ -32,4 +32,15 @@ trait WithColumnSorter
             'direction' => '',
         ];
     }
+
+    public function sortQuery($query, $defaultSortColumn = 'id', $defaultSortDirection = 'desc')
+    {
+        if ($this->sort['column'] && $this->sort['direction']) {
+            $query->orderBy($this->sort['column'], $this->sort['direction']);
+        } else {
+            $query->orderBy($defaultSortColumn, $defaultSortDirection);
+        }
+
+        return $query;
+    }
 }
