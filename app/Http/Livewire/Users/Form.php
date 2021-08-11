@@ -83,7 +83,7 @@ class Form extends Component
     {
         abort_unless(auth()->user()->hasRole('admin'), 403);
 
-        $this->userId ? $this->update(new UpdateUser()) : $this->create(new createUser());
+        $this->userId ? $this->update(new UpdateUser()) : $this->create(new CreateUser());
     }
 
     public function create(CreateUser $action)
