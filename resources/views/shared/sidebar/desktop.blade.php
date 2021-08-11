@@ -22,6 +22,12 @@
             Complaints
           </x-jet-nav-link>
 
+          <x-jet-nav-link href="{{ route('advisers.index') }}"
+            :active="request()->routeIs('advisers.index')"
+            icon="heroicon-o-user-circle">
+            Advisers
+          </x-jet-nav-link>
+
           @role('admin')
             <x-jet-nav-link href="{{ route('users.index') }}"
               :active="request()->routeIs('users.index')"
