@@ -71,7 +71,7 @@ class Index extends Component
 
         $this->userId = User::findOrFail($id)->id;
 
-        $this->showDelete();
+        $this->showDelete = true;
     }
 
     public function delete()
