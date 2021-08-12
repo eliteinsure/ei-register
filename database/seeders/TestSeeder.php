@@ -23,7 +23,9 @@ class TestSeeder extends Seeder
 
         $complainants = [];
 
-        Adviser::factory(10)->create();
+        Adviser::factory(10)->create([
+            'status' => 'Active',
+        ]);
 
         $staffNames = [];
 
