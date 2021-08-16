@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\Adviser;
 use App\Models\Complaint;
+use App\Models\Site;
+use App\Models\SiteManual;
 use App\Models\User;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\UserSeeder;
@@ -54,6 +56,10 @@ class TestSeeder extends Seeder
 
         $complaints = Complaint::whereJsonDoesntContain('tier->1->status', 'Pending')->latest()->first();
 
-        dd($complaints->toArray());
+        $manual = SiteManual::factory()->create();
+
+        dump($manual->toArray());
+
+        dump($complaints->toArray());
     }
 }
