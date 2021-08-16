@@ -20,11 +20,24 @@ class Index extends Component
 
     public $showDelete = false;
 
+    public $showReport = false;
+
+    public $showPdf = false;
+
     protected $listeners = ['render'];
 
     public function getComplaintProperty()
     {
         return Complaint::findOrFail($this->complaintId);
+    }
+
+    public function getPdfUrlProperty()
+    {
+        if (! $this->complaintId) {
+            return '';
+        }
+
+        return route('reports.complaints.pdf', ['complaint' => $this->complaintId]);
     }
 
     public function render()
@@ -86,5 +99,16 @@ class Index extends Component
             'style' => 'success',
             'message' => 'Complaint has been deleted.',
         ]);
+    }
+
+    public function showPdf($id)
+    {
+        $this->complaintId = $id;
+
+        $this->showPdf = true;
+    }
+
+    public function generateReport()
+    {
     }
 }

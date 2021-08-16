@@ -11,6 +11,9 @@
         </x-jet-button>
         @endrole
       </div>
+      <div>
+        @livewire('complaints.report')
+      </div>
     </div>
 
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -58,10 +61,6 @@
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                     <x-column-sorter column="nature">Nature of Complaint</x-column-sorter>
                   </th>
-                  {{-- <th scope="col"
-                    class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    Tier Result
-                  </th> --}}
                 </tr>
               </thead>
               <tbody>
@@ -73,6 +72,10 @@
                         <button type="button" class="text-lmara hover:text-dsgreen" title="View Details"
                           wire:click="$emitTo('complaints.form', 'edit', {{ $complaint->id }})">
                           <x-heroicon-o-eye class="h-6 w-6" />
+                        </button>
+                        <button type="button" class="text-lmara hover:text-dsgreen" title="View PDF"
+                          wire:click="showPdf({{ $complaint->id }})">
+                          <x-heroicon-o-document class="h-6 w-6" />
                         </button>
                         @role('admin')
                         <button type="button" class="text-red-500 hover:text-red-700" title="Delete"
@@ -106,9 +109,6 @@
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $complaint->nature }}
                     </td>
-                    {{-- <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
-                      {{ $complaint->tier_result }}
-                    </td> --}}
                   </tr>
                 @endforeach
               </tbody>
@@ -121,6 +121,16 @@
       </div>
     </div>
   </div>
+
+  <x-jet-dialog-modal wire:model="showPdf" max-width="5xl" focusable>
+    <x-slot name="title">Complaint PDF</x-slot>
+    <x-slot name="content">
+      <iframe src="{{ $this->PdfUrl }}" class="w-full" style="height: 600px;"></iframe>
+    </x-slot>
+    <x-slot name="footer">
+      <x-jet-secondary-button type="button" wire:click="$set('showPdf', false)">Close</x-jet-secondary-button>
+    </x-slot>
+  </x-jet-dialog-modal>
 
   <x-jet-confirmation-modal wire:model="showDelete">
     <x-slot name="title">Delete Complaint</x-slot>
