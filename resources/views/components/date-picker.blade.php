@@ -7,7 +7,7 @@
 ])
 
 <div wire:ignore x-data="{
-    value: @entangle($attributes->wire('model')),
+    value: @entangle($attributes->wire('model')).defer,
     instance: undefined
   }"
   x-init="
