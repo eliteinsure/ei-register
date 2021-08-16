@@ -31,6 +31,8 @@
     </x-slot>
   </x-form-modal>
 
+  <x-focus-error />
+
   <x-jet-dialog-modal wire:model="showPdf" max-width="5xl" focusable>
     <x-slot name="title">Complaint Report</x-slot>
     <x-slot name="content">

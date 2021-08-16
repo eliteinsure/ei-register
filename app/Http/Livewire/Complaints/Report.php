@@ -4,10 +4,13 @@ namespace App\Http\Livewire\Complaints;
 
 use App\Actions\Complaint\GenerateComplaintReport;
 use App\Models\Adviser;
+use App\Traits\Validators\FocusError;
 use Livewire\Component;
 
 class Report extends Component
 {
+    use FocusError;
+
     public $input;
 
     public $showModal = false;
@@ -35,6 +38,11 @@ class Report extends Component
                 unset($this->input['advisers']);
             }
         }
+    }
+
+    public function dehydrate()
+    {
+        $this->focusError();
     }
 
     public function resetInput()
