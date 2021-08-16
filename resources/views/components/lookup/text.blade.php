@@ -40,9 +40,9 @@ public function edit(){
               mode: 'select',
               tagTextProp: 'label',
               callbacks: {
-                'focus': () => {
+                /* 'focus': () => {
                   this.lookupSearch('');
-                },
+                }, */
                 'input': _.debounce((event) => {
                   this.lookupSearch(event.detail.value);
                 }, 250),

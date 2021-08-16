@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Adviser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
 
 class Complaint extends Model
@@ -26,13 +27,24 @@ class Complaint extends Model
         return 'CMP' . str_pad($this->id, 5, '0', STR_PAD_LEFT);
     }
 
-    public function getTierResultAttribute()
+    public function getStatusAttribute()
     {
-        if ('Failed' == $this->tier['1']['result']) {
-            return 'Tier 2 - ' . $this->tier['2']['result'];
+        if ('Failed' == $this->tier['1']['status']) {
+            return 'Tier 2 - ' . $this->tier['2']['status'];
         }
 
-        return 'Tier 1 - ' . $this->tier['1']['result'];
+        if ('Pending' == $this->tier['1']['status']) {
+            return $this->tier['1']['status'];
+        }
+
+        return 'Tier 1 - ' . $this->tier['1']['status'];
+    }
+
+    public function getDayCounterAttribute()
+    {
+        return $this->acknowledged_at->diffInDaysFiltered(function (Carbon $date) {
+            return ! $date->isWeekend();
+        });
     }
 
     public function adviser()

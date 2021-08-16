@@ -23,7 +23,9 @@ class TestSeeder extends Seeder
 
         $complainants = [];
 
-        Adviser::factory(10)->create();
+        Adviser::factory(10)->create([
+            'status' => 'Active',
+        ]);
 
         $staffNames = [];
 
@@ -49,5 +51,9 @@ class TestSeeder extends Seeder
         $user = User::factory()->create();
 
         $user->assignRole('admin');
+
+        $complaints = Complaint::whereJsonDoesntContain('tier->1->status', 'Pending')->latest()->first();
+
+        dd($complaints->toArray());
     }
 }

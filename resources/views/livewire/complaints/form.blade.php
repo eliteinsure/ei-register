@@ -35,11 +35,6 @@
               <x-jet-input-error for="received_at" class="mt-2" />
             </div>
             <div class="form-input">
-              <x-jet-label for="registered_at" value="Date Registered" />
-              <x-date-picker id="registered_at" wire:model.defer="input.registered_at" />
-              <x-jet-input-error for="registered_at" class="mt-2" />
-            </div>
-            <div class="form-input">
               <x-jet-label for="acknowledged_at" value="Date Acknowledged" />
               <x-date-picker id="acknowledged_at" wire:model.defer="input.acknowledged_at" />
               <x-jet-input-error for="acknowledged_at" class="mt-2" />
@@ -65,22 +60,28 @@
               <x-date-picker id="tier1_handed_over_at" wire:model.defer="input.tier.1.handed_over_at" />
               <x-jet-input-error for="tier.1.handed_over_at" class="mt-2" />
             </div>
-            <div class="form-input">
-              <x-jet-label for="tier1_result" value="Results" />
-              <x-select id="tier1_result" class="block w-full mt-1" wire:model="input.tier.1.result"
-                :options="$options['tier.1.results']" />
-              <x-jet-input-error for="tier.1.result" class="mt-2" />
+            <div class="form-input {{ $complaintId ? '' : 'hidden' }}">
+              <x-jet-label for="tier1_status" value="Status" />
+              <x-select id="tier1_status" class="block w-full mt-1" wire:model="input.tier.1.status"
+                :options="$options['tier.1.status']" />
+              <x-jet-input-error for="tier.1.status" class="mt-2" />
+            </div>
+            <div class="form-input {{ $complaintId ? '' : 'hidden' }}">
+              <x-jet-label for="stated_at" value="Date Stated" />
+              <x-date-picker id="stated_at" wire:model.defer="input.tier.1.stated_at" />
+              <x-jet-input-error for="tier.1.stated_at" class="mt-2" />
             </div>
             <div class="form-input">
-              <x-jet-label for="resulted_at" value="Results Date" />
-              <x-date-picker id="resulted_at" wire:model.defer="input.tier.1.resulted_at" />
-              <x-jet-input-error for="tier.1.resulted_at" class="mt-2" />
+              <x-jet-label for="tier1_notes" value="Notes" />
+              <x-textarea id="tier1_notes" class="block w-full mt-1 resize-y"
+                wire:model.defer="input.tier.1.notes" />
+              <x-jet-input-error for="tier.1.notes" class="mt-2" />
             </div>
           </div>
         </div>
         <div class="md:w-1/3">
           <div
-            class="space-y-6 {{ ($input['tier'][1]['result'] ?? '') == 'Failed' ? 'block' : 'hidden' }}">
+            class="space-y-6 {{ ($input['tier'][1]['status'] ?? '') == 'Failed' ? 'block' : 'hidden' }}">
             <div class="form-input">
               <p class="text-sm font-medium text-shark mt-6 md:mt-0 mb-2">TIER 2</p>
               <x-jet-label for="staff_position" value="Staff" />
@@ -100,30 +101,30 @@
               <x-jet-input-error for="tier.2.handed_over_at" class="mt-2" />
             </div>
             <div class="form-input">
-              <x-jet-label for="tier2_result" value="Result" />
-              <x-select id="tier2_result" class="block w-full mt-1" wire:model.defer="input.tier.2.result"
-                :options="$options['tier.2.results']" />
-              <x-jet-input-error for="tier.2.result" class="mt-2" />
+              <x-jet-label for="tier2_status" value="Status" />
+              <x-select id="tier2_status" class="block w-full mt-1" wire:model.defer="input.tier.2.status"
+                :options="$options['tier.2.status']" />
+              <x-jet-input-error for="tier.2.status" class="mt-2" />
             </div>
-          </div>
-          <div class="form-input">
-            <p class="text-sm font-medium text-shark mb-2">&nbsp;</p>
-            <x-jet-label for="notes" value="Notes" />
-            <x-textarea id="notes" class="block w-full mt-1 resize-y" wire:model.defer="input.notes" />
-            <x-jet-input-error for="notes" class="mt-2" />
+            <div class="form-input">
+              <x-jet-label for="tier2_notes" value="Notes" />
+              <x-textarea id="tier2_notes" class="block w-full mt-1 resize-y"
+                wire:model.defer="input.tier.2.notes" />
+              <x-jet-input-error for="tier.2.notes" class="mt-2" />
+            </div>
           </div>
         </div>
       </div>
     </x-slot>
     <x-slot name="footer">
       @role('admin')
-        <x-jet-button type="submit">{{ isset($complaintId) ? 'Update' : 'Register' }}</x-jet-button>
+      <x-jet-button type="submit">{{ isset($complaintId) ? 'Update' : 'Register' }}</x-jet-button>
       @endrole
       <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showModal', false)">
         @role('admin')
-          Cancel
-        @else
-          Close
+        Cancel
+      @else
+        Close
         @endrole
       </x-jet-secondary-button>
     </x-slot>

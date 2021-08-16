@@ -21,11 +21,9 @@ class CreateComplaintsTable extends Migration
             $table->string('policy_number');
             $table->string('insurer');
             $table->date('received_at');
-            $table->date('registered_at');
             $table->date('acknowledged_at');
             $table->string('nature');
             $table->json('tier');
-            $table->text('notes')->nullable();
 
             $table->timestamps();
         });
