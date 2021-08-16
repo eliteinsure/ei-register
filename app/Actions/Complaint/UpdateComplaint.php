@@ -14,7 +14,7 @@ class UpdateComplaint
     {
         $data = Validator::make($input, $this->complaintRules(true), [], $this->complaintAttributes())->validate();
 
-        if ('Failed' != $data['tier'][1]['result']) {
+        if ('Failed' != $data['tier'][1]['status']) {
             unset($data['tier'][2]);
         }
 
