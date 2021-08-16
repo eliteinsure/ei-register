@@ -6,15 +6,14 @@ use Illuminate\Validation\Rule;
 
 trait ComplaintValidator
 {
-    public function complaintRules()
+    public function complaintRules($update = false)
     {
-        return [
+        $rules = [
             'complainant' => ['required', 'string', 'max:255'],
             'label' => ['required', 'in:' . implode(',', config('services.complaint.labels'))],
             'policy_number' => ['required', 'string', 'max:255'],
             'insurer' => ['required', 'in:' . implode(',', config('services.complaint.insurers'))],
             'received_at' => ['required', 'date_format:Y-m-d'],
-            'registered_at' => ['required', 'date_format:Y-m-d'],
             'acknowledged_at' => ['required', 'date_format:Y-m-d'],
             'nature' => ['required', 'in:' . implode(',', config('services.complaint.natures'))],
             'tier' => ['required', 'array'],
@@ -26,15 +25,24 @@ trait ComplaintValidator
                 }),
             ],
             'tier.1.handed_over_at' => ['required', 'date_format:Y-m-d'],
-            'tier.1.result' => ['required', 'in:' . implode(',', config('services.complaint.tier.1.results'))],
-            'tier.1.resulted_at' => ['required', 'date_format:Y-m-d'],
-            'tier.2' => ['required_if:tier.1.result,Failed', 'array'],
-            'tier.2.staff_position' => ['required_if:tier.1.result,Failed', 'string', 'max:255'],
-            'tier.2.staff_name' => ['required_if:tier.1.result,Failed', 'string', 'max:255'],
-            'tier.2.handed_over_at' => ['required_if:tier.1.result,Failed', 'date_format:Y-m-d'],
-            'tier.2.result' => ['required_if:tier.1.result,Failed', 'in:' . implode(',', config('services.complaint.tier.2.results'))],
-            'notes' => ['nullable', 'string'],
+            'tier.1.notes' => ['nullable', 'string'],
         ];
+
+        if ($update) {
+            $rules = array_merge($rules, [
+
+                'tier.1.status' => ['required', 'in:' . implode(',', config('services.complaint.tier.1.status'))],
+                'tier.1.stated_at' => ['required', 'date_format:Y-m-d'],
+                'tier.2' => ['required_if:tier.1.result,Failed', 'array'],
+                'tier.2.staff_position' => ['required_if:tier.1.result,Failed', 'string', 'max:255'],
+                'tier.2.staff_name' => ['required_if:tier.1.result,Failed', 'string', 'max:255'],
+                'tier.2.handed_over_at' => ['required_if:tier.1.result,Failed', 'date_format:Y-m-d'],
+                'tier.2.status' => ['required_if:tier.1.result,Failed', 'in:' . implode(',', config('services.complaint.tier.2.status'))],
+                'tier.2.notes' => ['nullable', 'string'],
+            ]);
+        }
+
+        return $rules;
     }
 
     public function complaintAttributes()
@@ -52,14 +60,15 @@ trait ComplaintValidator
             'tier.1' => 'Tier 1',
             'tier.1.adviser_id' => 'Adviser',
             'tier.1.handed_over_at' => 'Date Handed Over',
-            'tier.1.result' => 'Result',
-            'tier.1.resulted_at' => 'Results Date',
+            'tier.1.status' => 'Status',
+            'tier.1.stated_at' => 'Date Stated',
+            'tier.1.notes' => 'Notes',
             'tier.2' => 'Tier 2',
             'tier.2.staff_position' => 'Staff',
             'tier.2.staff_name' => 'Staff Name',
             'tier.2.handed_over_at' => 'Date Handed Over',
-            'tier.2.result' => 'Result',
-            'notes' => 'Notes',
+            'tier.2.status' => 'Status',
+            'tier.2.notes' => 'Notes',
         ];
     }
 }

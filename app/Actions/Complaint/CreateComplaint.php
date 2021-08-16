@@ -14,9 +14,7 @@ class CreateComplaint
     {
         $data = Validator::make($input, $this->complaintRules(), [], $this->complaintAttributes())->validate();
 
-        if ('Failed' != $data['tier'][1]['result']) {
-            unset($data['tier'][2]);
-        }
+        $data['tier'][1]['status'] = 'Pending';
 
         $complaint = Complaint::create($data);
 
