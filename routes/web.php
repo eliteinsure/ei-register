@@ -42,8 +42,4 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::resource('users', UserController::class)->only([
         'index',
     ])->middleware('role:admin');
-
-    Route::group(['as' => 'pdf.', 'prefix' => 'pdf'], function () {
-        Route::get('complaint', [PdfController::class, 'complaint'])->name('complaint');
-    });
 });
