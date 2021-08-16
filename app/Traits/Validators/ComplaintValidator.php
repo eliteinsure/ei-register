@@ -16,7 +16,6 @@ trait ComplaintValidator
             'received_at' => ['required', 'date_format:Y-m-d'],
             'acknowledged_at' => ['required', 'date_format:Y-m-d'],
             'nature' => ['required', 'in:' . implode(',', config('services.complaint.natures'))],
-            'tier' => ['required', 'array'],
             'tier.1' => ['required', 'array'],
             'tier.1.adviser_id' => [
                 'required',
@@ -30,7 +29,6 @@ trait ComplaintValidator
 
         if ($update) {
             $rules = array_merge($rules, [
-
                 'tier.1.status' => ['required', 'in:' . implode(',', config('services.complaint.tier.1.status'))],
                 'tier.1.stated_at' => ['required', 'date_format:Y-m-d'],
                 'tier.2' => ['required_if:tier.1.status,Failed', 'array'],
