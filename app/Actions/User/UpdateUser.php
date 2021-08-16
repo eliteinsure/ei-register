@@ -4,6 +4,7 @@ namespace App\Actions\User;
 
 use App\Models\User;
 use App\Traits\Validators\UserValidator;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Rules\Password;
@@ -24,6 +25,8 @@ class UpdateUser
         $role = $data['role'];
 
         unset($data['role']);
+
+        $data['password'] = Hash::make($data['password']);
 
         $user->update($data);
 
