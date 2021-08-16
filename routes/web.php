@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AdviserController;
 use App\Http\Controllers\ComplaintController;
-use App\Http\Controllers\PdfController;
+use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +26,12 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
     Route::resource('complaints', ComplaintController::class)->only([
         'index',
+    ]);
+
+    Route::resource('softwares', SiteController::class)->only([
+        'index',
+    ])->names([
+        'index' => 'sites.index',
     ]);
 
     Route::resource('advisers', AdviserController::class)->only([
