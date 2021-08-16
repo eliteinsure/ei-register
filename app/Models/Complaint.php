@@ -42,6 +42,18 @@ class Complaint extends Model
 
     public function getDayCounterAttribute()
     {
+        if ('Success' == ($this->tier['1']['status'] ?? '')) {
+            return $this->acknowledged_at->diffInDaysFiltered(function (Carbon $date) {
+                return ! $date->isWeekend();
+            }, Carbon::parse($this->tier['1']['stated_at']));
+        }
+
+        if ('Success' == ($this->tier['2']['status'] ?? '')) {
+            return $this->acknowledged_at->diffInDaysFiltered(function (Carbon $date) {
+                return ! $date->isWeekend();
+            }, Carbon::parse($this->tier['2']['handed_over_at']));
+        }
+
         return $this->acknowledged_at->diffInDaysFiltered(function (Carbon $date) {
             return ! $date->isWeekend();
         });
