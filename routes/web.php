@@ -32,11 +32,18 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         'index',
     ]);
 
+    Route::group(['as' => 'reports.', 'prefix' => 'reports'], function () {
+        Route::group(['as' => 'complaints.', 'prefix' => 'complaints'], function () {
+            Route::get('/', [ComplaintController::class, 'report'])->name('index');
+            Route::get('/{complaint}', [ComplaintController::class, 'pdf'])->name('pdf');
+        });
+    });
+
     Route::resource('users', UserController::class)->only([
         'index',
     ])->middleware('role:admin');
 
-    Route::group(['as' => 'pdf.', 'prefix' => 'pdf', 'url' => 'pdf'], function () {
+    Route::group(['as' => 'pdf.', 'prefix' => 'pdf'], function () {
         Route::get('complaint', [PdfController::class, 'complaint'])->name('complaint');
     });
 });
