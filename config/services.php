@@ -69,7 +69,8 @@ return [
         ],
         'tier' => [
             '1' => [
-                'results' => [
+                'status' => [
+                    'Pending',
                     'Success',
                     'Failed',
                     'Retracted',
@@ -84,7 +85,7 @@ return [
                     'Admin ADR',
                     'SADR',
                 ],
-                'results' => [
+                'status' => [
                     'Success',
                     'Failed',
                     'Retracted',

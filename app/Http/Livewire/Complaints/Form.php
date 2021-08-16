@@ -24,9 +24,9 @@ class Form extends Component
         'labels' => [],
         'insurers' => [],
         'natures' => [],
-        'tier.1.results' => [],
+        'tier.1.status' => [],
         'tier.2.staffPositions' => [],
-        'tier.2.results' => [],
+        'tier.2.status' => [],
     ];
 
     protected $listeners = ['add', 'edit'];
@@ -57,7 +57,7 @@ class Form extends Component
 
     public function updated($name, $value)
     {
-        if ('input.tier.1.result' == $name && 'Failed' != $value) {
+        if ('input.tier.1.status' == $name && 'Failed' != $value) {
             unset($this->input['tier'][2]);
 
             $this->input['tier'][2]['handed_over_at'] = '';
@@ -68,12 +68,11 @@ class Form extends Component
     {
         $this->input = [
             'received_at' => '',
-            'registered_at' => '',
             'acknowledged_at' => '',
             'tier' => [
                 1 => [
                     'handed_over_at' => '',
-                    'resulted_at' => '',
+                    'stated_at' => '',
                 ],
                 2 => [
                     'handed_over_at' => '',
@@ -170,7 +169,7 @@ class Form extends Component
     public function staffLookupSearch($search = '')
     {
         $query = Complaint::select('tier->2->staff_name as staff_name')->groupBy('staff_name')
-            ->where('tier->1->result', 'Failed')
+            ->where('tier->1->status', 'Failed')
             ->when($search, function ($query) use ($search) {
                 return $query->whereRaw('LOWER(json_unquote(json_extract(`tier`, \'$."2"."staff_name"\'))) LIKE ?', '%' . Str::lower($search) . '%');
             })->oldest('staff_name');

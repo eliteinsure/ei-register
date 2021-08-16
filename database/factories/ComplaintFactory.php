@@ -29,18 +29,17 @@ class ComplaintFactory extends Factory
             'policy_number' => $this->faker->numerify('#####'),
             'insurer' => Arr::random(config('services.complaint.insurers')),
             'received_at' => $this->faker->date(),
-            'registered_at' => $this->faker->date(),
             'acknowledged_at' => $this->faker->date(),
             'nature' => Arr::random(config('services.complaint.natures')),
             'tier' => [
                 '1' => [
                     'adviser_id' => Adviser::factory(),
                     'handed_over_at' => $this->faker->date(),
-                    'result' => Arr::random(config('services.complaint.tier.1.results')),
-                    'resulted_at' => $this->faker->date(),
+                    'status' => Arr::random(config('services.complaint.tier.1.status')),
+                    'stated_at' => $this->faker->date(),
+                    'notes' => $this->faker->sentence,
                 ],
             ],
-            'notes' => $this->faker->sentence,
         ];
     }
 
@@ -49,7 +48,7 @@ class ComplaintFactory extends Factory
         return $this->state(function (array $attributes) {
             $tier = $attributes['tier'];
 
-            $tier['1']['result'] = 'Failed';
+            $tier['1']['status'] = 'Failed';
 
             return [
                 'tier' => $tier,
@@ -60,7 +59,7 @@ class ComplaintFactory extends Factory
     public function configure()
     {
         return $this->afterMaking(function (Complaint $complaint) {
-            if ('Failed' != $complaint->tier['1']['result']) {
+            if ('Failed' != $complaint->tier['1']['status']) {
                 return;
             }
 
@@ -70,7 +69,8 @@ class ComplaintFactory extends Factory
                 'staff_position' => Arr::random(config('services.complaint.tier.2.staffPositions')),
                 'staff_name' => $this->faker->name(),
                 'handed_over_at' => $this->faker->date(),
-                'result' => Arr::random(config('services.complaint.tier.2.results')),
+                'status' => Arr::random(config('services.complaint.tier.2.status')),
+                'notes' => $this->faker->sentence,
             ];
 
             $complaint->tier = $tier;

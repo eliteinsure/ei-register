@@ -36,27 +36,23 @@
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="label">Label</x-column-sorter>
-                  </th>
-                  <th scope="col"
-                    class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="policy_number">Policy Number</x-column-sorter>
-                  </th>
-                  <th scope="col"
-                    class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="insurer">Insurer</x-column-sorter>
-                  </th>
-                  <th scope="col"
-                    class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                     <x-column-sorter column="received_at">Date Received</x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="registered_at">Date Registered</x-column-sorter>
+                    <x-column-sorter column="created_at">Date Registered</x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                     <x-column-sorter column="acknowledged_at">Date Acknowledged</x-column-sorter>
+                  </th>
+                  <th scope="col"
+                    class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th scope="col"
+                    class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
+                    <x-column-sorter column="acknowledged_at">Days Counter</x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
@@ -93,22 +89,19 @@
                       {{ $complaint->complainant }}
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
-                      {{ $complaint->label }}
-                    </td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
-                      {{ $complaint->policy_number }}
-                    </td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
-                      {{ $complaint->insurer }}
-                    </td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $complaint->received_at->format('d/m/Y') }}
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
-                      {{ $complaint->registered_at->format('d/m/Y') }}
+                      {{ $complaint->created_at->format('d/m/Y') }}
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $complaint->acknowledged_at->format('d/m/Y') }}
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
+                      {{ $complaint->status }}
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
+                      {{ number_format($complaint->day_counter) }}
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $complaint->nature }}

@@ -20,11 +20,6 @@ class CreateAdvisersTable extends Migration
             $table->string('email');
             $table->integer('fsp_no');
             $table->string('contact_number');
-            $table->text('address');
-            $table->string('fap_name');
-            $table->string('fap_email');
-            $table->integer('fap_fsp_no');
-            $table->string('fap_contact_number');
             $table->string('status'); // Active, Terminated;
 
             $table->timestamps();

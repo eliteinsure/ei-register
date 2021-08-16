@@ -26,11 +26,6 @@ class AdviserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'fsp_no' => $this->faker->numerify('######'),
             'contact_number' => $this->faker->bothify('+639#########'),
-            'address' => $this->faker->address,
-            'fap_name' => $this->faker->name(),
-            'fap_email' => $this->faker->safeEmail(),
-            'fap_fsp_no' => $this->faker->numerify('#####'),
-            'fap_contact_number' => $this->faker->bothify('+639#########'),
             'status' => $this->faker->randomElement(['Active', 'Terminated']),
         ];
     }
