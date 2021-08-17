@@ -63,6 +63,8 @@ class Form extends Component
     {
         $this->siteId = $id;
 
+        $this->emitTo('sites.manual', 'setSite', $id);
+
         $this->input = collect($this->site)->except([
             'id',
             'created_at',

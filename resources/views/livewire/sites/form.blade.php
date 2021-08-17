@@ -30,6 +30,9 @@
           <x-jet-input-error for="description" class="mt-2" />
         </div>
       </div>
+      @if ($siteId)
+        @livewire('sites.manual')
+      @endif
     </x-slot>
     <x-slot name="footer">
       @role('admin')
@@ -38,9 +41,9 @@
 
       <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showModal', false)">
         @role('admin')
-        Cancel
-      @else
-        Close
+          Cancel
+        @else
+          Close
         @endrole
       </x-jet-secondary-button>
     </x-slot>
