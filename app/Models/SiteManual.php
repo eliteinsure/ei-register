@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Site;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class SiteManual extends Model
 {
@@ -12,9 +13,19 @@ class SiteManual extends Model
 
     protected $guarded = [];
 
-    public function getUrlAttribute()
+    public function getFileExtensionAttribute()
     {
-        return Storage::disk($this->disk)->url($this->path);
+        return Str::afterLast($this->file, '.');
+    }
+
+    public function getFilenameAttribute()
+    {
+        return Str::slug($this->site->name . ' ' . $this->name) . '.' . $this->file_extension;
+    }
+
+    public function getFileIconAttribute()
+    {
+        return config('services.file.icons')[$this->file_extension];
     }
 
     public function site()
