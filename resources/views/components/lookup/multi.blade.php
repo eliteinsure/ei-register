@@ -37,7 +37,6 @@ public function edit(){
                 mapValueTo: 'label',
                 searchKeys: [],
               },
-              mode: 'select',
               tagTextProp: 'label',
               callbacks: {
                 'focus': () => {
@@ -51,9 +50,11 @@ public function edit(){
 
                   if (event.detail.value) {
                     value = JSON.parse(event.detail.value);
+
+                    value = _.map(value, 'value');
                   }
 
-                  this.$refs.hidden.value = value?.[0]?.value ?? '';
+                  this.$refs.hidden.value = _.isEmpty(value) ? '' : value;
 
                   this.$refs.hidden.dispatchEvent(new Event('input'));
                 }

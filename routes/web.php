@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\AdviserController;
 use App\Http\Controllers\ComplaintController;
-use App\Http\Controllers\PdfController;
+use App\Http\Controllers\SiteController;
+use App\Http\Controllers\SiteManualController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,15 +29,32 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         'index',
     ]);
 
+    Route::resource('softwares', SiteController::class)->only([
+        'index',
+    ])->names([
+        'index' => 'sites.index',
+    ]);
+
+    Route::resource('softwares.manuals', SiteManualController::class)->only([
+        'show',
+    ])->parameters([
+        'softwares' => 'site',
+    ])->names([
+        'show' => 'sites.manuals.show',
+    ]);
+
     Route::resource('advisers', AdviserController::class)->only([
         'index',
     ]);
 
+    Route::group(['as' => 'reports.', 'prefix' => 'reports'], function () {
+        Route::group(['as' => 'complaints.', 'prefix' => 'complaints'], function () {
+            Route::get('/', [ComplaintController::class, 'report'])->name('index');
+            Route::get('/{complaint}', [ComplaintController::class, 'pdf'])->name('pdf');
+        });
+    });
+
     Route::resource('users', UserController::class)->only([
         'index',
     ])->middleware('role:admin');
-
-    Route::group(['as' => 'pdf.', 'prefix' => 'pdf', 'url' => 'pdf'], function () {
-        Route::get('complaint', [PdfController::class, 'complaint'])->name('complaint');
-    });
 });

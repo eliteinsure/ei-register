@@ -127,3 +127,64 @@ li {
     font-weight: normal;
     border-bottom: 2px solid #2e74b6;
 }
+
+.table-striped {
+    border: 1px solid #f2f2f2;
+}
+
+.table-striped tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.w-none {
+    width: 0;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.w-third {
+    width: 75%;
+}
+
+.w-half {
+    width: 50%;
+}
+
+.w-quart {
+    width: 25%;
+}
+
+.w-4 {
+    width: 1em;
+}
+
+.p-1 {
+    padding: 0.25em;
+}
+
+.p-2 {
+    padding: 0.5em;
+}
+
+.pr-2 {
+    padding-right: 0.5em;
+}
+
+.py-2 {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
