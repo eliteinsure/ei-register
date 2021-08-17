@@ -1,4 +1,4 @@
-@props(['id', 'model'])
+@props(['id', 'model', 'accept' => '*'])
 
 <label
   x-data="{ isUploading: false, progress: 0 }"
@@ -23,5 +23,6 @@
     </div>
   </div>
 
-  <input type="file" id="{{ $id }}" wire:model="{{ $model }}" class="sr-only">
+  <input type="file" id="{{ $id }}" wire:model.defer="{{ $model }}" class="sr-only"
+    accept="{{ $accept }}">
 </label>
