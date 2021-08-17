@@ -10,6 +10,7 @@
   <x-page-wrap>
     @livewire('sites.index')
     @livewire('sites.form')
+    @livewire('sites.manual')
     <x-focus-error />
   </x-page-wrap>
 </x-app-layout>

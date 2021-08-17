@@ -30,13 +30,10 @@
           <x-jet-input-error for="description" class="mt-2" />
         </div>
       </div>
-      @if ($siteId)
-        @livewire('sites.manual')
-      @endif
     </x-slot>
     <x-slot name="footer">
       @role('admin')
-      <x-jet-button type="submit">{{ isset($siteId) ? 'Update' : 'Create' }}</x-jet-button>
+        <x-jet-button type="submit">{{ isset($siteId) ? 'Update' : 'Create' }}</x-jet-button>
       @endrole
 
       <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showModal', false)">

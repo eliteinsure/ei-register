@@ -60,6 +60,10 @@
                           wire:click="$emitTo('sites.form', 'edit', {{ $site->id }})">
                           <x-heroicon-o-eye class="h-6 w-6" />
                         </button>
+                        <button type="button" class="text-lmara hover:text-dsgreen" title="View Manuals"
+                          wire:click="$emitTo('sites.manual', 'show', {{ $site->id }})">
+                          <x-heroicon-o-information-circle class="h-6 w-6" />
+                        </button>
                         @role('admin')
                         <button type="button" class="text-red-500 hover:text-red-700" title="Delete"
                           wire:click="confirmDelete({{ $site->id }})">
@@ -72,7 +76,8 @@
                       {{ $site->name }}
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
-                      <a href="{{ $site->url }}" target="_blank" class="font-medium text-lmara hover:text-shark">
+                      <a href="{{ $site->url }}" target="_blank"
+                        class="font-medium text-lmara hover:text-shark">
                         {{ $site->url }}
                       </a>
                     </td>
