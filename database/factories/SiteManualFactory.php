@@ -27,7 +27,7 @@ class SiteManualFactory extends Factory
         return [
             'site_id' => Site::factory(),
             'name' => $this->faker->catchPhrase,
-            'disk' => 'public',
+            'disk' => config('filesystems.default'),
         ];
     }
 
@@ -37,7 +37,7 @@ class SiteManualFactory extends Factory
             $manual->file = UploadedFile::fake()->create('site-manual.pdf', 128);
         })->afterCreating(function (SiteManual $manual) {
             $manual->update([
-                'file' => Storage::disk('public')->putFile('site-manuals', $manual->path),
+                'file' => Storage::disk(config('filesystems.default'))->putFile('site-manuals', $manual->file),
             ]);
         });
     }
