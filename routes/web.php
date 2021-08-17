@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdviserController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\SiteManualController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,14 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         'index',
     ])->names([
         'index' => 'sites.index',
+    ]);
+
+    Route::resource('softwares.manuals', SiteManualController::class)->only([
+        'show',
+    ])->parameters([
+        'softwares' => 'site',
+    ])->names([
+        'show' => 'sites.manuals.show',
     ]);
 
     Route::resource('advisers', AdviserController::class)->only([
