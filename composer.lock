@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d2b58b32df7153cb6308a3d33c476e93",
+    "content-hash": "0c64587efb0f797031a9555b436ce795",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -311,6 +311,71 @@
                 }
             ],
             "time": "2021-01-20T22:51:39+00:00"
+        },
+        {
+            "name": "codeat3/blade-forkawesome",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codeat3/blade-forkawesome.git",
+                "reference": "fc299eda01279b4110d3f06f818d1dcfa8088430"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codeat3/blade-forkawesome/zipball/fc299eda01279b4110d3f06f818d1dcfa8088430",
+                "reference": "fc299eda01279b4110d3f06f818d1dcfa8088430",
+                "shasum": ""
+            },
+            "require": {
+                "blade-ui-kit/blade-icons": "^0.5.0",
+                "illuminate/support": "^7.14|^8.0",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "codeat3/phpcs-styles": "dev-main",
+                "orchestra/testbench": "^5.0|^6.0",
+                "phpunit/phpunit": "^8.0|^9.0",
+                "symfony/finder": "^5.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Codeat3\\BladeForkAwesome\\BladeForkAwesomeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Codeat3\\BladeForkAwesome\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Swapnil Sarwe",
+                    "homepage": "https://swapnilsarwe.com"
+                },
+                {
+                    "name": "Dries Vints",
+                    "homepage": "https://driesvints.com"
+                }
+            ],
+            "description": " A package to easily make use of \"Fork Awesome Icons\" in your Laravel Blade views.",
+            "homepage": "https://github.com/codeat3/blade-forkawesome",
+            "keywords": [
+                "blade",
+                "forkawesome",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/codeat3/blade-forkawesome/issues",
+                "source": "https://github.com/codeat3/blade-forkawesome/tree/0.1.0"
+            },
+            "time": "2021-04-12T17:14:44+00:00"
         },
         {
             "name": "dasprid/enum",
