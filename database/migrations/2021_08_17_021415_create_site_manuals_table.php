@@ -18,7 +18,7 @@ class CreateSiteManualsTable extends Migration
             $table->foreignId('site_id');
 
             $table->text('name');
-            $table->text('path');
+            $table->text('file');
             $table->text('disk');
 
             $table->timestamps();

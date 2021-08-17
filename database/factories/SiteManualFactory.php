@@ -34,10 +34,10 @@ class SiteManualFactory extends Factory
     public function configure()
     {
         return $this->afterMaking(function (SiteManual $manual) {
-            $manual->path = UploadedFile::fake()->create('site-manual.pdf', 128);
+            $manual->file = UploadedFile::fake()->create('site-manual.pdf', 128);
         })->afterCreating(function (SiteManual $manual) {
             $manual->update([
-                'path' => Storage::disk('public')->putFile('site-manuals', $manual->path),
+                'file' => Storage::disk('public')->putFile('site-manuals', $manual->path),
             ]);
         });
     }
