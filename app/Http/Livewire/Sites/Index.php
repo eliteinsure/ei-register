@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Livewire\Complaints;
+namespace App\Http\Livewire\Sites;
 
-use App\Models\Complaint;
+use App\Actions\Site\DeleteSite;
+use App\Models\Site;
 use App\Traits\WithColumnSorter;
 use Exception;
 use Illuminate\Support\Carbon;
@@ -14,37 +15,26 @@ class Index extends Component
     use WithPagination;
     use WithColumnSorter;
 
-    public $complaintId;
+    public $siteId;
 
     public $search;
 
     public $showDelete = false;
 
-    public $showPdf = false;
-
     protected $listeners = ['render'];
 
-    public function getComplaintProperty()
+    public function getSiteProperty()
     {
-        return Complaint::findOrFail($this->complaintId);
-    }
-
-    public function getPdfUrlProperty()
-    {
-        if (! $this->complaintId) {
-            return '';
-        }
-
-        return route('reports.complaints.pdf', ['complaint' => $this->complaintId]);
+        return Site::findOrFail($this->siteId);
     }
 
     public function render()
     {
-        $query = Complaint::when($this->search, function ($query) {
+        $query = Site::when($this->search, function ($query) {
             return $query->where(function ($query) {
-                $stringColumns = ['id', 'complainant', 'label', 'policy_number', 'insurer', 'nature'];
+                $stringColumns = ['name', 'url', 'description'];
 
-                $dateColumns = ['received_at', 'registered_at', 'acknowledged_at'];
+                $dateColumns = ['launch_date', 'update_date'];
 
                 foreach ($stringColumns as $column) {
                     $query->orWhere($column, 'like', '%' . $this->search . '%');
@@ -64,9 +54,9 @@ class Index extends Component
 
         $query = $this->sortQuery($query);
 
-        $complaints = $query->paginate();
+        $sites = $query->paginate();
 
-        return view('livewire.complaints.index', compact('complaints'));
+        return view('livewire.sites.index', compact('sites'));
     }
 
     public function updatingSearch()
@@ -80,29 +70,22 @@ class Index extends Component
     {
         abort_unless(auth()->user()->hasRole('admin'), 403);
 
-        $this->complaintId = $id;
+        $this->siteId = $id;
 
         $this->showDelete = true;
     }
 
-    public function delete()
+    public function delete(DeleteSite $action)
     {
         abort_unless(auth()->user()->hasRole('admin'), 403);
 
-        $this->complaint->delete();
+        $action->delete($this->site);
 
         $this->showDelete = false;
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'Complaint has been deleted.',
+            'message' => 'Software has been deleted.',
         ]);
-    }
-
-    public function showPdf($id)
-    {
-        $this->complaintId = $id;
-
-        $this->showPdf = true;
     }
 }

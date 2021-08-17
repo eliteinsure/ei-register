@@ -77,6 +77,11 @@
           Complaints
         </x-jet-responsive-nav-link>
 
+        <x-jet-responsive-nav-link href="{{ route('sites.index') }}"
+          :active="request()->routeIs('sites.index')" icon="heroicon-o-globe">
+          Softwares
+        </x-jet-responsive-nav-link>
+
         <x-jet-responsive-nav-link href="{{ route('advisers.index') }}"
           :active="request()->routeIs('advisers.index')" icon="heroicon-o-user-circle">
           Advisers

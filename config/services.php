@@ -97,4 +97,39 @@ return [
 
     ],
 
+    'site' => [
+        'manual' => [
+            'mimes' => ['txt', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'mp4', 'mov', 'avi', 'wmv', 'mkv'],
+            'mimetypes' => [
+                'text/plain',
+                'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'application/vnd.ms-powerpoint',
+                'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                'video/mp4',
+                'video/quicktime',
+                'video/x-msvideo',
+                'video/x-ms-wmv',
+                'video/x-matroska',
+            ],
+        ],
+    ],
+
+    'file' => [
+        'icons' => [
+            'txt' => 'forkawesome-file-text-o',
+            'pdf' => 'forkawesome-file-pdf-o',
+            'doc' => 'forkawesome-file-word-o',
+            'docx' => 'forkawesome-file-word-o',
+            'ppt' => 'forkawesome-file-powerpoint-o',
+            'pptx' => 'forkawesome-file-powerpoint-o',
+            'mp4' => 'forkawesome-file-video-o',
+            'mov' => 'forkawesome-file-video-o',
+            'avi' => 'forkawesome-file-video-o',
+            'wmv' => 'forkawesome-file-video-o',
+            'mkv' => 'forkawesome-file-video-o',
+        ],
+    ],
+
 ];
