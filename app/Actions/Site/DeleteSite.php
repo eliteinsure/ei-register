@@ -10,7 +10,7 @@ class DeleteSite
     public function delete(Site $site)
     {
         foreach ($site->manuals as $manual) {
-            Storage::disk($manual->disk)->delete($manual->path);
+            Storage::disk($manual->disk)->delete($manual->file);
         }
 
         $site->manuals()->delete();
