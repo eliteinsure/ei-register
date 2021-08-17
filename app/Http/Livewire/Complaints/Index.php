@@ -20,8 +20,6 @@ class Index extends Component
 
     public $showDelete = false;
 
-    public $showReport = false;
-
     public $showPdf = false;
 
     protected $listeners = ['render'];
@@ -106,9 +104,5 @@ class Index extends Component
         $this->complaintId = $id;
 
         $this->showPdf = true;
-    }
-
-    public function generateReport()
-    {
     }
 }
