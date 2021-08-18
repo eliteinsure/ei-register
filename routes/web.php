@@ -29,16 +29,16 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         'index',
     ]);
 
-    Route::resource('softwares', SiteController::class)->only([
+    Route::resource('software', SiteController::class)->only([
         'index',
     ])->names([
         'index' => 'sites.index',
     ]);
 
-    Route::resource('softwares.manuals', SiteManualController::class)->only([
+    Route::resource('software.manuals', SiteManualController::class)->only([
         'show',
     ])->parameters([
-        'softwares' => 'site',
+        'software' => 'site',
     ])->names([
         'show' => 'sites.manuals.show',
     ]);
@@ -51,6 +51,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         Route::group(['as' => 'complaints.', 'prefix' => 'complaints'], function () {
             Route::get('/', [ComplaintController::class, 'report'])->name('index');
             Route::get('/{complaint}', [ComplaintController::class, 'pdf'])->name('pdf');
+        });
+
+        Route::group(['as' => 'sites.', 'prefix' => 'software'], function () {
+            Route::get('/', [SiteController::class, 'report'])->name('index');
         });
     });
 
