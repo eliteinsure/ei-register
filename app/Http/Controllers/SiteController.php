@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Site;
+use App\Traits\Validators\ReportError;
 use App\Traits\Validators\SiteReportValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -11,6 +12,7 @@ use niklasravnsborg\LaravelPdf\Facades\Pdf;
 class SiteController extends Controller
 {
     use SiteReportValidator;
+    use ReportError;
 
     public function index()
     {
@@ -26,11 +28,7 @@ class SiteController extends Controller
         $validator = Validator::make($input, $this->siteReportRules(), [], $this->siteReportAttributes());
 
         if ($validator->fails()) {
-            $errors = collect($validator->messages())->transform(function ($item, $key) {
-                return $item[0];
-            })->values()->all();
-
-            return view('pdf.error', compact('errors'));
+            return $this->reportErrors($validator);
         }
 
         $data = $validator->validated();
