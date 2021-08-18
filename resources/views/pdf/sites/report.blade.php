@@ -43,7 +43,7 @@
       @foreach ($sites as $site)
         <tr>
           <td class="p-2">{{ $site->name }}</td>
-          <td class="p-2">{{ $site->url }}</td>
+          <td class="p-2"><a href="{{ $site->url }}">{{ $site->url }}</a></td>
           <td class="p-2">{{ $site->launch_date->format('d/m/Y') }}</td>
           <td class="p-2">{{ $site->update_date ? $site->update_date->format('d/m/Y') : '' }}</td>
           <td class="p-2">{{ $site->description }}</td>
