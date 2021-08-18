@@ -66,10 +66,9 @@ class Report extends Component
 
     public function advisersLookupSearch($search = '')
     {
-        $query = Adviser::where('status', 'Active')
-            ->when($search, function ($query) use ($search) {
-                return $query->where('name', 'like', '%' . $search . '%');
-            })->oldest('name');
+        $query = Adviser::when($search, function ($query) use ($search) {
+            return $query->where('name', 'like', '%' . $search . '%');
+        })->oldest('name');
 
         $advisers = $query->get()->map(function ($adviser) {
             return [

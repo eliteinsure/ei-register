@@ -61,29 +61,40 @@
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                     <x-column-sorter column="nature">Nature of Complaint</x-column-sorter>
                   </th>
+                  @if (auth()->user()->hasRole('admin'))
+                    <th scope="col"
+                      class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
+                      <span class="sr-only">Delete Action</span>
+                    </th>
+                  @endif
                 </tr>
               </thead>
               <tbody>
                 @foreach ($complaints as $index => $complaint)
-                  <!-- Odd row -->
                   <tr class="{{ $index % 2 ? 'bg-gray-50' : 'bg-white' }}">
-                    <td class="px-4 py-2 whitespace-nowrap text-left text-sm font-medium">
-                      <div class="flex items-center space-x-2">
-                        <button type="button" class="text-lmara hover:text-dsgreen" title="View Details"
-                          wire:click="$emitTo('complaints.form', 'edit', {{ $complaint->id }})">
-                          <x-heroicon-o-eye class="h-6 w-6" />
-                        </button>
-                        <button type="button" class="text-lmara hover:text-dsgreen" title="View PDF"
-                          wire:click="showPdf({{ $complaint->id }})">
-                          <x-heroicon-o-document class="h-6 w-6" />
-                        </button>
-                        @role('admin')
-                        <button type="button" class="text-red-500 hover:text-red-700" title="Delete"
-                          wire:click="confirmDelete({{ $complaint->id }})">
-                          <x-heroicon-o-trash class="h-6 w-6" />
-                        </button>
-                        @endrole
-                      </div>
+                    <td class="px-4 py-2 whitespace-nowrap text-left text-sm">
+                      <x-jet-dropdown align="bottom" content-classes="py-1 bg-white divide-y divide-gray-200">
+                        <x-slot name="trigger">
+                          <button type="button"
+                            class="text-lmara hover:text-dsgreen" title="Actions">
+                            <x-heroicon-o-dots-vertical class="h-6 w-6" />
+                          </button>
+                        </x-slot>
+                        <x-slot name="content">
+                          <x-jet-dropdown-link href="javascript:void(0)"
+                            wire:click="$emitTo('complaints.form', 'edit', {{ $complaint->id }})">
+                            @if (auth()->user()->hasRole('admin'))
+                              Edit
+                            @else
+                              View Details
+                            @endif
+                          </x-jet-dropdown-link>
+                          <x-jet-dropdown-link href="javascript:void(0)"
+                            wire:click="showPdf({{ $complaint->id }})">
+                            View PDF
+                          </x-jet-dropdown-link>
+                        </x-slot>
+                      </x-jet-dropdown>
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $complaint->number }}
@@ -109,6 +120,14 @@
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $complaint->nature }}
                     </td>
+                    @if (auth()->user()->hasRole('admin'))
+                      <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
+                        <button type="button" class="text-red-500 hover:text-red-700" title="Delete"
+                          wire:click="confirmDelete({{ $complaint->id }})">
+                          <x-heroicon-o-trash class="h-6 w-6" />
+                        </button>
+                      </td>
+                    @endif
                   </tr>
                 @endforeach
               </tbody>

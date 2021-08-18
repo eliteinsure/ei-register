@@ -23,6 +23,15 @@ class Form extends Component
 
     protected $listeners = ['add', 'edit'];
 
+    public function getTitleProperty()
+    {
+        if ($this->userId) {
+            return auth()->user()->hasRole('admin') ? 'Edit User' : 'User Detials';
+        } else {
+            return 'Register a User';
+        }
+    }
+
     public function getUserProperty()
     {
         return User::where('id', $this->userId)->where('id', '!=', auth()->user()->id)->firstOrFail();
@@ -98,7 +107,7 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'User has been created.',
+            'message' => 'User has been registered.',
         ]);
     }
 
@@ -114,7 +123,7 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'User has been updated.',
+            'message' => 'User has been edited.',
         ]);
     }
 }

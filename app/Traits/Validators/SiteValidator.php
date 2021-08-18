@@ -21,7 +21,7 @@ trait SiteValidator
             'name' => 'Name',
             'url' => 'Link',
             'launch_date' => 'Date Launched',
-            'update_date' => 'Date Updated',
+            'update_date' => 'Date Last Updated',
             'description' => 'Description',
         ];
     }

@@ -86,6 +86,7 @@ return [
                     'SADR',
                 ],
                 'status' => [
+                    'Pending',
                     'Success',
                     'Failed',
                     'Retracted',

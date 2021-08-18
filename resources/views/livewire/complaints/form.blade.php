@@ -1,6 +1,6 @@
 <div>
   <x-form-modal wire:model="showModal" submit="submit" max-width="5xl" focusable>
-    <x-slot name="title">{{ isset($complaintId) ? 'Complaint Details' : 'Register a Complaint' }}</x-slot>
+    <x-slot name="title">{{ $this->title }}</x-slot>
     <x-slot name="content">
       <div class="md:flex md:space-x-6">
         <div class="md:w-1/3">
@@ -117,15 +117,15 @@
       </div>
     </x-slot>
     <x-slot name="footer">
-      @role('admin')
-      <x-jet-button type="submit">{{ isset($complaintId) ? 'Update' : 'Register' }}</x-jet-button>
-      @endrole
+      @if (auth()->user()->hasRole('admin'))
+        <x-jet-button type="submit">{{ isset($complaintId) ? 'Edit' : 'Register' }}</x-jet-button>
+      @endif
       <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showModal', false)">
-        @role('admin')
-        Cancel
-      @else
-        Close
-        @endrole
+        @if (auth()->user()->hasRole('admin'))
+          Cancel
+        @else
+          Close
+        @endif
       </x-jet-secondary-button>
     </x-slot>
   </x-form-modal>
