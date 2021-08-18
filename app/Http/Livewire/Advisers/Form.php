@@ -22,6 +22,15 @@ class Form extends Component
 
     protected $listeners = ['add', 'edit'];
 
+    public function getTitleProperty()
+    {
+        if ($this->adviserId) {
+            return auth()->user()->hasRole('admin') ? 'Edit Adviser' : 'Adviser Detials';
+        } else {
+            return 'Register an Adviser';
+        }
+    }
+
     public function getAdviserProperty()
     {
         return Adviser::findOrFail($this->adviserId);
@@ -93,7 +102,7 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'Adviser has been created.',
+            'message' => 'Adviser has been registered.',
         ]);
     }
 
@@ -109,7 +118,7 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'Adviser has been updated.',
+            'message' => 'Adviser has been edited.',
         ]);
     }
 }

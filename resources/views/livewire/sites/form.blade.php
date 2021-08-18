@@ -1,6 +1,6 @@
 <div>
   <x-form-modal wire:model="showModal" submit="submit" focusable>
-    <x-slot name="title">{{ isset($siteId) ? 'Software Details' : 'Create a New Software' }}</x-slot>
+    <x-slot name="title">{{ $this->title }}</x-slot>
     <x-slot name="content">
       <div class="space-y-6">
         <div class="form-input">
@@ -19,7 +19,7 @@
           <x-jet-input-error for="launch_date" class="mt-2" />
         </div>
         <div class="form-input">
-          <x-jet-label for="update_date" value="Date Updated" />
+          <x-jet-label for="update_date" value="Date Last Updated" />
           <x-date-picker id="update_date" wire:model.defer="input.update_date" />
           <x-jet-input-error for="update_date" class="mt-2" />
         </div>
@@ -32,16 +32,15 @@
       </div>
     </x-slot>
     <x-slot name="footer">
-      @role('admin')
-        <x-jet-button type="submit">{{ isset($siteId) ? 'Update' : 'Create' }}</x-jet-button>
-      @endrole
-
+      @if (auth()->user()->hasRole('admin'))
+        <x-jet-button type="submit">{{ isset($siteId) ? 'Edit' : 'Register' }}</x-jet-button>
+      @endif
       <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showModal', false)">
-        @role('admin')
+        @if (auth()->user()->hasRole('admin'))
           Cancel
         @else
           Close
-        @endrole
+        @endif
       </x-jet-secondary-button>
     </x-slot>
   </x-form-modal>

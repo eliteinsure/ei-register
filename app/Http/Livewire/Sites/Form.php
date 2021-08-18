@@ -20,6 +20,15 @@ class Form extends Component
 
     protected $listeners = ['add', 'edit'];
 
+    public function getTitleProperty()
+    {
+        if ($this->siteId) {
+            return auth()->user()->hasRole('admin') ? 'Edit Software' : 'Software Detials';
+        } else {
+            return 'Register a Software';
+        }
+    }
+
     public function getSiteProperty()
     {
         return Site::findOrFail($this->siteId);
@@ -91,7 +100,7 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'Software has been created.',
+            'message' => 'Software has been registered.',
         ]);
     }
 
@@ -107,7 +116,7 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'Software has been updated.',
+            'message' => 'Software has been edited.',
         ]);
     }
 }

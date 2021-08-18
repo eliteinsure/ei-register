@@ -25,7 +25,7 @@
           <x-jet-nav-link href="{{ route('sites.index') }}"
             :active="request()->routeIs('sites.index')"
             icon="heroicon-o-globe">
-            Softwares
+            Software
           </x-jet-nav-link>
 
           <x-jet-nav-link href="{{ route('advisers.index') }}"

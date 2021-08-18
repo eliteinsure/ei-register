@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Adviser;
 use App\Models\Complaint;
 use App\Traits\Validators\ComplaintReportValidator;
+use App\Traits\Validators\ReportError;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 class ComplaintController extends Controller
 {
     use ComplaintReportValidator;
+    use ReportError;
 
     public function index()
     {
@@ -19,13 +22,23 @@ class ComplaintController extends Controller
 
     public function report(Request $request)
     {
-        $data = $request->validate($this->complaintReportRules(), [], $this->complaintReportAttributes());
+        $input = collect($request->all())->map(function ($item) {
+            return $item ?? '';
+        })->all();
+
+        $validator = Validator::make($input, $this->complaintReportRules(), [], $this->complaintReportAttributes());
+
+        if ($validator->fails()) {
+            return $this->reportErrors($validator);
+        }
+
+        $data = $validator->validated();
 
         $query = Complaint::whereBetween('received_at', [$data['received_from'], $data['received_to']])
             ->when(isset($data['advisers']), function ($query) use ($data) {
                 return $query->where(function ($query) use ($data) {
                     foreach ($data['advisers'] as $adviser) {
-                        $query->orWhereJsonContains('tier->1->adviser_id', intval($adviser));
+                        $query->orWhereJsonContains('tier->1->adviser_id', $adviser);
                     }
                 });
             })->oldest('received_at');
