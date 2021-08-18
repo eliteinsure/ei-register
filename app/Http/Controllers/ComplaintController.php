@@ -25,7 +25,7 @@ class ComplaintController extends Controller
             ->when(isset($data['advisers']), function ($query) use ($data) {
                 return $query->where(function ($query) use ($data) {
                     foreach ($data['advisers'] as $adviser) {
-                        $query->orWhereJsonContains('tier->1->adviser_id', intval($adviser));
+                        $query->orWhereJsonContains('tier->1->adviser_id', $adviser);
                     }
                 });
             })->oldest('received_at');
