@@ -19,7 +19,7 @@
           <x-jet-input-error for="launch_date" class="mt-2" />
         </div>
         <div class="form-input">
-          <x-jet-label for="update_date" value="Date Updated" />
+          <x-jet-label for="update_date" value="Date Last Updated" />
           <x-date-picker id="update_date" wire:model.defer="input.update_date" />
           <x-jet-input-error for="update_date" class="mt-2" />
         </div>

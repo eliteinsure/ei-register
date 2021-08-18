@@ -48,7 +48,7 @@
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                     <x-column-sorter column="update_date">
-                      Date Updated
+                      Date Last Updated
                     </x-column-sorter>
                   </th>
                   @if (auth()->user()->hasRole('admin'))
