@@ -41,7 +41,7 @@ class TestSeeder extends Seeder
                 'complainant' => $faker->randomElement($complainants),
             ])->toArray();
 
-            $data['tier'][1]['adviser_id'] = Adviser::inRandomOrder()->first()->id;
+            $data['tier'][1]['adviser_id'] = strval(Adviser::inRandomOrder()->first()->id);
 
             if (isset($data['tier'][2]['staff_name'])) {
                 $data['tier'][2]['staff_name'] = $faker->randomElement($staffNames);
