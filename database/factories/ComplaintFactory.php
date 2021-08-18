@@ -33,7 +33,7 @@ class ComplaintFactory extends Factory
             'nature' => Arr::random(config('services.complaint.natures')),
             'tier' => [
                 '1' => [
-                    'adviser_id' => Adviser::factory(),
+                    'adviser_id' => strval(Adviser::factory()->create()->id),
                     'handed_over_at' => $this->faker->date(),
                     'status' => Arr::random(config('services.complaint.tier.1.status')),
                     'stated_at' => $this->faker->date(),
