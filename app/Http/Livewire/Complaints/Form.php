@@ -31,6 +31,15 @@ class Form extends Component
 
     protected $listeners = ['add', 'edit'];
 
+    public function getTitleProperty()
+    {
+        if ($this->complaintId) {
+            return auth()->user()->hasRole('admin') ? 'Edit Complaint' : 'Complaint Detials';
+        } else {
+            return 'Register a Complaint';
+        }
+    }
+
     public function getComplaintProperty()
     {
         return Complaint::findOrFail($this->complaintId);
@@ -208,7 +217,7 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'Complaint has been created.',
+            'message' => 'Complaint has been registered.',
         ]);
     }
 
@@ -224,7 +233,7 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'Complaint has been updated.',
+            'message' => 'Complaint has been edited.',
         ]);
     }
 }

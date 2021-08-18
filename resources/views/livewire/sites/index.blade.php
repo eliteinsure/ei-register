@@ -7,7 +7,7 @@
       <div>
         @role('admin')
         <x-jet-button type="button" wire:click="$emitTo('sites.form', 'add')">
-          Create a New Software
+          Register a Software
         </x-jet-button>
         @endrole
       </div>

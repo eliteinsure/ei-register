@@ -1,6 +1,6 @@
 <div>
   <x-form-modal wire:model="showModal" submit="submit" focusable>
-    <x-slot name="title">{{ isset($userId) ? 'User Details' : 'Create a New User' }}</x-slot>
+    <x-slot name="title">{{ $this->title }}</x-slot>
     <x-slot name="content">
       <div class="space-y-6">
         <div class="form-input">
@@ -15,7 +15,8 @@
         </div>
         <div class="form-input">
           <x-jet-label for="password" value="Password" />
-          <x-jet-input type="password" id="password" class="block w-full mt-1" wire:model.defer="input.password" />
+          <x-jet-input type="password" id="password" class="block w-full mt-1"
+            wire:model.defer="input.password" />
           <x-jet-input-error for="password" class="mt-2" />
         </div>
         <div class="form-input">
