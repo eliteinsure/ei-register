@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Complaints;
+namespace App\Http\Livewire\Claims;
 
-use App\Models\Complaint;
+use App\Models\Claim;
 use App\Traits\WithColumnSorter;
 use Exception;
 use Illuminate\Support\Carbon;
@@ -14,37 +14,26 @@ class Index extends Component
     use WithPagination;
     use WithColumnSorter;
 
-    public $complaintId;
+    public $claimId;
 
     public $search;
 
     public $showDelete = false;
 
-    public $showPdf = false;
-
     protected $listeners = ['render'];
 
-    public function getComplaintProperty()
+    public function getClaimProperty()
     {
-        return Complaint::findOrFail($this->complaintId);
-    }
-
-    public function getPdfUrlProperty()
-    {
-        if (! $this->complaintId) {
-            return '';
-        }
-
-        return route('reports.complaints.pdf', ['complaint' => $this->complaintId]);
+        return Claim::findOrFail($this->claimId);
     }
 
     public function render()
     {
-        $query = Complaint::when($this->search, function ($query) {
+        $query = Claim::when($this->search, function ($query) {
             return $query->where(function ($query) {
-                $stringColumns = ['id', 'complainant', 'label', 'policy_number', 'insurer', 'nature'];
+                $stringColumns = ['client_name', 'insurer', 'policy_number', 'nature', 'type', 'status'];
 
-                $dateColumns = ['received_at', 'created_at', 'acknowledged_at'];
+                $dateColumns = ['created_at'];
 
                 foreach ($stringColumns as $column) {
                     $query->orWhere($column, 'like', '%' . $this->search . '%');
@@ -64,9 +53,9 @@ class Index extends Component
 
         $query = $this->sortQuery($query);
 
-        $complaints = $query->paginate();
+        $claims = $query->paginate();
 
-        return view('livewire.complaints.index', compact('complaints'));
+        return view('livewire.claims.index', compact('claims'));
     }
 
     public function updatingSearch()
@@ -80,7 +69,7 @@ class Index extends Component
     {
         abort_unless(auth()->user()->hasRole('admin'), 403);
 
-        $this->complaintId = $id;
+        $this->claimId = $id;
 
         $this->showDelete = true;
     }
@@ -89,20 +78,13 @@ class Index extends Component
     {
         abort_unless(auth()->user()->hasRole('admin'), 403);
 
-        $this->complaint->delete();
+        $this->claim->delete();
 
         $this->showDelete = false;
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'Complaint has been deleted.',
+            'message' => 'Claim has been deleted.',
         ]);
-    }
-
-    public function showPdf($id)
-    {
-        $this->complaintId = $id;
-
-        $this->showPdf = true;
     }
 }
