@@ -44,7 +44,7 @@ class Index extends Component
             return $query->where(function ($query) {
                 $stringColumns = ['id', 'complainant', 'label', 'policy_number', 'insurer', 'nature'];
 
-                $dateColumns = ['received_at', 'registered_at', 'acknowledged_at'];
+                $dateColumns = ['received_at', 'created_at', 'acknowledged_at'];
 
                 foreach ($stringColumns as $column) {
                     $query->orWhere($column, 'like', '%' . $this->search . '%');
