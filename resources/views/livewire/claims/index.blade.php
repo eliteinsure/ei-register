@@ -11,6 +11,9 @@
         </x-jet-button>
         @endrole
       </div>
+      <div>
+        @livewire('claims.report')
+      </div>
     </div>
 
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

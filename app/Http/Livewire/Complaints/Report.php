@@ -59,8 +59,6 @@ class Report extends Component
     {
         $this->resetInput();
 
-        $this->pdfUrl = null;
-
         $this->showModal = true;
     }
 
@@ -82,8 +80,6 @@ class Report extends Component
 
     public function generate(GenerateComplaintReport $action)
     {
-        $this->pdfUrl = '';
-
         $this->pdfUrl = $action->generate($this->input);
 
         $this->showPdf = true;
