@@ -117,6 +117,23 @@ return [
         ],
     ],
 
+    'claim' => [
+        'natures' => [
+            'Pre-approval',
+            'Claim',
+        ],
+        'types' => [
+            'Life',
+            'Trauma',
+            'Medical',
+            'TPD',
+            'IP',
+        ],
+        'status' => [
+            'In Progress', 'Continuing', 'Disapproved', 'Successful',
+        ],
+    ],
+
     'file' => [
         'icons' => [
             'txt' => 'forkawesome-file-text-o',
