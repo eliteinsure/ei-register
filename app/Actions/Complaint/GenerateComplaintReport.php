@@ -13,6 +13,8 @@ class GenerateComplaintReport
     {
         $data = Validator::make($input, $this->complaintReportRules(), [], $this->complaintReportAttributes())->validate();
 
+        $data['now'] = time();
+
         return route('reports.complaints.index', $data);
     }
 }
