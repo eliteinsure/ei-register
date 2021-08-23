@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Sites;
+namespace App\Http\Livewire\Claims;
 
-use App\Actions\Site\GenerateSiteReport;
+use App\Actions\Claim\GenerateClaimReport;
 use App\Traits\Validators\FocusError;
 use Livewire\Component;
 
@@ -20,7 +20,7 @@ class Report extends Component
 
     public function render()
     {
-        return view('livewire.sites.report');
+        return view('livewire.claims.report');
     }
 
     public function mount()
@@ -36,10 +36,8 @@ class Report extends Component
     public function resetInput()
     {
         $this->input = [
-            'launch_from' => '',
-            'launch_to' => '',
-            'update_from' => '',
-            'update_to' => '',
+            'created_from' => '',
+            'created_to' => '',
         ];
     }
 
@@ -50,7 +48,7 @@ class Report extends Component
         $this->showModal = true;
     }
 
-    public function generate(GenerateSiteReport $action)
+    public function generate(GenerateClaimReport $action)
     {
         $this->pdfUrl = $action->generate($this->input);
 
