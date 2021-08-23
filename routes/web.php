@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdviserController;
+use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\SiteManualController;
@@ -26,6 +27,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     })->name('dashboard');
 
     Route::resource('complaints', ComplaintController::class)->only([
+        'index',
+    ]);
+
+    Route::resource('claims', ClaimController::class)->only([
         'index',
     ]);
 

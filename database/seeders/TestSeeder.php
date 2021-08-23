@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Adviser;
+use App\Models\Claim;
 use App\Models\Complaint;
 use App\Models\Site;
 use App\Models\SiteManual;
@@ -58,8 +59,10 @@ class TestSeeder extends Seeder
 
         $manual = SiteManual::factory()->create();
 
-        dump($manual->toArray());
+        /* dump($manual->toArray());
 
-        dump($complaints->toArray());
+        dump($complaints->toArray()); */
+
+        Claim::factory(10)->create();
     }
 }

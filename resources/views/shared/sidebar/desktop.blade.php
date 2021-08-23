@@ -22,6 +22,12 @@
             Complaints
           </x-jet-nav-link>
 
+          <x-jet-nav-link href="{{ route('claims.index') }}"
+            :active="request()->routeIs('claims.index')"
+            icon="heroicon-o-clipboard-list">
+            Claims
+          </x-jet-nav-link>
+
           <x-jet-nav-link href="{{ route('sites.index') }}"
             :active="request()->routeIs('sites.index')"
             icon="heroicon-o-globe">
