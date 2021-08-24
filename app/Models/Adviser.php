@@ -14,8 +14,13 @@ class Adviser extends Model
 
     protected $guarded = [];
 
-    public function complaints()
+    public function adviserComplaints()
     {
         return $this->hasMany(Complaint::class, 'tier->1->adviser_id');
+    }
+
+    public function staffComplaints()
+    {
+        return $this->hasMany(Complaint::class, 'tier->2->staff_id');
     }
 }

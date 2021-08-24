@@ -2,6 +2,7 @@
   <x-form-modal wire:model="showModal" submit="submit" max-width="5xl" focusable>
     <x-slot name="title">{{ $this->title }}</x-slot>
     <x-slot name="content">
+      <div>{{ json_encode($errors) }}</div>
       <div class="md:flex md:space-x-6">
         <div class="md:w-1/3">
           <div class="space-y-6">
@@ -92,8 +93,8 @@
             </div>
             <div class="form-input">
               <x-jet-label for="staff" value="Staff Name" />
-              <x-lookup.text id="staff" wire:model.defer="input.tier.2.staff_name" />
-              <x-jet-input-error for="tier.2.staff_name" class="mt-2" />
+              <x-lookup.text id="staff" wire:model.defer="input.tier.2.staff_id" />
+              <x-jet-input-error for="tier.2.staff_id" class="mt-2" />
             </div>
             <div class="form-input">
               <x-jet-label for="tier2_handed_over_at" value="Date Handed Over" />

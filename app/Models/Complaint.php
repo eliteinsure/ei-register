@@ -63,4 +63,9 @@ class Complaint extends Model
     {
         return $this->belongsTo(Adviser::class, 'tier->1->adviser_id');
     }
+
+    public function staff()
+    {
+        return $this->belongsTo(Adviser::class, 'tier->2->staff_id');
+    }
 }

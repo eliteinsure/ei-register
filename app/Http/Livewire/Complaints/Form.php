@@ -137,10 +137,14 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('adviser-lookup-value', $adviser);
 
-        $staff = isset($this->input['tier'][2]['staff_name']) ? json_encode([[
-            'value' => $this->input['tier'][2]['staff_name'],
-            'label' => $this->input['tier'][2]['staff_name'],
-        ]]) : null;
+        $staff = Adviser::find($this->input['tier'][2]['staff_id'] ?? null);
+
+        if ($staff) {
+            $staff = json_encode([[
+                'value' => $staff->id,
+                'label' => $staff->name . " ($staff[type])",
+            ]]);
+        }
 
         $this->dispatchBrowserEvent('staff-lookup-value', $staff);
 
@@ -181,16 +185,15 @@ class Form extends Component
 
     public function staffLookupSearch($search = '')
     {
-        $query = Complaint::select('tier->2->staff_name as staff_name')->groupBy('staff_name')
-            ->where('tier->1->status', 'Failed')
+        $query = Adviser::where('status', 'Active')
             ->when($search, function ($query) use ($search) {
-                return $query->whereRaw('LOWER(json_unquote(json_extract(`tier`, \'$."2"."staff_name"\'))) LIKE ?', '%' . Str::lower($search) . '%');
-            })->oldest('staff_name');
+                return $query->where('name', 'like', '%' . $search . '%');
+            })->oldest('name');
 
-        $staffs = $query->get()->map(function ($complaint) {
+        $staffs = $query->get()->map(function ($staff) {
             return [
-                'value' => $complaint->staff_name,
-                'label' => $complaint->staff_name,
+                'value' => $staff['id'],
+                'label' => $staff['name'] . " ($staff[type])",
             ];
         });
 

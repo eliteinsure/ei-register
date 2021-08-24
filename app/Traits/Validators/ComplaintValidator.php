@@ -33,7 +33,12 @@ trait ComplaintValidator
                 'tier.1.stated_at' => ['required', 'date_format:Y-m-d'],
                 'tier.2' => ['required_if:tier.1.status,Failed', 'array'],
                 'tier.2.staff_position' => ['required_if:tier.1.status,Failed', 'string', 'max:255'],
-                'tier.2.staff_name' => ['required_if:tier.1.status,Failed', 'string', 'max:255'],
+                'tier.2.staff_id' => [
+                    'required_if:tier.1.status,Failed',
+                    Rule::exists('advisers', 'id')->where(function ($query) {
+                        return $query->where('status', 'Active');
+                    }),
+                ],
                 'tier.2.handed_over_at' => ['required_if:tier.1.status,Failed', 'date_format:Y-m-d'],
                 'tier.2.status' => ['required_if:tier.1.status,Failed', 'in:' . implode(',', config('services.complaint.tier.2.status'))],
                 'tier.2.notes' => ['nullable', 'string'],
