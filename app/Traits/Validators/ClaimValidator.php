@@ -11,7 +11,8 @@ trait ClaimValidator
             'insurer' => ['required', 'in:' . implode(',', config('services.complaint.insurers'))],
             'policy_number' => ['required', 'string', 'max:255'],
             'nature' => ['required', 'in:' . implode(',', config('services.claim.natures'))],
-            'type' => ['required', 'in:' . implode(',', config('services.claim.types'))],
+            'type' => ['required', 'array'],
+            'type.*' => ['required', 'in:' . implode(',', config('services.claim.types'))],
             'status' => ['required', 'in:' . implode(',', config('services.claim.status'))],
         ];
     }
@@ -24,6 +25,7 @@ trait ClaimValidator
             'policy_number' => 'Policy Number',
             'nature' => 'Nature',
             'type' => 'Type',
+            'type.*' => 'Type',
             'status' => 'Status',
         ];
     }

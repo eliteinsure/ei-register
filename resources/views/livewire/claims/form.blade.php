@@ -28,8 +28,7 @@
         </div>
         <div class="form-input">
           <x-jet-label for="type" value="Type" />
-          <x-select type="text" id="type" class="block w-full mt-1" wire:model.defer="input.type"
-            :options="$options['types']" />
+          <x-lookup.multi id="type" wire:model.defer="input.type" :options="$options['types']" />
           <x-jet-input-error for="type" class="mt-2" />
         </div>
         <div class="form-input">

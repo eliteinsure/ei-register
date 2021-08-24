@@ -129,8 +129,8 @@
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $claim->nature }}
                     </td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
-                      {{ $claim->type }}
+                    <td class="px-4 py-2 text-sm text-shark text-opacity-75">
+                      {{ $claim->types }}
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $claim->status }}

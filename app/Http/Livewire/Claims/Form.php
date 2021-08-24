@@ -60,9 +60,24 @@ class Form extends Component
         return view('livewire.claims.form');
     }
 
+    public function updated($name, $value)
+    {
+        if ('input.type' == $name) {
+            if ($value) {
+                $this->input['type'] = explode(',', $value);
+            } else {
+                unset($this->input['type']);
+            }
+        }
+    }
+
     public function resetInput()
     {
         $this->input = [];
+
+        $this->dispatchBrowserEvent('client-lookup-value');
+
+        $this->dispatchBrowserEvent('type-lookup-value');
     }
 
     public function add()
@@ -72,8 +87,6 @@ class Form extends Component
         $this->claimid = null;
 
         $this->resetInput();
-
-        $this->dispatchBrowserEvent('client-lookup-value');
 
         $this->showModal = true;
     }
@@ -93,7 +106,16 @@ class Form extends Component
             'label' => $this->input['client_name'],
         ]]);
 
+        $type = collect($this->input['type'])->map(function ($type) {
+            return [
+                'value' => $type,
+                'label' => $type,
+            ];
+        })->toJson();
+
         $this->dispatchBrowserEvent('client-lookup-value', $client);
+
+        $this->dispatchBrowserEvent('type-lookup-value', $type);
 
         $this->showModal = true;
     }

@@ -20,7 +20,7 @@ class CreateClaimsTable extends Migration
             $table->string('insurer');
             $table->string('policy_number');
             $table->string('nature');
-            $table->string('type');
+            $table->json('type');
             $table->string('status');
 
             $table->timestamps();

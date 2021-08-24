@@ -102,6 +102,23 @@ return [
 
     ],
 
+    'claim' => [
+        'natures' => [
+            'Pre-approval',
+            'Claim',
+        ],
+        'types' => [
+            'Life',
+            'Trauma',
+            'Medical',
+            'TPD',
+            'IP',
+        ],
+        'status' => [
+            'In Progress', 'Continuing', 'Disapproved', 'Successful',
+        ],
+    ],
+
     'site' => [
         'manual' => [
             'mimes' => ['txt', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'mp4', 'mov', 'avi', 'wmv', 'mkv'],
@@ -118,23 +135,6 @@ return [
                 'video/x-ms-wmv',
                 'video/x-matroska',
             ],
-        ],
-    ],
-
-    'claim' => [
-        'natures' => [
-            'Pre-approval',
-            'Claim',
-        ],
-        'types' => [
-            'Life',
-            'Trauma',
-            'Medical',
-            'TPD',
-            'IP',
-        ],
-        'status' => [
-            'In Progress', 'Continuing', 'Disapproved', 'Successful',
         ],
     ],
 

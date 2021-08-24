@@ -31,9 +31,11 @@ class Index extends Component
     {
         $query = Claim::when($this->search, function ($query) {
             return $query->where(function ($query) {
-                $stringColumns = ['client_name', 'insurer', 'policy_number', 'nature', 'type', 'status'];
+                $stringColumns = ['client_name', 'insurer', 'policy_number', 'nature', 'status'];
 
                 $dateColumns = ['created_at'];
+
+                $jsonColumns = ['type'];
 
                 foreach ($stringColumns as $column) {
                     $query->orWhere($column, 'like', '%' . $this->search . '%');
@@ -47,6 +49,10 @@ class Index extends Component
                     }
 
                     $query->orWhere($column, 'like', '%' . $date->format('Y-m-d') . '%');
+                }
+
+                foreach ($jsonColumns as $column) {
+                    $query->orWhereJsonContains('type', [$this->search]);
                 }
             });
         });

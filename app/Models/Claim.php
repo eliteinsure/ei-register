@@ -12,9 +12,18 @@ class Claim extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'type' => 'array',
+    ];
+
     public function getNumberAttribute()
     {
         return 'CL' . $this->created_at->year . str_pad($this->id, 3, '0', STR_PAD_LEFT);
+    }
+
+    public function getTypesAttribute()
+    {
+        return implode(', ', $this->type);
     }
 
     public function getDayCounterAttribute()

@@ -27,7 +27,7 @@ class ClaimFactory extends Factory
             'insurer' => Arr::random(config('services.complaint.insurers')),
             'policy_number' => $this->faker->numerify('#####'),
             'nature' => Arr::random(config('services.claim.natures')),
-            'type' => Arr::random(config('services.claim.types')),
+            'type' => $this->faker->randomElements(config('services.claim.types'), $this->faker->numberBetween(1, count(config('services.claim.types')))),
             'status' => Arr::random(config('services.claim.status')),
         ];
     }
