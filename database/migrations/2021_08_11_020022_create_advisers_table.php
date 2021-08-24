@@ -16,6 +16,7 @@ class CreateAdvisersTable extends Migration
         Schema::create('advisers', function (Blueprint $table) {
             $table->id();
 
+            $table->string('type'); // Adviser, Staff, Management
             $table->string('name');
             $table->string('email');
             $table->integer('fsp_no');

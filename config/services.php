@@ -37,6 +37,10 @@ return [
 
     'roles' => ['admin', 'user'],
 
+    'adviser' => [
+        'types' => ['Adviser', 'Staff', 'Management'],
+    ],
+
     'complaint' => [
         'labels' => [
             'Client',

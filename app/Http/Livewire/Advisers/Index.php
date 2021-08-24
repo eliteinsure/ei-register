@@ -29,7 +29,7 @@ class Index extends Component
     {
         $query = Adviser::when($this->search, function ($query) {
             return $query->where(function ($query) {
-                $stringColumns = ['name', 'email', 'fsp_no', 'contact_number', 'status'];
+                $stringColumns = ['type', 'name', 'email', 'fsp_no', 'contact_number', 'status'];
 
                 foreach ($stringColumns as $column) {
                     $query->orWhere($column, 'like', '%' . $this->search . '%');

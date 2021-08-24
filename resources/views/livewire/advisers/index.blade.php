@@ -24,6 +24,12 @@
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
+                    <x-column-sorter column="type">
+                      Type
+                    </x-column-sorter>
+                  </th>
+                  <th scope="col"
+                    class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                     <x-column-sorter column="name">
                       Name
                     </x-column-sorter>
@@ -81,6 +87,9 @@
                           </x-jet-dropdown-link>
                         </x-slot>
                       </x-jet-dropdown>
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
+                      {{ $adviser->type }}
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $adviser->name }}

@@ -7,6 +7,7 @@ trait AdviserValidator
     public function adviserRules()
     {
         return [
+            'type' => ['required', 'in:' . implode(',', config('services.adviser.types'))],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'max:255', 'email', 'unique:advisers'],
             'fsp_no' => ['required', 'integer', 'max:999999999'],
@@ -17,6 +18,7 @@ trait AdviserValidator
     public function adviserAttributes()
     {
         return [
+            'type' => 'Type',
             'name' => 'Name',
             'email' => 'Email',
             'fsp_no' => 'FSP Number',
