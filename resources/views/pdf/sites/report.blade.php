@@ -1,5 +1,10 @@
 @extends('layouts.pdf')
 
+@section('pdfTitle')
+  <div class="header-title-lg">Software Register</div>
+  <div class="header-title-sm">Report</div>
+@endsection
+
 @section('content')
   <p>&nbsp;</p>
   <table class="table-striped w-full">

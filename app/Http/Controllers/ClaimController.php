@@ -34,10 +34,11 @@ class ClaimController extends Controller
 
         $data = $validator->validated();
 
-        $query = Claim::whereBetween('created_at', [
-            Carbon::parse($data['created_from'])->startOfDay()->format('Y-m-d H:i:s'),
-            Carbon::parse($data['created_to'])->endOfDay()->format('Y-m-d H:i:s'),
-        ])->oldest('created_at');
+        $query = Claim::with('adviser:id,name as adviser_name,type as adviser_type')
+            ->whereBetween('created_at', [
+                Carbon::parse($data['created_from'])->startOfDay()->format('Y-m-d H:i:s'),
+                Carbon::parse($data['created_to'])->endOfDay()->format('Y-m-d H:i:s'),
+            ])->oldest('created_at');
 
         $claims = $query->get();
 
