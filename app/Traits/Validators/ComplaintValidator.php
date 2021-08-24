@@ -62,7 +62,7 @@ trait ComplaintValidator
             'tier.1.stated_at' => 'Date Stated',
             'tier.1.notes' => 'Notes',
             'tier.2' => 'Tier 2',
-            'tier.2.staff_position' => 'Staff',
+            'tier.2.staff_position' => 'Management / Staff',
             'tier.2.staff_name' => 'Staff Name',
             'tier.2.handed_over_at' => 'Date Handed Over',
             'tier.2.status' => 'Status',

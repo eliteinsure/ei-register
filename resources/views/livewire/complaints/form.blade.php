@@ -84,7 +84,7 @@
             class="space-y-6 {{ ($input['tier'][1]['status'] ?? '') == 'Failed' ? 'block' : 'hidden' }}">
             <div class="form-input">
               <p class="text-sm font-medium text-shark mt-6 md:mt-0 mb-2">TIER 2</p>
-              <x-jet-label for="staff_position" value="Staff" />
+              <x-jet-label for="staff_position" value="Management / Staff" />
               <x-select id="staff_position" class="block w-full mt-1"
                 wire:model.defer="input.tier.2.staff_position"
                 :options="$options['tier.2.staffPositions']" />
