@@ -21,6 +21,11 @@
           <x-jet-input-error for="policy_number" class="mt-2" />
         </div>
         <div class="form-input">
+          <x-jet-label for="adviser" value="Adviser" />
+          <x-lookup.select id="adviser" wire:model.defer="input.adviser_id" />
+          <x-jet-input-error for="adviser_id" class="mt-2" />
+        </div>
+        <div class="form-input">
           <x-jet-label for="nature" value="Nature" />
           <x-select type="text" id="nature" class="block w-full mt-1" wire:model.defer="input.nature"
             :options="$options['natures']" />

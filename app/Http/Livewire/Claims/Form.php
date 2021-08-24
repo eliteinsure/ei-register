@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Claims;
 
 use App\Actions\Claim\CreateClaim;
 use App\Actions\Claim\UpdateClaim;
+use App\Models\Adviser;
 use App\Models\Claim;
 use App\Traits\Validators\FocusError;
 use Livewire\Component;
@@ -77,6 +78,8 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('client-lookup-value');
 
+        $this->dispatchBrowserEvent('adviser-lookup-value');
+
         $this->dispatchBrowserEvent('type-lookup-value');
     }
 
@@ -106,6 +109,15 @@ class Form extends Component
             'label' => $this->input['client_name'],
         ]]);
 
+        $adviser = Adviser::find($this->input['adviser_id']);
+
+        $adviser = json_encode([[
+            'value' => $adviser->id,
+            'label' => $adviser->name,
+        ]]);
+
+        $this->dispatchBrowserEvent('adviser-lookup-value', $adviser);
+
         $type = collect($this->input['type'])->map(function ($type) {
             return [
                 'value' => $type,
@@ -133,6 +145,25 @@ class Form extends Component
             });
 
         $this->dispatchBrowserEvent('client-lookup-list', $clients);
+    }
+
+    public function adviserLookupSearch($search = '')
+    {
+        $query = Adviser::where(function ($query) {
+            $query->where('status', 'Active')
+                ->where('type', 'Adviser');
+        })->when($search, function ($query) use ($search) {
+            return $query->where('name', 'like', '%' . $search . '%');
+        })->oldest('name');
+
+        $advisers = $query->get()->map(function ($adviser) {
+            return [
+                'value' => $adviser['id'],
+                'label' => $adviser['name'],
+            ];
+        });
+
+        $this->dispatchBrowserEvent('adviser-lookup-list', $advisers);
     }
 
     public function dehydrate()

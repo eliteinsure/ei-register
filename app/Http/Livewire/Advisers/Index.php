@@ -68,6 +68,8 @@ class Index extends Component
 
         abort_if($this->adviser->staffComplaints()->count(), 403, 'Could not delete adviser. Please make sure that there are no complaints with this adviser / staff.');
 
+        abort_if($this->adviser->claims()->count(), 403, 'Could not delete adviser. Please make sure that there are no claims with this adviser / staff.');
+
         $this->showDelete = true;
     }
 
@@ -78,6 +80,8 @@ class Index extends Component
         abort_if($this->adviser->adviserComplaints()->count(), 403, 'Could not delete adviser. Please make sure that there are no complaints with this adviser / staff.');
 
         abort_if($this->adviser->staffComplaints()->count(), 403, 'Could not delete adviser. Please make sure that there are no complaints with this adviser / staff.');
+
+        abort_if($this->adviser->claims()->count(), 403, 'Could not delete adviser. Please make sure that there are no claims with this adviser / staff.');
 
         $this->adviser->delete();
 

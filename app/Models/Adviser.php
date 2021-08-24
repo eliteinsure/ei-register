@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Claim;
 use App\Models\Complaint;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,5 +23,10 @@ class Adviser extends Model
     public function staffComplaints()
     {
         return $this->hasMany(Complaint::class, 'tier->2->staff_id');
+    }
+
+    public function claims()
+    {
+        return $this->hasMany(Claim::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Adviser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -31,5 +32,10 @@ class Claim extends Model
         return $this->created_at->diffInDaysFiltered(function (Carbon $date) {
             return ! $date->isWeekend();
         });
+    }
+
+    public function adviser()
+    {
+        return $this->belongsTo(Adviser::class);
     }
 }

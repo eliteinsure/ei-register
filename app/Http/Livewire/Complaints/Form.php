@@ -92,6 +92,12 @@ class Form extends Component
                 ],
             ],
         ];
+
+        $this->dispatchBrowserEvent('complainant-lookup-value');
+
+        $this->dispatchBrowserEvent('adviser-lookup-value');
+
+        $this->dispatchBrowserEvent('staff-lookup-value');
     }
 
     public function add()
@@ -101,12 +107,6 @@ class Form extends Component
         $this->complaintId = null;
 
         $this->resetInput();
-
-        $this->dispatchBrowserEvent('complainant-lookup-value');
-
-        $this->dispatchBrowserEvent('adviser-lookup-value');
-
-        $this->dispatchBrowserEvent('staff-lookup-value');
 
         $this->showModal = true;
     }

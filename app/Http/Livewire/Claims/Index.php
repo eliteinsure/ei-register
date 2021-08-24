@@ -29,35 +29,52 @@ class Index extends Component
 
     public function render()
     {
-        $query = Claim::when($this->search, function ($query) {
-            return $query->where(function ($query) {
-                $stringColumns = ['client_name', 'insurer', 'policy_number', 'nature', 'status'];
+        $columns = [
+            'claims.id',
+            'claims.client_name',
+            'claims.insurer',
+            'claims.policy_number',
+            'claims.nature',
+            'claims.type',
+            'claims.status',
+            'claims.created_at',
+            'advisers.name',
+        ];
 
-                $dateColumns = ['created_at'];
+        $query = Claim::with('adviser:id,name as adviser_name,type as adviser_type')
+            ->leftJoin('advisers', 'advisers.id', '=', 'claims.adviser_id')
+            ->select('claims.*', 'advisers.name', 'claims.type as claim_type')
+            ->when($this->search, function ($query) use ($columns) {
+                return $query->where(function ($query) use ($columns) {
+                    $stringColumns = collect($columns)->reject(function ($item) {
+                        return in_array($item, ['claims.created_at', 'claims.type']);
+                    })->all();
 
-                $jsonColumns = ['type'];
+                    $dateColumns = ['claims.created_at'];
 
-                foreach ($stringColumns as $column) {
-                    $query->orWhere($column, 'like', '%' . $this->search . '%');
-                }
+                    $jsonColumns = ['claims.type'];
 
-                foreach ($dateColumns as $column) {
-                    try {
-                        $date = Carbon::createFromFormat('d/m/Y', $this->search);
-                    } catch (Exception $e) {
-                        continue;
+                    foreach ($stringColumns as $column) {
+                        $query->orWhere($column, 'like', '%' . $this->search . '%');
                     }
 
-                    $query->orWhere($column, 'like', '%' . $date->format('Y-m-d') . '%');
-                }
+                    foreach ($dateColumns as $column) {
+                        try {
+                            $date = Carbon::createFromFormat('d/m/Y', $this->search);
+                        } catch (Exception $e) {
+                            continue;
+                        }
 
-                foreach ($jsonColumns as $column) {
-                    $query->orWhereJsonContains('type', [$this->search]);
-                }
+                        $query->orWhere($column, 'like', '%' . $date->format('Y-m-d') . '%');
+                    }
+
+                    foreach ($jsonColumns as $column) {
+                        $query->orWhereJsonContains($column, [$this->search]);
+                    }
+                });
             });
-        });
 
-        $query = $this->sortQuery($query);
+        $query = $this->sortQuery($query, 'claims.created_at', 'desc');
 
         $claims = $query->paginate();
 
