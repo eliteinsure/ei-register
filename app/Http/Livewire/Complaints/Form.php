@@ -132,7 +132,7 @@ class Form extends Component
 
         $adviser = json_encode([[
             'value' => $adviser->id,
-            'label' => $adviser->name,
+            'label' => $adviser->name . " ($adviser[type])",
         ]]);
 
         $this->dispatchBrowserEvent('adviser-lookup-value', $adviser);
@@ -172,7 +172,7 @@ class Form extends Component
         $advisers = $query->get()->map(function ($adviser) {
             return [
                 'value' => $adviser['id'],
-                'label' => $adviser['name'],
+                'label' => $adviser['name'] . " ($adviser[type])",
             ];
         });
 
