@@ -6,7 +6,7 @@
       </div>
       <div>
         <x-jet-button type="button" wire:click="$emitTo('advisers.form', 'add')">
-          Register an Adviser
+          Register an Adviser / Staff
         </x-jet-button>
       </div>
     </div>

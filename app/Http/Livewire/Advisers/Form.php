@@ -25,9 +25,9 @@ class Form extends Component
     public function getTitleProperty()
     {
         if ($this->adviserId) {
-            return auth()->user()->hasRole('admin') ? 'Update Adviser' : 'Adviser Detials';
+            return auth()->user()->hasRole('admin') ? 'Update Adviser / Staff' : 'Adviser / Staff Detials';
         } else {
-            return 'Register an Adviser';
+            return 'Register an Adviser / Staff';
         }
     }
 
