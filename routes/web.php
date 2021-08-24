@@ -22,6 +22,10 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', 'dashboard');
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+    Route::get('/temp', function () {
+        return phpinfo();
+    });
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');

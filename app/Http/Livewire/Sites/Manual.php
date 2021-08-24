@@ -59,6 +59,8 @@ class Manual extends Component
         $this->input = [];
 
         $this->file = null;
+
+        $this->dispatchBrowserEvent('file-filepond-reset');
     }
 
     public function submit(UploadManual $action)
