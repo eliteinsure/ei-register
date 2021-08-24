@@ -18,7 +18,7 @@ class CreateComplaintsTable extends Migration
 
             $table->string('complainant');
             $table->string('label');
-            $table->string('policy_number');
+            $table->string('policy_number')->nullable();
             $table->string('insurer');
             $table->date('received_at');
             $table->date('acknowledged_at');

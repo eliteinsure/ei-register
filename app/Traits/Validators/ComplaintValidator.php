@@ -11,7 +11,7 @@ trait ComplaintValidator
         $rules = [
             'complainant' => ['required', 'string', 'max:255'],
             'label' => ['required', 'in:' . implode(',', config('services.complaint.labels'))],
-            'policy_number' => ['required', 'string', 'max:255'],
+            'policy_number' => ['required_if:label,Client', 'string', 'max:255'],
             'insurer' => ['required', 'in:' . implode(',', config('services.complaint.insurers'))],
             'received_at' => ['required', 'date_format:Y-m-d'],
             'acknowledged_at' => ['required', 'date_format:Y-m-d'],

@@ -66,6 +66,10 @@ class Form extends Component
 
     public function updated($name, $value)
     {
+        if ('Client' == $name && 'Client' != $value) {
+            unset($this->input['policy_number']);
+        }
+
         if ('input.tier.1.status' == $name && 'Failed' != $value) {
             unset($this->input['tier'][2]);
 

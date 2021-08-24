@@ -13,11 +13,11 @@
             </div>
             <div class="form-input">
               <x-jet-label for="label" value="Label" />
-              <x-select id="label" class="block w-full mt-1" wire:model.defer="input.label"
+              <x-select id="label" class="block w-full mt-1" wire:model.lazy="input.label"
                 :options="$options['labels']" />
               <x-jet-input-error for="label" class="mt-2" />
             </div>
-            <div class="form-input">
+            <div class="form-input {{ ($input['label'] ?? '') == 'Client' ? 'block' : 'hidden' }}">
               <x-jet-label for="policy_number" value="Policy Number" />
               <x-jet-input type="text" id="policy_number" class="block w-full mt-1"
                 wire:model.defer="input.policy_number" />
