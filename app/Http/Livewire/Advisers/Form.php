@@ -25,7 +25,7 @@ class Form extends Component
     public function getTitleProperty()
     {
         if ($this->adviserId) {
-            return auth()->user()->hasRole('admin') ? 'Edit Adviser' : 'Adviser Detials';
+            return auth()->user()->hasRole('admin') ? 'Update Adviser' : 'Adviser Detials';
         } else {
             return 'Register an Adviser';
         }
@@ -118,7 +118,7 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'Adviser has been edited.',
+            'message' => 'Adviser has been updated.',
         ]);
     }
 }

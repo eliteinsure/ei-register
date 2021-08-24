@@ -56,7 +56,7 @@
                         <x-slot name="content">
                           <x-jet-dropdown-link href="javascript:void(0)"
                             wire:click="$emitTo('users.form', 'edit', {{ $user->id }})">
-                            Edit
+                            Update
                           </x-jet-dropdown-link>
                         </x-slot>
                       </x-jet-dropdown>

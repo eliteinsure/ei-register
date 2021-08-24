@@ -74,7 +74,7 @@
                           <x-jet-dropdown-link href="javascript:void(0)"
                             wire:click="$emitTo('advisers.form', 'edit', {{ $adviser->id }})">
                             @if (auth()->user()->hasRole('admin'))
-                              Edit
+                              Update
                             @else
                               View Details
                             @endif

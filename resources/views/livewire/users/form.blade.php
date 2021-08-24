@@ -33,7 +33,7 @@
       </div>
     </x-slot>
     <x-slot name="footer">
-      <x-jet-button type="submit">{{ isset($userId) ? 'Edit' : 'Register' }}</x-jet-button>
+      <x-jet-button type="submit">{{ isset($userId) ? 'Update' : 'Register' }}</x-jet-button>
       <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showModal', false)">Cancel
       </x-jet-secondary-button>
     </x-slot>

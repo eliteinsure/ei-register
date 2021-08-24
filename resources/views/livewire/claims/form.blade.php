@@ -42,7 +42,7 @@
     </x-slot>
     <x-slot name="footer">
       @if (auth()->user()->hasRole('admin'))
-        <x-jet-button type="submit">{{ isset($claimId) ? 'Edit' : 'Register' }}</x-jet-button>
+        <x-jet-button type="submit">{{ isset($claimId) ? 'Update' : 'Register' }}</x-jet-button>
       @endif
       <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showModal', false)">
         @if (auth()->user()->hasRole('admin'))

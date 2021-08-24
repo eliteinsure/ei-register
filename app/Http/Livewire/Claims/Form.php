@@ -30,7 +30,7 @@ class Form extends Component
     public function getTitleProperty()
     {
         if ($this->claimId) {
-            return auth()->user()->hasRole('admin') ? 'Edit Claim' : 'Claim Details';
+            return auth()->user()->hasRole('admin') ? 'Update Claim' : 'Claim Details';
         } else {
             return 'Register a Claim';
         }
@@ -153,7 +153,7 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'Claim has been edited.',
+            'message' => 'Claim has been updated.',
         ]);
     }
 }

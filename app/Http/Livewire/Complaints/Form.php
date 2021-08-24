@@ -34,7 +34,7 @@ class Form extends Component
     public function getTitleProperty()
     {
         if ($this->complaintId) {
-            return auth()->user()->hasRole('admin') ? 'Edit Complaint' : 'Complaint Detials';
+            return auth()->user()->hasRole('admin') ? 'Update Complaint' : 'Complaint Detials';
         } else {
             return 'Register a Complaint';
         }
@@ -233,7 +233,7 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'Complaint has been edited.',
+            'message' => 'Complaint has been updated.',
         ]);
     }
 }

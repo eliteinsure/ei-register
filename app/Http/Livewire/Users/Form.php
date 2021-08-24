@@ -26,7 +26,7 @@ class Form extends Component
     public function getTitleProperty()
     {
         if ($this->userId) {
-            return auth()->user()->hasRole('admin') ? 'Edit User' : 'User Detials';
+            return auth()->user()->hasRole('admin') ? 'Update User' : 'User Detials';
         } else {
             return 'Register a User';
         }
@@ -123,7 +123,7 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'User has been edited.',
+            'message' => 'User has been updated.',
         ]);
     }
 }

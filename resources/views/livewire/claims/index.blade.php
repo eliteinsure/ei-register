@@ -105,7 +105,7 @@
                           <x-jet-dropdown-link href="javascript:void(0)"
                             wire:click="$emitTo('claims.form', 'edit', {{ $claim->id }})">
                             @if (auth()->user()->hasRole('admin'))
-                              Edit
+                              Update
                             @else
                               View Details
                             @endif
