@@ -24,5 +24,5 @@
   </div>
 
   <input type="file" id="{{ $id }}" wire:model.defer="{{ $model }}" class="sr-only"
-    accept="{{ $accept }}">
+    accept="{{ $accept }}" x-bind:disabled="isUploading">
 </label>
