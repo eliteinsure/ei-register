@@ -115,7 +115,7 @@ return [
             'IP',
         ],
         'status' => [
-            'In Progress', 'Continuing', 'Disapproved', 'Successful',
+            'In Progress', 'Continuing', 'Disapproved', 'Approved', 'Partially Approved',
         ],
     ],
 
