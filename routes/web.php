@@ -5,6 +5,7 @@ use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\SiteManualController;
+use App\Http\Controllers\TestUploadController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,11 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::get('/temp', function () {
         return phpinfo();
     });
+
+    Route::resource('test-upload', TestUploadController::class)->only([
+        'create',
+        'store'
+    ]);
 
     Route::get('/dashboard', function () {
         return view('dashboard');
