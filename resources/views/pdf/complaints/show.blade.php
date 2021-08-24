@@ -78,7 +78,7 @@
         <td class="py-2">{{ $complaint->label }}</td>
         <td class="w-4">&nbsp;</td>
         <td class="p-2">Policy Number:</td>
-        <td class="py-2 pr-2">{{ $complaint->policy_number }}</td>
+        <td class="py-2 pr-2">{{ $complaint->policy_number ?? 'N/A' }}</td>
       </tr>
       <tr>
         <td class="p-2">Insurer:</td>

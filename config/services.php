@@ -75,7 +75,7 @@ return [
             '1' => [
                 'status' => [
                     'Pending',
-                    'Success',
+                    'Resolved',
                     'Failed',
                     'Retracted',
                     'Invalid',
@@ -91,7 +91,7 @@ return [
                 ],
                 'status' => [
                     'Pending',
-                    'Success',
+                    'Resolved',
                     'Failed',
                     'Retracted',
                     'Invalid',
