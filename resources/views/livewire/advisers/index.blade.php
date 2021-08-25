@@ -98,7 +98,7 @@
                       {{ $adviser->email }}
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
-                      {{ $adviser->fsp_no }}
+                      {{ $adviser->fsp_no ?? 'N/A' }}
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $adviser->contact_number }}

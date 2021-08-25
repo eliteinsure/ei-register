@@ -5,7 +5,7 @@
       <div class="space-y-6">
         <div class="form-input">
           <x-jet-label for="type" value="Type" />
-          <x-select id="type" class="block w-full mt-1" :options="$types" wire:model.defer="input.type" />
+          <x-select id="type" class="block w-full mt-1" :options="$types" wire:model.lazy="input.type" />
           <x-jet-input-error for="type" class="mt-2" />
         </div>
         <div class="form-input">
@@ -18,7 +18,7 @@
           <x-jet-input type="email" id="email" class="block w-full mt-1" wire:model.defer="input.email" />
           <x-jet-input-error for="email" class="mt-2" />
         </div>
-        <div class="form-input">
+        <div class="form-input {{ ($input['type'] ?? '') == 'Adviser' ? 'block' : 'hidden' }}">
           <x-jet-label for="fsp_no" value="FSP Number" />
           <x-jet-input type="text" id="fsp_no" class="block w-full mt-1" wire:model.defer="input.fsp_no" />
           <x-jet-input-error for="fsp_no" class="mt-2" />
