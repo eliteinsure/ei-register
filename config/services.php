@@ -119,6 +119,10 @@ return [
         ],
     ],
 
+    'cir' => [
+        'url' => env('CIR_URL'),
+    ],
+
     'site' => [
         'manual' => [
             'mimes' => ['txt', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'mp4', 'mov', 'avi', 'wmv', 'mkv'],
