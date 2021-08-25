@@ -23,15 +23,6 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', 'dashboard');
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
-    Route::get('/temp', function () {
-        return phpinfo();
-    });
-
-    Route::resource('test-upload', TestUploadController::class)->only([
-        'create',
-        'store'
-    ]);
-
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
