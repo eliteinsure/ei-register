@@ -19,7 +19,7 @@ class CreateAdvisersTable extends Migration
             $table->string('type'); // Adviser, Staff, Management
             $table->string('name');
             $table->string('email');
-            $table->integer('fsp_no');
+            $table->integer('fsp_no')->nullable();
             $table->string('contact_number');
             $table->string('status'); // Active, Terminated;
 
