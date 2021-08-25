@@ -12,7 +12,7 @@ class CreateComplaint
 
     public function create($input)
     {
-        $data = Validator::make($input, $this->complaintRules(), [], $this->complaintAttributes())->validate();
+        $data = Validator::make($input, $this->complaintRules($input), [], $this->complaintAttributes())->validate();
 
         $data['tier'][1]['status'] = 'Pending';
 

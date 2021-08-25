@@ -26,7 +26,6 @@ class ComplaintFactory extends Factory
         return [
             'complainant' => $this->faker->name(),
             'label' => Arr::random(config('services.complaint.labels')),
-            'insurer' => Arr::random(config('services.complaint.insurers')),
             'received_at' => $this->faker->date(),
             'acknowledged_at' => $this->faker->date(),
             'nature' => Arr::random(config('services.complaint.natures')),
@@ -58,15 +57,19 @@ class ComplaintFactory extends Factory
     public function configure()
     {
         return $this->afterMaking(function (Complaint $complaint) {
+            if ('Client' == $complaint->label) {
+                $complaint->policy_number = $this->faker->numerify('#####');
+            }
+
+            if (in_array($complaint->label, ['Client', 'Prospect'])) {
+                $complaint->insurer = Arr::random(config('services.complaint.insurers'));
+            }
+
             if ('Failed' != $complaint->tier['1']['status']) {
                 return;
             }
 
             $tier = $complaint->tier;
-
-            if ('Client' == $complaint->label) {
-                $complaint->policy_number = $this->faker->numerify('#####');
-            }
 
             $tier['2'] = [
                 'staff_position' => Arr::random(config('services.complaint.tier.2.staffPositions')),
