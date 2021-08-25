@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdviserController;
+use App\Http\Controllers\CirController;
 use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\SiteController;
@@ -34,6 +35,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::resource('claims', ClaimController::class)->only([
         'index',
     ]);
+
+    Route::group(['as' => 'cir.', 'prefix' => 'cir'], function () {
+        Route::get('login', [CirController::class, 'login'])->name('login');
+    });
 
     Route::resource('software', SiteController::class)->only([
         'index',
