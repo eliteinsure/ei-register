@@ -2,7 +2,6 @@
   <x-form-modal wire:model="showModal" submit="submit" max-width="5xl" focusable>
     <x-slot name="title">{{ $this->title }}</x-slot>
     <x-slot name="content">
-      <div>{{ json_encode($errors) }}</div>
       <div class="md:flex md:space-x-6">
         <div class="md:w-1/3">
           <div class="space-y-6">

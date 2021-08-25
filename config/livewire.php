@@ -13,7 +13,7 @@ return [
     |
     | After changing this item, run: `php artisan livewire:discover`.
     |
-    */
+     */
 
     'class_namespace' => 'App\\Http\\Livewire',
 
@@ -25,7 +25,7 @@ return [
     | This value sets the path for Livewire component views. This affects
     | file manipulation helper commands like `artisan make:livewire`.
     |
-    */
+     */
 
     'view_path' => resource_path('views/livewire'),
 
@@ -37,7 +37,7 @@ return [
     | Route::get('/some-endpoint', SomeComponent::class);. In this case the
     | the view returned by SomeComponent will be wrapped in "layouts.app"
     |
-    */
+     */
 
     'layout' => 'layouts.app',
 
@@ -52,7 +52,7 @@ return [
     |
     | Examples: "/assets", "myurl.com/app".
     |
-    */
+     */
 
     'asset_url' => null,
 
@@ -65,7 +65,7 @@ return [
     | Livewire "message" endpoint (the endpoint that gets hit everytime
     | a Livewire component updates). It is set to "web" by default.
     |
-    */
+     */
 
     'middleware_group' => 'web',
 
@@ -79,7 +79,7 @@ return [
     | are directed to a global endpoint for temporary storage. The config
     | items below are used for customizing the way the endpoint works.
     |
-    */
+     */
 
     'temporary_file_upload' => [
         'disk' => null,        // Example: 'local', 's3'              Default: 'default'
@@ -106,7 +106,7 @@ return [
     |
     | Example: for Laravel Vapor, it would be "/tmp/storage/bootstrap/cache/livewire-components.php".
     |
-    */
+     */
 
     'manifest_path' => null,
 
