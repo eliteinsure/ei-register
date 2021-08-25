@@ -17,7 +17,7 @@
                 :options="$options['labels']" />
               <x-jet-input-error for="label" class="mt-2" />
             </div>
-            <div class="form-input {{ ($input['label'] ?? '') == 'Client' ? 'block' : 'hidden' }}">
+            <div class="form-input">
               <x-jet-label for="policy_number" value="Policy Number" />
               <x-jet-input type="text" id="policy_number" class="block w-full mt-1"
                 wire:model.defer="input.policy_number" />

@@ -12,6 +12,8 @@ class SiteManualController extends Controller
     {
         $manual = $site->manuals()->findOrFail($manual);
 
-        return Storage::disk($manual->disk)->download($manual->file, $manual->filename);
+        // return Storage::disk($manual->disk)->download($manual->file, $manual->filename);
+
+        return Storage::disk($manual->disk)->response($manual->file, $manual->filename);
     }
 }
