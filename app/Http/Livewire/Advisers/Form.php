@@ -62,6 +62,13 @@ class Form extends Component
         return view('livewire.advisers.form');
     }
 
+    public function updated($name, $value)
+    {
+        if ('input.type' == $name && 'Adviser' != $value) {
+            unset($this->input['fsp_no']);
+        }
+    }
+
     public function resetInput()
     {
         $this->input = [];
