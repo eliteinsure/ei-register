@@ -78,7 +78,7 @@
         <td class="py-2">{{ $complaint->label }}</td>
         <td class="w-4">&nbsp;</td>
         <td class="p-2">Policy Number:</td>
-        <td class="py-2 pr-2">{{ $complaint->policy_number }}</td>
+        <td class="py-2 pr-2">{{ $complaint->policy_number ?? 'N/A' }}</td>
       </tr>
       <tr>
         <td class="p-2">Insurer:</td>
@@ -110,10 +110,10 @@
     <table class="table-striped w-full">
       <tr>
         <td class="p-2">Adviser:</td>
-        <td class="py-2 w-quart">{{ $complaint->adviser->name }}</td>
+        <td class="py-2">{{ $complaint->adviser->name }} ({{ $complaint->adviser->type }})</td>
         <td class="w-4">&nbsp;</td>
         <td class="p-2">Date Handed Over:</td>
-        <td class="py-2 pr-2 w-quart">
+        <td class="py-2 pr-2">
           {{ \Illuminate\Support\Carbon::parse($complaint->tier['1']['handed_over_at'])->format('d/m/Y') }}
         </td>
       </tr>
@@ -140,10 +140,11 @@
       <table class="table-striped w-full">
         <tr>
           <td class="p-2">Staff:</td>
-          <td class="py-2 w-quart">{{ $complaint->tier['2']['staff_position'] }}</td>
+          <td class="py-2">{{ $complaint->tier['2']['staff_position'] }}</td>
           <td class="w-4">&nbsp;</td>
           <td class="p-2">Staff Name:</td>
-          <td class="py-2 pr-2 w-quart">{{ $complaint->tier['2']['staff_name'] }}</td>
+          <td class="py-2 pr-2">{{ $complaint->staff->name }} ({{ $complaint->staff->type }})
+          </td>
         </tr>
         <tr>
           <td class="p-2">Date Handed Over:</td>

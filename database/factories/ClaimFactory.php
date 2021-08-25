@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Adviser;
 use App\Models\Claim;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
@@ -23,11 +24,12 @@ class ClaimFactory extends Factory
     public function definition()
     {
         return [
+            'adviser_id' => Adviser::factory(),
             'client_name' => $this->faker->name(),
             'insurer' => Arr::random(config('services.complaint.insurers')),
             'policy_number' => $this->faker->numerify('#####'),
             'nature' => Arr::random(config('services.claim.natures')),
-            'type' => Arr::random(config('services.claim.types')),
+            'type' => $this->faker->randomElements(config('services.claim.types'), $this->faker->numberBetween(1, count(config('services.claim.types')))),
             'status' => Arr::random(config('services.claim.status')),
         ];
     }

@@ -20,7 +20,7 @@
         <td class="header-image"><img
             src="{{ asset('images/logo-only.png') }}"
             height="0.76in" /></td>
-        <td class="header-title">{{ $title }}</td>
+        <td class="header-title">@yield('pdfTitle', $title)</td>
         <td class="header-right-box">
           &nbsp;
         </td>

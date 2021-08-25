@@ -88,13 +88,13 @@
         </x-jet-responsive-nav-link>
 
         <x-jet-responsive-nav-link href="{{ route('advisers.index') }}"
-          :active="request()->routeIs('advisers.index')" icon="heroicon-o-user-circle">
-          Advisers
+          :active="request()->routeIs('advisers.index')" icon="heroicon-o-users">
+          Advisers / Staffs
         </x-jet-responsive-nav-link>
 
         @role('admin')
           <x-jet-responsive-nav-link href="{{ route('users.index') }}"
-            :active="request()->routeIs('users.index')" icon="heroicon-o-users">
+            :active="request()->routeIs('users.index')" icon="heroicon-o-user-circle">
             Users
           </x-jet-responsive-nav-link>
         @endrole

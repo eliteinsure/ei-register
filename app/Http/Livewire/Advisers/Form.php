@@ -18,6 +18,8 @@ class Form extends Component
 
     public $showModal = false;
 
+    public $types;
+
     public $status;
 
     protected $listeners = ['add', 'edit'];
@@ -25,9 +27,9 @@ class Form extends Component
     public function getTitleProperty()
     {
         if ($this->adviserId) {
-            return auth()->user()->hasRole('admin') ? 'Edit Adviser' : 'Adviser Detials';
+            return auth()->user()->hasRole('admin') ? 'Update Adviser / Staff' : 'Adviser / Staff Detials';
         } else {
-            return 'Register an Adviser';
+            return 'Register an Adviser / Staff';
         }
     }
 
@@ -39,6 +41,13 @@ class Form extends Component
     public function mount()
     {
         $this->resetInput();
+
+        $this->types = collect(config('services.adviser.types'))->map(function ($type) {
+            return [
+                'value' => $type,
+                'label' => $type,
+            ];
+        })->all();
 
         $this->status = collect(['Active', 'Terminated'])->map(function ($status) {
             return [
@@ -118,7 +127,7 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'Adviser has been edited.',
+            'message' => 'Adviser has been updated.',
         ]);
     }
 }

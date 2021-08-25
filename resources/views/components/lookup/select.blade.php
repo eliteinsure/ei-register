@@ -13,7 +13,7 @@ public function edit(){
   $this->dispatchBrowserEvent('[id]-lookup-value', $value);
 } --}}
 
-<div wire:ignore.self x-data="{{ $id }}LookupText"
+<div wire:ignore.self x-data="{{ $id }}LookupSelect"
   x-on:{{ $id }}-lookup-list.window="lookupList"
   x-on:{{ $id }}-lookup-value.window="lookupValue">
   <div wire:ignore>
@@ -27,7 +27,7 @@ public function edit(){
 @push('scripts')
   <script type="text/javascript">
     document.addEventListener('alpine:init', () => {
-      Alpine.data('{{ $id }}LookupText', () => ({
+      Alpine.data('{{ $id }}LookupSelect', () => ({
         tagify: null,
         init() {
           document.addEventListener('DOMContentLoaded', () => {

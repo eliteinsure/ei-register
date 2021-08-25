@@ -34,7 +34,6 @@ class TestSeeder extends Seeder
 
         foreach (range(1, 10) as $item) {
             array_push($complainants, $faker->name());
-            array_push($staffNames, $faker->name());
         }
 
         foreach (range(1, 100) as $item) {
@@ -44,25 +43,19 @@ class TestSeeder extends Seeder
 
             $data['tier'][1]['adviser_id'] = strval(Adviser::inRandomOrder()->first()->id);
 
-            if (isset($data['tier'][2]['staff_name'])) {
-                $data['tier'][2]['staff_name'] = $faker->randomElement($staffNames);
+            if (isset($data['tier'][2]['staff_id'])) {
+                $data['tier'][2]['staff_id'] = strval(Adviser::inRandomOrder()->first()->id);
             }
 
             Complaint::create($data);
+
+            Claim::factory()->create([
+                'adviser_id' => Adviser::where('type', 'Adviser')->inRandomOrder()->first()->id,
+            ]);
         }
 
         $user = User::factory()->create();
 
         $user->assignRole('admin');
-
-        $complaints = Complaint::whereJsonDoesntContain('tier->1->status', 'Pending')->latest()->first();
-
-        $manual = SiteManual::factory()->create();
-
-        /* dump($manual->toArray());
-
-        dump($complaints->toArray()); */
-
-        Claim::factory(10)->create();
     }
 }

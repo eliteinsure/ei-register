@@ -35,7 +35,7 @@ class Index extends Component
             return '';
         }
 
-        return route('reports.complaints.pdf', ['complaint' => $this->complaintId]);
+        return route('reports.complaints.pdf', ['complaint' => $this->complaintId, 'now' => time()]);
     }
 
     public function render()
