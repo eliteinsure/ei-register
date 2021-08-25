@@ -4,6 +4,11 @@
     <x-slot name="content">
       <div class="space-y-6">
         <div class="form-input">
+          <x-jet-label for="type" value="Type" />
+          <x-select id="type" class="block w-full mt-1" :options="$types" wire:model.defer="input.type" />
+          <x-jet-input-error for="type" class="mt-2" />
+        </div>
+        <div class="form-input">
           <x-jet-label for="name" value="Name" />
           <x-jet-input type="text" id="name" class="block w-full mt-1" wire:model.defer="input.name" />
           <x-jet-input-error for="name" class="mt-2" />
@@ -36,7 +41,7 @@
     </x-slot>
     <x-slot name="footer">
       @if (auth()->user()->hasRole('admin'))
-        <x-jet-button type="submit">{{ isset($adviserId) ? 'Edit' : 'Register' }}</x-jet-button>
+        <x-jet-button type="submit">{{ isset($adviserId) ? 'Update' : 'Register' }}</x-jet-button>
       @endif
       <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showModal', false)">
         @if (auth()->user()->hasRole('admin'))

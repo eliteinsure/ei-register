@@ -29,7 +29,7 @@ class Index extends Component
     {
         $query = Adviser::when($this->search, function ($query) {
             return $query->where(function ($query) {
-                $stringColumns = ['name', 'email', 'fsp_no', 'contact_number', 'status'];
+                $stringColumns = ['type', 'name', 'email', 'fsp_no', 'contact_number', 'status'];
 
                 foreach ($stringColumns as $column) {
                     $query->orWhere($column, 'like', '%' . $this->search . '%');
@@ -64,7 +64,11 @@ class Index extends Component
 
         $this->adviserId = $id;
 
-        abort_if($this->adviser->complaints()->count(), 403, 'Could not delete adviser. Please make sure that there are no complaints with this adviser.');
+        abort_if($this->adviser->adviserComplaints()->count(), 403, 'Could not delete adviser. Please make sure that there are no complaints with this adviser / staff.');
+
+        abort_if($this->adviser->staffComplaints()->count(), 403, 'Could not delete adviser. Please make sure that there are no complaints with this adviser / staff.');
+
+        abort_if($this->adviser->claims()->count(), 403, 'Could not delete adviser. Please make sure that there are no claims with this adviser / staff.');
 
         $this->showDelete = true;
     }
@@ -73,7 +77,11 @@ class Index extends Component
     {
         abort_unless(auth()->user()->hasRole('admin'), 403);
 
-        abort_if($this->adviser->complaints()->count(), 403, 'Could not delete adviser. Please make sure that there are no complaints with this adviser.');
+        abort_if($this->adviser->adviserComplaints()->count(), 403, 'Could not delete adviser. Please make sure that there are no complaints with this adviser / staff.');
+
+        abort_if($this->adviser->staffComplaints()->count(), 403, 'Could not delete adviser. Please make sure that there are no complaints with this adviser / staff.');
+
+        abort_if($this->adviser->claims()->count(), 403, 'Could not delete adviser. Please make sure that there are no claims with this adviser / staff.');
 
         $this->adviser->delete();
 

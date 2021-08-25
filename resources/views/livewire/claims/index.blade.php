@@ -29,55 +29,61 @@
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="id">
+                    <x-column-sorter column="claims.id">
                       Claim Number
                     </x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="client_name">
+                    <x-column-sorter column="claims.client_name">
                       Client Name
                     </x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="insurer">
+                    <x-column-sorter column="claims.insurer">
                       Insurer
                     </x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="policy_number">
+                    <x-column-sorter column="claims.policy_number">
                       Policy Number
                     </x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="nature">
+                    <x-column-sorter column="advisers.name">
+                      Adviser
+                    </x-column-sorter>
+                  </th>
+                  <th scope="col"
+                    class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
+                    <x-column-sorter column="claims.nature">
                       Nature
                     </x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="type">
+                    <x-column-sorter column="claims.type">
                       Type
                     </x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="status">
+                    <x-column-sorter column="claims.status">
                       Status
                     </x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="created_at">
+                    <x-column-sorter column="claims.created_at">
                       Date Registered
                     </x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="created_at">
+                    <x-column-sorter column="claims.created_at">
                       Days Counter
                     </x-column-sorter>
                   </th>
@@ -105,7 +111,7 @@
                           <x-jet-dropdown-link href="javascript:void(0)"
                             wire:click="$emitTo('claims.form', 'edit', {{ $claim->id }})">
                             @if (auth()->user()->hasRole('admin'))
-                              Edit
+                              Update
                             @else
                               View Details
                             @endif
@@ -127,10 +133,13 @@
                       {{ $claim->policy_number }}
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
-                      {{ $claim->nature }}
+                      {{ $claim->adviser->adviser_name }}
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
-                      {{ $claim->type }}
+                      {{ $claim->nature }}
+                    </td>
+                    <td class="px-4 py-2 text-sm text-shark text-opacity-75">
+                      {{ $claim->types }}
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $claim->status }}

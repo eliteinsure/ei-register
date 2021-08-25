@@ -1,4 +1,4 @@
-@props(['id'])
+@props(['id', 'options' => null])
 
 {{-- public function [id]LookupSearch($search = ''){
   $this->dispatchBrowserEvent: [id]-lookup-list
@@ -13,7 +13,7 @@ public function edit(){
   $this->dispatchBrowserEvent('[id]-lookup-value', $value);
 } --}}
 
-<div wire:ignore.self x-data="{{ $id }}LookupText"
+<div wire:ignore.self x-data="{{ $id }}LookupMulti"
   x-on:{{ $id }}-lookup-list.window="lookupList"
   x-on:{{ $id }}-lookup-value.window="lookupValue">
   <div wire:ignore>
@@ -27,25 +27,26 @@ public function edit(){
 @push('scripts')
   <script type="text/javascript">
     document.addEventListener('alpine:init', () => {
-      Alpine.data('{{ $id }}LookupText', () => ({
+      Alpine.data('{{ $id }}LookupMulti', () => ({
         tagify: null,
         init() {
           document.addEventListener('DOMContentLoaded', () => {
             this.tagify = new window.Tagify(this.$refs.input, {
               dropdown: {
-                enabled: 1,
+                enabled: 0,
                 mapValueTo: 'label',
                 searchKeys: [],
               },
               tagTextProp: 'label',
               callbacks: {
-                'focus': () => {
+                @if (!$options)
+                  'focus': () => {
                   this.lookupSearch('');
-                },
-                'input': _.debounce((event) => {
+                  },
+                  'input': _.debounce((event) => {
                   this.lookupSearch(event.detail.value);
-                }, 250),
-                'change': (event) => {
+                  }, 250),
+                @endif 'change': (event) => {
                   var value = {};
 
                   if (event.detail.value) {
@@ -60,6 +61,10 @@ public function edit(){
                 }
               }
             });
+
+            @if ($options)
+              this.tagify.whitelist = @json($options);
+            @endif
           });
         },
         lookupValue(event) {
@@ -69,7 +74,8 @@ public function edit(){
             this.tagify.removeTags();
           }
         },
-        lookupSearch(search) {
+        @if (!$options)
+          lookupSearch(search) {
           var controller;
 
           this.tagify.whitelist = null;
@@ -81,8 +87,10 @@ public function edit(){
           this.tagify.loading(true).dropdown.hide();
 
           this.$wire.{{ $id }}LookupSearch(search);
-        },
+          },
+        @endif
         lookupList(event) {
+          console.log(event);
           this.tagify.whitelist = event.detail;
 
           this.tagify.loading(false).dropdown.show();

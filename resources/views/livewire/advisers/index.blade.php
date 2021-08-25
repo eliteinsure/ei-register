@@ -6,7 +6,7 @@
       </div>
       <div>
         <x-jet-button type="button" wire:click="$emitTo('advisers.form', 'add')">
-          Register an Adviser
+          Register an Adviser / Staff
         </x-jet-button>
       </div>
     </div>
@@ -21,6 +21,12 @@
                 <tr>
                   <th scope="col" class="relative px-4 py-3">
                     <span class="sr-only">Actions</span>
+                  </th>
+                  <th scope="col"
+                    class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
+                    <x-column-sorter column="type">
+                      Type
+                    </x-column-sorter>
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
@@ -74,13 +80,16 @@
                           <x-jet-dropdown-link href="javascript:void(0)"
                             wire:click="$emitTo('advisers.form', 'edit', {{ $adviser->id }})">
                             @if (auth()->user()->hasRole('admin'))
-                              Edit
+                              Update
                             @else
                               View Details
                             @endif
                           </x-jet-dropdown-link>
                         </x-slot>
                       </x-jet-dropdown>
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
+                      {{ $adviser->type }}
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $adviser->name }}

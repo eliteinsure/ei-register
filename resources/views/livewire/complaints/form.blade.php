@@ -13,11 +13,11 @@
             </div>
             <div class="form-input">
               <x-jet-label for="label" value="Label" />
-              <x-select id="label" class="block w-full mt-1" wire:model.defer="input.label"
+              <x-select id="label" class="block w-full mt-1" wire:model.lazy="input.label"
                 :options="$options['labels']" />
               <x-jet-input-error for="label" class="mt-2" />
             </div>
-            <div class="form-input">
+            <div class="form-input {{ ($input['label'] ?? '') == 'Client' ? 'block' : 'hidden' }}">
               <x-jet-label for="policy_number" value="Policy Number" />
               <x-jet-input type="text" id="policy_number" class="block w-full mt-1"
                 wire:model.defer="input.policy_number" />
@@ -84,7 +84,7 @@
             class="space-y-6 {{ ($input['tier'][1]['status'] ?? '') == 'Failed' ? 'block' : 'hidden' }}">
             <div class="form-input">
               <p class="text-sm font-medium text-shark mt-6 md:mt-0 mb-2">TIER 2</p>
-              <x-jet-label for="staff_position" value="Staff" />
+              <x-jet-label for="staff_position" value="Management / Staff" />
               <x-select id="staff_position" class="block w-full mt-1"
                 wire:model.defer="input.tier.2.staff_position"
                 :options="$options['tier.2.staffPositions']" />
@@ -92,8 +92,8 @@
             </div>
             <div class="form-input">
               <x-jet-label for="staff" value="Staff Name" />
-              <x-lookup.text id="staff" wire:model.defer="input.tier.2.staff_name" />
-              <x-jet-input-error for="tier.2.staff_name" class="mt-2" />
+              <x-lookup.text id="staff" wire:model.defer="input.tier.2.staff_id" />
+              <x-jet-input-error for="tier.2.staff_id" class="mt-2" />
             </div>
             <div class="form-input">
               <x-jet-label for="tier2_handed_over_at" value="Date Handed Over" />
@@ -118,7 +118,7 @@
     </x-slot>
     <x-slot name="footer">
       @if (auth()->user()->hasRole('admin'))
-        <x-jet-button type="submit">{{ isset($complaintId) ? 'Edit' : 'Register' }}</x-jet-button>
+        <x-jet-button type="submit">{{ isset($complaintId) ? 'Update' : 'Register' }}</x-jet-button>
       @endif
       <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showModal', false)">
         @if (auth()->user()->hasRole('admin'))

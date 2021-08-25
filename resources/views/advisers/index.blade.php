@@ -1,9 +1,9 @@
 <x-app-layout>
-  @section('title', 'Advisers')
+  @section('title', 'Advisers / Staffs')
 
   <x-slot name="header">
     <x-page-header>
-      Advisers
+      Advisers / Staffs
     </x-page-header>
   </x-slot>
 

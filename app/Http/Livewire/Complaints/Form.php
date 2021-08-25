@@ -34,7 +34,7 @@ class Form extends Component
     public function getTitleProperty()
     {
         if ($this->complaintId) {
-            return auth()->user()->hasRole('admin') ? 'Edit Complaint' : 'Complaint Detials';
+            return auth()->user()->hasRole('admin') ? 'Update Complaint' : 'Complaint Detials';
         } else {
             return 'Register a Complaint';
         }
@@ -66,6 +66,10 @@ class Form extends Component
 
     public function updated($name, $value)
     {
+        if ('Client' == $name && 'Client' != $value) {
+            unset($this->input['policy_number']);
+        }
+
         if ('input.tier.1.status' == $name && 'Failed' != $value) {
             unset($this->input['tier'][2]);
 
@@ -88,6 +92,12 @@ class Form extends Component
                 ],
             ],
         ];
+
+        $this->dispatchBrowserEvent('complainant-lookup-value');
+
+        $this->dispatchBrowserEvent('adviser-lookup-value');
+
+        $this->dispatchBrowserEvent('staff-lookup-value');
     }
 
     public function add()
@@ -97,12 +107,6 @@ class Form extends Component
         $this->complaintId = null;
 
         $this->resetInput();
-
-        $this->dispatchBrowserEvent('complainant-lookup-value');
-
-        $this->dispatchBrowserEvent('adviser-lookup-value');
-
-        $this->dispatchBrowserEvent('staff-lookup-value');
 
         $this->showModal = true;
     }
@@ -128,15 +132,19 @@ class Form extends Component
 
         $adviser = json_encode([[
             'value' => $adviser->id,
-            'label' => $adviser->name,
+            'label' => $adviser->name . " ($adviser[type])",
         ]]);
 
         $this->dispatchBrowserEvent('adviser-lookup-value', $adviser);
 
-        $staff = isset($this->input['tier'][2]['staff_name']) ? json_encode([[
-            'value' => $this->input['tier'][2]['staff_name'],
-            'label' => $this->input['tier'][2]['staff_name'],
-        ]]) : null;
+        $staff = Adviser::find($this->input['tier'][2]['staff_id'] ?? null);
+
+        if ($staff) {
+            $staff = json_encode([[
+                'value' => $staff->id,
+                'label' => $staff->name . " ($staff[type])",
+            ]]);
+        }
 
         $this->dispatchBrowserEvent('staff-lookup-value', $staff);
 
@@ -168,7 +176,7 @@ class Form extends Component
         $advisers = $query->get()->map(function ($adviser) {
             return [
                 'value' => $adviser['id'],
-                'label' => $adviser['name'],
+                'label' => $adviser['name'] . " ($adviser[type])",
             ];
         });
 
@@ -177,16 +185,15 @@ class Form extends Component
 
     public function staffLookupSearch($search = '')
     {
-        $query = Complaint::select('tier->2->staff_name as staff_name')->groupBy('staff_name')
-            ->where('tier->1->status', 'Failed')
+        $query = Adviser::where('status', 'Active')
             ->when($search, function ($query) use ($search) {
-                return $query->whereRaw('LOWER(json_unquote(json_extract(`tier`, \'$."2"."staff_name"\'))) LIKE ?', '%' . Str::lower($search) . '%');
-            })->oldest('staff_name');
+                return $query->where('name', 'like', '%' . $search . '%');
+            })->oldest('name');
 
-        $staffs = $query->get()->map(function ($complaint) {
+        $staffs = $query->get()->map(function ($staff) {
             return [
-                'value' => $complaint->staff_name,
-                'label' => $complaint->staff_name,
+                'value' => $staff['id'],
+                'label' => $staff['name'] . " ($staff[type])",
             ];
         });
 
@@ -233,7 +240,7 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'Complaint has been edited.',
+            'message' => 'Complaint has been updated.',
         ]);
     }
 }

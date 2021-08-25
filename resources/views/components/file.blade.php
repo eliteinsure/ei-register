@@ -14,10 +14,13 @@
     </div>
 
     <div x-show="isUploading" class="-mx-3 -my-2">
-      <div class="overflow-hidden flex rounded bg-white w-full">
+      <div class="overflow-hidden flex items-center rounded bg-white w-full relative">
         <div x-bind:style="{width: progress + '%'}"
           class="px-3 py-2 shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-lmara">
           &nbsp;
+        </div>
+        <div class="absolute inset-0 flex items-center">
+          <span class="w-full font-semibold text-center text-dsgreen" x-text="progress + '%'"></span>
         </div>
       </div>
     </div>

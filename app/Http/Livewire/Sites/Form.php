@@ -23,7 +23,7 @@ class Form extends Component
     public function getTitleProperty()
     {
         if ($this->siteId) {
-            return auth()->user()->hasRole('admin') ? 'Edit Software' : 'Software Detials';
+            return auth()->user()->hasRole('admin') ? 'Update Software' : 'Software Detials';
         } else {
             return 'Register a Software';
         }
@@ -116,7 +116,7 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'Software has been edited.',
+            'message' => 'Software has been updated.',
         ]);
     }
 }

@@ -49,6 +49,15 @@
     vertical-align: bottom;
 }
 
+.header-title-lg {
+    font-size: 1.5em;
+    text-transform: uppercase;
+}
+
+.header-title-sm {
+    font-size: 0.75em;
+}
+
 .header-left-box {
     width: 0.68in;
     height: 0.65in;

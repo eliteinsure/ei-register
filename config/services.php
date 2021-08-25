@@ -37,6 +37,10 @@ return [
 
     'roles' => ['admin', 'user'],
 
+    'adviser' => [
+        'types' => ['Adviser', 'Staff', 'Management'],
+    ],
+
     'complaint' => [
         'labels' => [
             'Client',
@@ -71,7 +75,7 @@ return [
             '1' => [
                 'status' => [
                     'Pending',
-                    'Success',
+                    'Resolved',
                     'Failed',
                     'Retracted',
                     'Invalid',
@@ -87,7 +91,7 @@ return [
                 ],
                 'status' => [
                     'Pending',
-                    'Success',
+                    'Resolved',
                     'Failed',
                     'Retracted',
                     'Invalid',
@@ -96,6 +100,23 @@ return [
             ],
         ],
 
+    ],
+
+    'claim' => [
+        'natures' => [
+            'Pre-approval',
+            'Claim',
+        ],
+        'types' => [
+            'Life',
+            'Trauma',
+            'Medical',
+            'TPD',
+            'IP',
+        ],
+        'status' => [
+            'In Progress', 'Continuing', 'Disapproved', 'Approved', 'Partially Approved',
+        ],
     ],
 
     'site' => [
@@ -114,23 +135,6 @@ return [
                 'video/x-ms-wmv',
                 'video/x-matroska',
             ],
-        ],
-    ],
-
-    'claim' => [
-        'natures' => [
-            'Pre-approval',
-            'Claim',
-        ],
-        'types' => [
-            'Life',
-            'Trauma',
-            'Medical',
-            'TPD',
-            'IP',
-        ],
-        'status' => [
-            'In Progress', 'Continuing', 'Disapproved', 'Successful',
         ],
     ],
 

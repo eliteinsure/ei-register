@@ -71,7 +71,7 @@ class Report extends Component
         $advisers = $query->get()->map(function ($adviser) {
             return [
                 'value' => $adviser['id'],
-                'label' => $adviser['name'],
+                'label' => $adviser['name'] . " ($adviser[type])",
             ];
         });
 

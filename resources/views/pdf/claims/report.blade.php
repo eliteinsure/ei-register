@@ -1,5 +1,10 @@
 @extends('layouts.pdf')
 
+@section('pdfTitle')
+  <div class="header-title-lg">Claims Register</div>
+  <div class="header-title-sm">Report</div>
+@endsection
+
 @section('content')
   <p>&nbsp;</p>
   <table class="table-striped w-full">
@@ -22,6 +27,7 @@
         <th class="p-2 text-left">Client Name</th>
         <th class="p-2 text-left">Insurer</th>
         <th class="p-2 text-left">Policy Number</th>
+        <th class="p-2 text-left">Adviser</th>
         <th class="p-2 text-left">Nature</th>
         <th class="p-2 text-left">Type</th>
         <th class="p-2 text-left">Status</th>
@@ -32,8 +38,9 @@
           <td class="p-2">{{ $claim->client_name }}</td>
           <td class="p-2">{{ $claim->insurer }}</td>
           <td class="p-2">{{ $claim->policy_number }}</td>
+          <td class="p-2">{{ $claim->adviser->adviser_name }}</td>
           <td class="p-2">{{ $claim->nature }}</td>
-          <td class="p-2">{{ $claim->type }}</td>
+          <td class="p-2">{{ $claim->types }}</td>
           <td class="p-2">{{ $claim->status }}</td>
         </tr>
       @endforeach

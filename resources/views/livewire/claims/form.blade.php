@@ -21,6 +21,11 @@
           <x-jet-input-error for="policy_number" class="mt-2" />
         </div>
         <div class="form-input">
+          <x-jet-label for="adviser" value="Adviser" />
+          <x-lookup.select id="adviser" wire:model.defer="input.adviser_id" />
+          <x-jet-input-error for="adviser_id" class="mt-2" />
+        </div>
+        <div class="form-input">
           <x-jet-label for="nature" value="Nature" />
           <x-select type="text" id="nature" class="block w-full mt-1" wire:model.defer="input.nature"
             :options="$options['natures']" />
@@ -28,8 +33,7 @@
         </div>
         <div class="form-input">
           <x-jet-label for="type" value="Type" />
-          <x-select type="text" id="type" class="block w-full mt-1" wire:model.defer="input.type"
-            :options="$options['types']" />
+          <x-lookup.multi id="type" wire:model.defer="input.type" :options="$options['types']" />
           <x-jet-input-error for="type" class="mt-2" />
         </div>
         <div class="form-input">
@@ -42,7 +46,7 @@
     </x-slot>
     <x-slot name="footer">
       @if (auth()->user()->hasRole('admin'))
-        <x-jet-button type="submit">{{ isset($claimId) ? 'Edit' : 'Register' }}</x-jet-button>
+        <x-jet-button type="submit">{{ isset($claimId) ? 'Update' : 'Register' }}</x-jet-button>
       @endif
       <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showModal', false)">
         @if (auth()->user()->hasRole('admin'))

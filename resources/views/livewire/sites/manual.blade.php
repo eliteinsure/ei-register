@@ -11,7 +11,9 @@
               <x-jet-input-error for="name" class="mt-2" />
             </div>
             <div class="form-input md:flex-1 md:px-3">
-              <x-filepond wire:model="file" :accept="config('services.site.manual.mimetypes')" />
+              {{-- <x-filepond wire:model="file" :accept="config('services.site.manual.mimetypes')" /> --}}
+              <x-file id="file" model="file"
+                accept="{{ implode(',', config('services.site.manual.mimetypes')) }}" />
               <x-jet-input-error for="file" class="mt-2" />
             </div>
             <div class="md:flex-shrink-0 md:px-3">
