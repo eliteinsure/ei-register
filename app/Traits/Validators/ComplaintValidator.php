@@ -6,13 +6,18 @@ use Illuminate\Validation\Rule;
 
 trait ComplaintValidator
 {
-    public function complaintRules($update = false)
+    public function complaintRules($input, $update = false)
     {
         $rules = [
             'complainant' => ['required', 'string', 'max:255'],
             'label' => ['required', 'in:' . implode(',', config('services.complaint.labels'))],
             'policy_number' => ['required_if:label,Client', 'string', 'max:255'],
-            'insurer' => ['required', 'in:' . implode(',', config('services.complaint.insurers'))],
+            'insurer' => [
+                Rule::requiredIf(function () use ($input) {
+                    return in_array($input['label'] ?? '', ['Client', 'Prospect']);
+                }),
+                'in:' . implode(',', config('services.complaint.insurers')),
+            ],
             'received_at' => ['required', 'date_format:Y-m-d'],
             'acknowledged_at' => ['required', 'date_format:Y-m-d'],
             'nature' => ['required', 'in:' . implode(',', config('services.complaint.natures'))],

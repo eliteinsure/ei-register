@@ -82,7 +82,7 @@
       </tr>
       <tr>
         <td class="p-2">Insurer:</td>
-        <td class="py-2">{{ $complaint->insurer }}</td>
+        <td class="py-2">{{ $complaint->insurer ?? 'N/A' }}</td>
         <td class="w-4">&nbsp;</td>
         <td class="p-2">Date Received:</td>
         <td class="py-2 pr-2">{{ $complaint->received_at->format('d/m/Y') }}</td>

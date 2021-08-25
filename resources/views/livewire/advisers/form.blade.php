@@ -18,7 +18,7 @@
           <x-jet-input type="email" id="email" class="block w-full mt-1" wire:model.defer="input.email" />
           <x-jet-input-error for="email" class="mt-2" />
         </div>
-        <div class="form-input {{ ($input['type'] ?? '') == 'Adviser' ? 'block' : 'hidden' }}">
+        <div class="form-input {{ ($input['type'] ?? '') == 'Adviser' ? '' : 'hidden' }}">
           <x-jet-label for="fsp_no" value="FSP Number" />
           <x-jet-input type="text" id="fsp_no" class="block w-full mt-1" wire:model.defer="input.fsp_no" />
           <x-jet-input-error for="fsp_no" class="mt-2" />
