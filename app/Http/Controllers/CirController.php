@@ -16,6 +16,6 @@ class CirController extends Controller
 
         $token = auth()->user()->tokens()->first();
 
-        return redirect()->away(config('services.cir.url') . '/login/' . $token->token);
+        return redirect()->away(config('services.cir.url') . '/login?token=' . $token->token);
     }
 }
