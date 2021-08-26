@@ -8,11 +8,9 @@ class CirController extends Controller
 {
     public function login()
     {
-        $token = auth()->user()->tokens()->first();
+        auth()->user()->tokens()->delete();
 
-        if (! $token) {
-            $token = auth()->user()->createToken('cir');
-        }
+        auth()->user()->createToken('cir');
 
         $token = auth()->user()->tokens()->first();
 
