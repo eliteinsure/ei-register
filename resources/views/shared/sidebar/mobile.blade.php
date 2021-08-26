@@ -82,6 +82,11 @@
           Claims
         </x-jet-responsive-nav-link>
 
+        <x-jet-responsive-nav-link href="{{ route('cir.login') }}" icon="heroicon-o-document-report"
+          :active="false" target="_blank">
+          Claims
+        </x-jet-responsive-nav-link>
+
         <x-jet-responsive-nav-link href="{{ route('sites.index') }}"
           :active="request()->routeIs('sites.index')" icon="heroicon-o-globe">
           Software

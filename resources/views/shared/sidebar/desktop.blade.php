@@ -28,6 +28,13 @@
             Claims
           </x-jet-nav-link>
 
+          <x-jet-nav-link href="{{ route('cir.login') }}"
+            :active="false"
+            icon="heroicon-o-document-report"
+            target="_blank">
+            CIR
+          </x-jet-nav-link>
+
           <x-jet-nav-link href="{{ route('sites.index') }}"
             :active="request()->routeIs('sites.index')"
             icon="heroicon-o-globe">
@@ -41,11 +48,11 @@
           </x-jet-nav-link>
 
           @role('admin')
-            <x-jet-nav-link href="{{ route('users.index') }}"
-              :active="request()->routeIs('users.index')"
-              icon="heroicon-o-user-circle">
-              Users
-            </x-jet-nav-link>
+          <x-jet-nav-link href="{{ route('users.index') }}"
+            :active="request()->routeIs('users.index')"
+            icon="heroicon-o-user-circle">
+            Users
+          </x-jet-nav-link>
           @endrole
 
           <form method="POST" action="{{ route('logout') }}">
