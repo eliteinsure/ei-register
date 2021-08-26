@@ -13,7 +13,7 @@ class CreateTaCirTable extends Migration
      */
     public function up()
     {
-        Schema::connection('cir')->create('ta_cir', function (Blueprint $table) {
+        Schema::create('ta_cir', function (Blueprint $table) {
             $table->increments('report_number');
             $table->string('send_date', 50)->nullable();
             $table->string('due_date', 50)->nullable();
@@ -43,26 +43,26 @@ class CreateTaCirTable extends Migration
      */
     public function down()
     {
-        Schema::connection('cir')->drop('ta_cir', function (Blueprint $table) {
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+        Schema::drop('ta_cir', function (Blueprint $table) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         });
     }
 }

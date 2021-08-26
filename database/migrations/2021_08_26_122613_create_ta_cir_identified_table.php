@@ -13,7 +13,7 @@ class CreateTaCirIdentifiedTable extends Migration
      */
     public function up()
     {
-        Schema::connection('cir')->create('ta_cir_identified', function (Blueprint $table) {
+        Schema::create('ta_cir_identified', function (Blueprint $table) {
             $table->integer('report_number')->nullable();
             $table->string('issue_identified')->nullable();
         });
@@ -26,9 +26,9 @@ class CreateTaCirIdentifiedTable extends Migration
      */
     public function down()
     {
-        Schema::connection('cir')->drop('ta_cir_identified', function (Blueprint $table) {
-            
-            
+        Schema::drop('ta_cir_identified', function (Blueprint $table) {
+
+
         });
     }
 }

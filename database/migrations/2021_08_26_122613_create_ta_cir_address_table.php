@@ -13,7 +13,7 @@ class CreateTaCirAddressTable extends Migration
      */
     public function up()
     {
-        Schema::connection('cir')->create('ta_cir_address', function (Blueprint $table) {
+        Schema::create('ta_cir_address', function (Blueprint $table) {
             $table->integer('id_question', true);
             $table->integer('report_number')->nullable();
             $table->string('issue_address')->nullable();
@@ -28,11 +28,11 @@ class CreateTaCirAddressTable extends Migration
      */
     public function down()
     {
-        Schema::connection('cir')->drop('ta_cir_address', function (Blueprint $table) {
-            
-            
-            
-            
+        Schema::drop('ta_cir_address', function (Blueprint $table) {
+
+
+
+
         });
     }
 }
