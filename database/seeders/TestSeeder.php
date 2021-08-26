@@ -5,8 +5,6 @@ namespace Database\Seeders;
 use App\Models\Adviser;
 use App\Models\Claim;
 use App\Models\Complaint;
-use App\Models\Site;
-use App\Models\SiteManual;
 use App\Models\User;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\UserSeeder;
