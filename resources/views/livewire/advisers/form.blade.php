@@ -5,7 +5,8 @@
       <div class="space-y-6">
         <div class="form-input">
           <x-jet-label for="type" value="Type" />
-          <x-select id="type" class="block w-full mt-1" :options="$types" wire:model.lazy="input.type" />
+          <x-select id="type" class="block w-full mt-1" :options="$options['types']"
+            wire:model.lazy="input.type" />
           <x-jet-input-error for="type" class="mt-2" />
         </div>
         <div class="form-input">
@@ -32,7 +33,7 @@
         @if ($adviserId)
           <div class="form-input">
             <x-jet-label for="status" value="Status" />
-            <x-select id="status" class="block w-full mt-1" :options="$status"
+            <x-select id="status" class="block w-full mt-1" :options="$options['status']"
               wire:model.defer="input.status" />
             <x-jet-input-error for="status" class="mt-2" />
           </div>
