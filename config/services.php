@@ -39,6 +39,210 @@ return [
 
     'adviser' => [
         'types' => ['Adviser', 'Staff', 'Management'],
+        'status' => ['Active', 'Pending', 'Terminated'],
+        'requirements' => [
+            'sub-agencies' => [
+                'fidelity-life' => [
+                    'label' => 'Fidelity Life',
+                    'options' => ['Active', 'Pending', 'Declined', 'No Application'],
+                    'classes' => [
+                        'Active' => 'text-shark',
+                        'Pending' => 'text-green-600',
+                        'Declined' => 'text-red-600',
+                        'No Application' => 'text-red-600',
+                    ],
+                ],
+                'accuro' => [
+                    'label' => 'Accuro',
+                    'options' => ['Active', 'Pending', 'Declined', 'No Application'],
+                    'classes' => [
+                        'Active' => 'text-shark',
+                        'Pending' => 'text-green-600',
+                        'Declined' => 'text-red-600',
+                        'No Application' => 'text-red-600',
+                    ],
+                ],
+                'aia' => [
+                    'label' => 'AIA',
+                    'options' => ['Active', 'Pending', 'Declined', 'No Application'],
+                    'classes' => [
+                        'Active' => 'text-shark',
+                        'Pending' => 'text-green-600',
+                        'Declined' => 'text-red-600',
+                        'No Application' => 'text-red-600',
+                    ],
+                ],
+                'partners-life' => [
+                    'label' => 'Partners Life',
+                    'options' => ['Active', 'Pending', 'Declined', 'No Application'],
+                    'classes' => [
+                        'Active' => 'text-shark',
+                        'Pending' => 'text-green-600',
+                        'Declined' => 'text-red-600',
+                        'No Application' => 'text-red-600',
+                    ],
+                ],
+                'nib' => [
+                    'label' => 'NIB',
+                    'options' => ['Active', 'Pending', 'Declined', 'No Application'],
+                    'classes' => [
+                        'Active' => 'text-shark',
+                        'Pending' => 'text-green-600',
+                        'Declined' => 'text-red-600',
+                        'No Application' => 'text-red-600',
+                    ],
+                ],
+                'cigna' => [
+                    'label' => 'Cigna',
+                    'options' => ['Active', 'Pending', 'Declined', 'No Application'],
+                    'classes' => [
+                        'Active' => 'text-shark',
+                        'Pending' => 'text-green-600',
+                        'Declined' => 'text-red-600',
+                        'No Application' => 'text-red-600',
+                    ],
+                ],
+                'kiwisaver' => [
+                    'label' => 'Kiwisaver',
+                    'options' => ['Active', 'Pending', 'Declined', 'No Application'],
+                    'classes' => [
+                        'Active' => 'text-shark',
+                        'Pending' => 'text-green-600',
+                        'Declined' => 'text-red-600',
+                        'No Application' => 'text-red-600',
+                    ],
+                ],
+            ],
+            'adviser-requirements' => [
+                'fspr' => [
+                    'label' => 'FSPR',
+                    'options' => 'expiring-date',
+                ],
+                'drs' => [
+                    'label' => 'DRS',
+                    'options' => ['Paid', 'Partial', 'Not Paid', 'Others'],
+                    'classes' => [
+                        'Paid' => 'text-shark',
+                        'Partial' => 'text-green-600',
+                        'Not Paid' => 'text-red-600',
+                        'Others' => 'text-shark',
+                    ],
+                ],
+                'pi-cover' => [
+                    'label' => 'PI Cover',
+                    'options' => ['Paid', 'Partial', 'Not Paid', 'Agreement'],
+                    'classes' => [
+                        'Paid' => 'text-shark',
+                        'Partial' => 'text-green-600',
+                        'Not Paid' => 'text-red-600',
+                        'Agreement' => 'text-shark',
+                    ],
+                ],
+                'lvl-5' => [
+                    'label' => 'Level 5',
+                    'options' => ['Finished', 'Ongoing', 'Not Enrolled'],
+                    'classes' => [
+                        'Finished' => 'text-shark',
+                        'Ongoing' => 'text-green-600',
+                        'Not Enrolled' => 'text-red-600',
+                    ],
+                ],
+            ],
+            'documentary-requirements' => [
+                'bank-acct-aml' => [
+                    'label' => 'Bank Acct (AML)',
+                    'options' => ['Compliant', 'Non-Compliant'],
+                    'classes' => [
+                        'Compliant' => 'text-shark',
+                        'Non-Compliant' => 'text-red-600',
+                    ],
+                ],
+                'tax' => [
+                    'label' => 'Tax',
+                    'options' => ['GST', 'Non-GST', 'WHT', 'Pending'],
+                    'classes' => [
+                        'GST' => 'text-shark',
+                        'Non-GST' => 'text-shark',
+                        'WHT' => 'text-shark',
+                        'Pending' => 'text-red-600',
+                    ],
+                ],
+                'business-photo' => [
+                    'label' => 'Business Photo',
+                    'options' => ['Received', 'Not Received'],
+                    'classes' => [
+                        'Received' => 'text-shark',
+                        'Not Received' => 'text-red-500',
+                    ],
+                ],
+                'id' => [
+                    'label' => 'ID',
+                    'options' => ['Received', 'Not Received'],
+                    'classes' => [
+                        'Received' => 'text-shark',
+                        'Not Received' => 'text-red-500',
+                    ],
+                ],
+            ],
+            'software' => [
+                'email' => [
+                    'label' => 'Email',
+                    'options' => ['Active', 'Not Active'],
+                    'classes' => [
+                        'Active' => 'text-shark',
+                        'Not Active' => 'text-red-600',
+                    ],
+                ],
+                'pipedrive' => [
+                    'label' => 'Pipedrive',
+                    'options' => ['Active', 'Not Active'],
+                    'classes' => [
+                        'Active' => 'text-shark',
+                        'Not Active' => 'text-red-600',
+                    ],
+                ],
+                'training' => [
+                    'label' => 'Training',
+                    'options' => ['Active', 'Not Active'],
+                    'classes' => [
+                        'Active' => 'text-shark',
+                        'Not Active' => 'text-red-600',
+                    ],
+                ],
+                'advice-process' => [
+                    'label' => 'Advice Process',
+                    'options' => ['Active', 'Not Active'],
+                    'classes' => [
+                        'Active' => 'text-shark',
+                        'Not Active' => 'text-red-600',
+                    ],
+                ],
+                'website' => [
+                    'label' => 'Website',
+                    'options' => ['Yes', 'No'],
+                    'classes' => [
+                        'Yes' => 'text-shark',
+                        'No' => 'text-red-600',
+                    ],
+                ],
+                'client-feedback-report' => [
+                    'label' => 'Client Feedback Report',
+                    'options' => ['Active', 'Not Active'],
+                    'classes' => [
+                        'Active' => 'text-shark',
+                        'Not Active' => 'text-red-600',
+                    ],
+                ],
+                'lead-tracker' => [
+                    'label' => 'Lead Tracker',
+                    'options' => ['Active', 'Not Active'],
+                    'classes' => [
+                        'Active' => 'text-shark',
+                        'Not Active' => 'text-red-600',
+                    ],
+                ],
+            ],
+        ],
     ],
 
     'complaint' => [
