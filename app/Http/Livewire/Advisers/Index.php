@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Advisers;
 
 use App\Models\Adviser;
 use App\Traits\WithColumnSorter;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -19,6 +20,14 @@ class Index extends Component
     public $showDelete = false;
 
     public $listeners = ['render'];
+
+    public $tabs;
+
+    public $currentTab;
+
+    public $firstTab;
+
+    public $lastTab;
 
     public function getAdviserProperty()
     {
@@ -42,6 +51,20 @@ class Index extends Component
         $advisers = $query->paginate();
 
         return view('livewire.advisers.index', compact('advisers'));
+    }
+
+    public function mount()
+    {
+        $this->tabs = collect(config('services.adviser.requirements'))->keys()->mapWithKeys(function ($item) {
+            return [$item => Str::title(Str::replace('_', ' ', $item))];
+        })->prepend('Basic Information', 'basic_information')
+            ->all();
+
+        $this->firstTab = collect($this->tabs)->keys()->first();
+
+        $this->lastTab = collect($this->tabs)->keys()->last();
+
+        $this->currentTab = $this->firstTab;
     }
 
     public function updatingSearch()
