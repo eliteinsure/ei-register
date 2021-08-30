@@ -20,6 +20,11 @@ class Adviser extends Model
         'requirements' => 'array',
     ];
 
+    public function getStatusClassAttribute()
+    {
+        return config('services.adviser.status_classes')[$this->status];
+    }
+
     public function getFsprClassAttribute()
     {
         $date = Carbon::parse($this->requirements['adviser_requirements']['fspr']);

@@ -40,6 +40,11 @@ return [
     'adviser' => [
         'types' => ['Adviser', 'Staff', 'Management'],
         'status' => ['Active', 'Pending', 'Terminated'],
+        'status_classes' => [
+            'Active' => 'text-shark',
+            'Pending' => 'text-green-600',
+            'Terminated' => 'text-red-600',
+        ],
         'requirements' => [
             'sub_agencies' => [
                 'fidelity_life' => [
