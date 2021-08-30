@@ -25,7 +25,7 @@ class Adviser extends Model
         return config('services.adviser.status_classes')[$this->status];
     }
 
-    public function getFsprClassAttribute()
+    public function getAdviserRequirementsFsprClassAttribute()
     {
         $date = Carbon::parse($this->requirements['adviser_requirements']['fspr']);
 
@@ -42,6 +42,30 @@ class Adviser extends Model
         }
 
         return 'text-shark';
+    }
+
+    public function requirementValue($requirementKey, $subRequirementKey, $value)
+    {
+        $key = config('services.adviser.requirements.' . $requirementKey . '.' . $subRequirementKey);
+
+        if ('expiring-date' == $key['options']) {
+            return Carbon::parse($value)->format('d/m/Y');
+        }
+
+        return $value;
+    }
+
+    public function requirementClass($requirementKey, $subRequirementKey, $value)
+    {
+        $key = config('services.adviser.requirements.' . $requirementKey . '.' . $subRequirementKey);
+
+        if (is_array($key['options'])) {
+            return $key['classes'][$value];
+        } elseif ('expiring-date' == $key['options']) {
+            return $this->{$requirementKey . '_' . $subRequirementKey . '_class'};
+        } else {
+            return 'text-shark';
+        }
     }
 
     public function adviserComplaints()
