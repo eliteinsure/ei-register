@@ -41,8 +41,8 @@ return [
         'types' => ['Adviser', 'Staff', 'Management'],
         'status' => ['Active', 'Pending', 'Terminated'],
         'requirements' => [
-            'sub-agencies' => [
-                'fidelity-life' => [
+            'sub_agencies' => [
+                'fidelity_life' => [
                     'label' => 'Fidelity Life',
                     'options' => ['Active', 'Pending', 'Declined', 'No Application'],
                     'classes' => [
@@ -72,7 +72,7 @@ return [
                         'No Application' => 'text-red-600',
                     ],
                 ],
-                'partners-life' => [
+                'partners_life' => [
                     'label' => 'Partners Life',
                     'options' => ['Active', 'Pending', 'Declined', 'No Application'],
                     'classes' => [
@@ -113,7 +113,7 @@ return [
                     ],
                 ],
             ],
-            'adviser-requirements' => [
+            'adviser_requirements' => [
                 'fspr' => [
                     'label' => 'FSPR',
                     'options' => 'expiring-date',
@@ -128,7 +128,7 @@ return [
                         'Others' => 'text-shark',
                     ],
                 ],
-                'pi-cover' => [
+                'pi_cover' => [
                     'label' => 'PI Cover',
                     'options' => ['Paid', 'Partial', 'Not Paid', 'Agreement'],
                     'classes' => [
@@ -138,7 +138,7 @@ return [
                         'Agreement' => 'text-shark',
                     ],
                 ],
-                'lvl-5' => [
+                'lvl_5' => [
                     'label' => 'Level 5',
                     'options' => ['Finished', 'Ongoing', 'Not Enrolled'],
                     'classes' => [
@@ -148,8 +148,8 @@ return [
                     ],
                 ],
             ],
-            'documentary-requirements' => [
-                'bank-acct-aml' => [
+            'documentary_requirements' => [
+                'bank_acct_aml' => [
                     'label' => 'Bank Acct (AML)',
                     'options' => ['Compliant', 'Non-Compliant'],
                     'classes' => [
@@ -167,7 +167,7 @@ return [
                         'Pending' => 'text-red-600',
                     ],
                 ],
-                'business-photo' => [
+                'business_photo' => [
                     'label' => 'Business Photo',
                     'options' => ['Received', 'Not Received'],
                     'classes' => [
@@ -209,7 +209,7 @@ return [
                         'Not Active' => 'text-red-600',
                     ],
                 ],
-                'advice-process' => [
+                'advice_process' => [
                     'label' => 'Advice Process',
                     'options' => ['Active', 'Not Active'],
                     'classes' => [
@@ -225,7 +225,7 @@ return [
                         'No' => 'text-red-600',
                     ],
                 ],
-                'client-feedback-report' => [
+                'client_feedback_report' => [
                     'label' => 'Client Feedback Report',
                     'options' => ['Active', 'Not Active'],
                     'classes' => [
@@ -233,7 +233,7 @@ return [
                         'Not Active' => 'text-red-600',
                     ],
                 ],
-                'lead-tracker' => [
+                'lead_tracker' => [
                     'label' => 'Lead Tracker',
                     'options' => ['Active', 'Not Active'],
                     'classes' => [
