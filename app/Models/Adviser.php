@@ -49,7 +49,7 @@ class Adviser extends Model
         $key = config('services.adviser.requirements.' . $requirementKey . '.' . $subRequirementKey);
 
         if ('expiring-date' == $key['options']) {
-            return Carbon::parse($value)->format('d/m/Y');
+            return $value ? Carbon::parse($value)->format('d/m/Y') : null;
         }
 
         return $value;
@@ -60,7 +60,7 @@ class Adviser extends Model
         $key = config('services.adviser.requirements.' . $requirementKey . '.' . $subRequirementKey);
 
         if (is_array($key['options'])) {
-            return $key['classes'][$value];
+            return $key['classes'][$value] ?? 'text-shark';
         } elseif ('expiring-date' == $key['options']) {
             return $this->{$requirementKey . '_' . $subRequirementKey . '_class'};
         } else {
