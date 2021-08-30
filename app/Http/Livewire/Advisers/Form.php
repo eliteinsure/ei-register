@@ -20,7 +20,10 @@ class Form extends Component
 
     public $types;
 
-    public $status;
+    public $options = [
+        'types' => [],
+        'status' => [],
+    ];
 
     protected $listeners = ['add', 'edit'];
 
@@ -42,19 +45,14 @@ class Form extends Component
     {
         $this->resetInput();
 
-        $this->types = collect(config('services.adviser.types'))->map(function ($type) {
-            return [
-                'value' => $type,
-                'label' => $type,
-            ];
-        })->all();
-
-        $this->status = collect(['Active', 'Terminated'])->map(function ($status) {
-            return [
-                'value' => $status,
-                'label' => $status,
-            ];
-        })->all();
+        foreach ($this->options as $key => $option) {
+            $this->options[$key] = collect(config('services.adviser.' . $key))->map(function ($item) {
+                return [
+                    'value' => $item,
+                    'label' => $item,
+                ];
+            })->all();
+        }
     }
 
     public function render()

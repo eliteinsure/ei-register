@@ -16,12 +16,12 @@ class CreateAdvisersTable extends Migration
         Schema::create('advisers', function (Blueprint $table) {
             $table->id();
 
-            $table->string('type'); // Adviser, Staff, Management
+            $table->string('type');
             $table->string('name');
             $table->string('email');
             $table->integer('fsp_no')->nullable();
             $table->string('contact_number');
-            $table->string('status'); // Active, Terminated;
+            $table->string('status');
 
             $table->timestamps();
         });
