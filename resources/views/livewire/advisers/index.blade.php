@@ -11,6 +11,37 @@
       </div>
     </div>
 
+    @if ($advisers->count())
+      <div class="mb-4">
+        <div class="sm:hidden">
+          <label for="tabs" class="sr-only">Select a tab</label>
+          <select id="tabs" name="tabs"
+            class="block w-full focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+            wire:change="$set('currentTab', $event.target.value)">
+            @foreach ($tabs as $tabName => $tabLabel)
+              <option {{ $tabName == $currentTab ? 'selected' : null }} value="{{ $tabName }}">
+                {{ $tabLabel }}
+              </option>
+            @endforeach
+          </select>
+        </div>
+        <div class="hidden sm:inline-block">
+          <nav class="relative z-0 rounded-lg shadow flex divide-x divide-gray-200" aria-label="Tabs">
+            @foreach ($tabs as $tabName => $tabLabel)
+              <a href="javascript:void(0);"
+                class="{{ $tabName == $currentTab ? 'text-tblue' : 'text-shark hover:text-dsgreen' }} {{ $tabName == $firstTab ? 'rounded-l-lg' : null }} {{ $tabName == $lastTab ? 'rounded-r-lg' : null }} group relative min-w-0 flex-1 overflow-hidden bg-white py-4 px-4 text-sm font-medium text-center hover:bg-gray-50 focus:z-10 flex items-center"
+                aria-current="page"
+                wire:click="$set('currentTab', '{{ $tabName }}')">
+                <span class="w-full">{{ $tabLabel }}</span>
+                <span aria-hidden="true"
+                  class="{{ $tabName == $currentTab ? 'bg-lmara' : 'bg-transparent' }} absolute inset-x-0 bottom-0 h-0.5"></span>
+              </a>
+            @endforeach
+          </nav>
+        </div>
+      </div>
+    @endif
+
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
         <div
@@ -34,30 +65,43 @@
                       Name
                     </x-column-sorter>
                   </th>
-                  <th scope="col"
-                    class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="email">
-                      Email
-                    </x-column-sorter>
-                  </th>
-                  <th scope="col"
-                    class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="fsp_no">
-                      FSP Number
-                    </x-column-sorter>
-                  </th>
-                  <th scope="col"
-                    class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="contact_number">
-                      Contact Number
-                    </x-column-sorter>
-                  </th>
-                  <th scope="col"
-                    class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="status">
-                      Status
-                    </x-column-sorter>
-                  </th>
+                  @if ($currentTab == 'basic_information')
+                    <th scope="col"
+                      class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
+                      <x-column-sorter column="email">
+                        Email
+                      </x-column-sorter>
+                    </th>
+                    <th scope="col"
+                      class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
+                      <x-column-sorter column="fsp_no">
+                        FSP Number
+                      </x-column-sorter>
+                    </th>
+                    <th scope="col"
+                      class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
+                      <x-column-sorter column="contact_number">
+                        Contact Number
+                      </x-column-sorter>
+                    </th>
+                    <th scope="col"
+                      class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
+                      <x-column-sorter column="status">
+                        Status
+                      </x-column-sorter>
+                    </th>
+                  @else
+                    @foreach (config('services.adviser.requirements') as $requirementKey => $requirement)
+                      @if ($requirementKey == $currentTab)
+                        @foreach ($requirement as $subRequirementKey => $subRequirement)
+                          <th scope="col"
+                            class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
+                            {{ $subRequirement['label'] }}
+                          </th>
+                        @endforeach
+                      @endif
+                    @endforeach
+                  @endif
                   @if (auth()->user()->hasRole('admin'))
                     <th scope="col" class="relative px-4 py-3">
                       <span class="sr-only">Delete Action</span>
@@ -85,6 +129,10 @@
                               View Details
                             @endif
                           </x-jet-dropdown-link>
+                          <x-jet-dropdown-link href="javascript:void(0)"
+                            wire:click="$emitTo('advisers.requirement', 'show', {{ $adviser->id }})">
+                            Requirements
+                          </x-jet-dropdown-link>
                         </x-slot>
                       </x-jet-dropdown>
                     </td>
@@ -94,18 +142,33 @@
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $adviser->name }}
                     </td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
-                      {{ $adviser->email }}
-                    </td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
-                      {{ $adviser->fsp_no ?? 'N/A' }}
-                    </td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
-                      {{ $adviser->contact_number }}
-                    </td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
-                      {{ $adviser->status }}
-                    </td>
+                    @if ($currentTab == 'basic_information')
+                      <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
+                        {{ $adviser->email }}
+                      </td>
+                      <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
+                        {{ $adviser->fsp_no ?? 'N/A' }}
+                      </td>
+                      <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
+                        {{ $adviser->contact_number }}
+                      </td>
+                      <td
+                        class="px-4 py-2 whitespace-nowrap text-sm text-opacity-75 {{ $adviser->status_class }}">
+                        {{ $adviser->status }}
+                      </td>
+                    @else
+                      @foreach (config('services.adviser.requirements') as $requirementKey => $requirement)
+                        @if ($requirementKey == $currentTab)
+                          @foreach ($requirement as $subRequirementKey => $subRequirement)
+                            <td
+                              class="px-4 py-2 whitespace-nowrap text-sm text-opacity-75 font-medium {{ $adviser->requirementClass($requirementKey, $subRequirementKey, $adviser->requirements[$requirementKey][$subRequirementKey]) }}">
+                              {{ $adviser->requirementValue($requirementKey, $subRequirementKey, $adviser->requirements[$requirementKey][$subRequirementKey]) }}
+                            </td>
+                          @endforeach
+                        @endif
+                      @endforeach
+                    @endif
+
                     @if (auth()->user()->hasRole('admin'))
                       <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                         <button type="button" class="text-red-500 hover:text-red-700" title="Delete"
