@@ -19,7 +19,7 @@ class UpdateAdviser
 
         $rules['email'] = ['required', 'string', 'email', 'max:255', Rule::unique('advisers')->ignore($adviser)];
 
-        $rules['status'] = ['required', 'in:Active,Terminated'];
+        $rules['status'] = ['required', 'in:' . implode(',', config('services.adviser.status'))];
 
         $attributes['status'] = 'Status';
 
