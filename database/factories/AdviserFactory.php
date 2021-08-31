@@ -27,7 +27,7 @@ class AdviserFactory extends Factory
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'contact_number' => $this->faker->bothify('+639#########'),
-            'status' => $this->faker->randomElement(['Active', 'Terminated']),
+            'status' => Arr::random(config('services.adviser.status')),
         ];
     }
 
@@ -37,6 +37,26 @@ class AdviserFactory extends Factory
             if ('Adviser' == $adviser->type) {
                 $adviser->fsp_no = $this->faker->numerify('######');
             }
+
+            $requirements = [];
+
+            foreach (config('services.adviser.requirements') as $requirementName => $requirement) {
+                $requirements[$requirementName] = [];
+
+                $subRequirements = [];
+
+                foreach ($requirement as $subRequirementName => $subRequirement) {
+                    if (is_array($subRequirement['options'])) {
+                        $subRequirements[$subRequirementName] = Arr::random($subRequirement['options']);
+                    } elseif ('expiring-date' == $subRequirement['options']) {
+                        $subRequirements[$subRequirementName] = $this->faker->date();
+                    }
+                }
+
+                $requirements[$requirementName] = $subRequirements;
+            }
+
+            $adviser->requirements = $requirements;
         });
     }
 }

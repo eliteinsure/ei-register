@@ -10,6 +10,7 @@
   <x-page-wrap>
     @livewire('advisers.index')
     @livewire('advisers.form')
+    @livewire('advisers.requirement')
     <x-focus-error />
   </x-page-wrap>
 </x-app-layout>
