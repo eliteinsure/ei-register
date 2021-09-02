@@ -10,6 +10,6 @@ trait FocusError
             return false;
         }
 
-        $this->dispatchBrowserEvent('focus-error', $this->getErrorBag()->first());
+        $this->dispatchBrowserEvent('focus-error', $this->getErrorBag()->keys()[0]);
     }
 }
