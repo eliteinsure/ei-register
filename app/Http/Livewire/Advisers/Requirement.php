@@ -4,11 +4,14 @@ namespace App\Http\Livewire\Advisers;
 
 use App\Actions\Adviser\UpdateAdviserRequirement;
 use App\Models\Adviser;
+use App\Traits\Validators\FocusError;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
 class Requirement extends Component
 {
+    use FocusError;
+
     public $input;
 
     public $adviserId;
@@ -32,6 +35,16 @@ class Requirement extends Component
 
     public function render()
     {
+        $errorBag = $this->getErrorBag();
+
+        if (count($errorBag)) {
+            $errorTab = Str::before($errorBag->keys()[0], '.');
+
+            $this->currentTab = $errorTab;
+        }
+
+        $this->focusError();
+
         return view('livewire.advisers.requirement');
     }
 
