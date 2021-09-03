@@ -50,6 +50,9 @@ class ClaimController extends Controller
 
         $pdf = Pdf::loadView('pdf.claims.report', $pdfData, [], [
             'orientation' => 'landscape',
+            'instanceConfigurator' => function ($mpdf) {
+                $mpdf->setAutoBottomMargin = 'stretch';
+            },
         ]);
 
         return $pdf->stream('claims-report.pdf');

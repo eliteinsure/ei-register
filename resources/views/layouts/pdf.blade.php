@@ -45,6 +45,38 @@
     </table>
   </htmlpageheader>
 
+  <htmlpagefooter name="page-footer-first">
+    <table class="table-footer">
+      <tr>
+        <td colspan="2" class="text-sm text-justify" style="padding-left: 0.5in; padding-right: 0.5in;">
+          Disclaimer: Eliteinsure has used reasonable endeavours to ensure the accuracy and completeness of
+          the information provided but makes no warranties as to the accuracy or completeness of such
+          information. The information should not be taken as advice. Eliteinsure accepts no responsibility
+          for the results of any omissions or actions taken on basis of this information. This report includes
+          commercially sensitive information. Accordingly, it may be used for the purpose provided; may not be
+          disclosed to any third party; and will be subject to any obligation of confidence owed by the
+          recipient under contract or otherwise.
+        </td>
+      </tr>
+      <tr>
+        <td class="text-xs">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="footer-logo">
+          <img src="{{ asset('images/horizontal-logo.png') }}"
+            width="2.12in" />
+        </td>
+        <td class="footer-page">
+          <a
+            href="{{ config('services.company.url') }}"
+            class="footer-link"
+            target="_blank">{{ config('services.company.web') }}</a>&nbsp;|&nbsp;Page
+          {PAGENO}
+        </td>
+      </tr>
+    </table>
+  </htmlpagefooter>
+
   <htmlpagefooter name="page-footer">
     <table class="table-footer">
       <tr>
