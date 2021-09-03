@@ -57,7 +57,11 @@ class ComplaintController extends Controller
             $pdfData['advisers'] = $advisers;
         }
 
-        $pdf = Pdf::loadView('pdf.complaints.report', $pdfData);
+        $pdf = Pdf::loadView('pdf.complaints.report', $pdfData, [], [
+            'instanceConfigurator' => function ($mpdf) {
+                $mpdf->setAutoBottomMargin = 'stretch';
+            },
+        ]);
 
         return $pdf->stream('complaints-report.pdf');
     }
