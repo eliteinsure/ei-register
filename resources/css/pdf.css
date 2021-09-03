@@ -14,6 +14,7 @@
 
 @page :first {
     header: page-header-first;
+    footer: page-footer-first;
 }
 
 .margin {
@@ -151,6 +152,18 @@ li {
 
 .text-left {
     text-align: left;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.text-sm {
+    font-size: 0.85em;
+}
+
+.text-xs {
+    font-size: 0.75em;
 }
 
 .nowrap {

@@ -49,6 +49,9 @@ class SiteController extends Controller
 
         $pdf = Pdf::loadView('pdf.sites.report', $pdfData, [], [
             'orientation' => 'landscape',
+            'instanceConfigurator' => function ($mpdf) {
+                $mpdf->setAutoBottomMargin = 'stretch';
+            },
         ]);
 
         return $pdf->stream('software-report.pdf');
