@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Adviser;
 use App\Models\Claim;
 use App\Traits\Validators\ClaimReportValidator;
 use App\Traits\Validators\ReportError;
@@ -38,7 +39,9 @@ class ClaimController extends Controller
             ->whereBetween('created_at', [
                 Carbon::parse($data['created_from'])->startOfDay()->format('Y-m-d H:i:s'),
                 Carbon::parse($data['created_to'])->endOfDay()->format('Y-m-d H:i:s'),
-            ])->oldest('created_at');
+            ])->when(isset($data['advisers']), function ($query) use ($data) {
+                return $query->whereIn('adviser_id', $data['advisers']);
+            })->oldest('created_at');
 
         $claims = $query->get();
 
@@ -47,6 +50,12 @@ class ClaimController extends Controller
             'claims' => $claims,
             'filter' => $data,
         ];
+
+        if (isset($data['advisers'])) {
+            $advisers = Adviser::whereIn('id', $data['advisers'])->oldest('name')->pluck('name');
+
+            $pdfData['advisers'] = $advisers;
+        }
 
         $pdf = Pdf::loadView('pdf.claims.report', $pdfData, [], [
             'orientation' => 'landscape',

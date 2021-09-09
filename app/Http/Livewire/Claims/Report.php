@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Claims;
 
 use App\Actions\Claim\GenerateClaimReport;
+use App\Models\Adviser;
 use App\Traits\Validators\FocusError;
 use Livewire\Component;
 
@@ -28,6 +29,17 @@ class Report extends Component
         $this->resetInput();
     }
 
+    public function updated($name, $value)
+    {
+        if ('input.advisers' == $name) {
+            if ($value) {
+                $this->input['advisers'] = explode(',', $value);
+            } else {
+                unset($this->input['advisers']);
+            }
+        }
+    }
+
     public function dehydrate()
     {
         $this->focusError();
@@ -39,6 +51,8 @@ class Report extends Component
             'created_from' => '',
             'created_to' => '',
         ];
+
+        $this->dispatchBrowserEvent('advisers-lookup-value');
     }
 
     public function show()
@@ -46,6 +60,22 @@ class Report extends Component
         $this->resetInput();
 
         $this->showModal = true;
+    }
+
+    public function advisersLookupSearch($search = '')
+    {
+        $query = Adviser::when($search, function ($query) use ($search) {
+            return $query->where('name', 'like', '%' . $search . '%');
+        })->oldest('name');
+
+        $advisers = $query->get()->map(function ($adviser) {
+            return [
+                'value' => $adviser['id'],
+                'label' => $adviser['name'] . " ($adviser[type])",
+            ];
+        });
+
+        $this->dispatchBrowserEvent('advisers-lookup-list', $advisers);
     }
 
     public function generate(GenerateClaimReport $action)
