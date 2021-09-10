@@ -71,6 +71,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         Route::group(['as' => 'sites.', 'prefix' => 'software'], function () {
             Route::get('/', [SiteController::class, 'report'])->name('index');
         });
+
+        Route::group(['as' => 'advisers.', 'prefix' => 'advisers'], function () {
+            Route::get('/{adviser}', [AdviserController::class, 'pdf'])->name('pdf');
+        });
     });
 
     Route::resource('users', UserController::class)->only([
