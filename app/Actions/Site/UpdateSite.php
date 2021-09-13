@@ -20,10 +20,6 @@ class UpdateSite
 
         $data = Validator::make($input, $rules, [], $this->siteAttributes())->validate();
 
-        if (! $data['update_date']) {
-            $data['update_date'] = null;
-        }
-
         $site->update($data);
 
         return $site;

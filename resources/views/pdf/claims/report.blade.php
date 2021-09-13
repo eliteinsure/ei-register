@@ -16,6 +16,11 @@
           class="font-bold">{{ \Illuminate\Support\Carbon::parse($filter['created_to'])->format('d/m/Y') }}</span>
       </td>
     </tr>
+    <tr>
+      <td class="p-2">Advisers:
+        <span class="font-bold">{{ isset($advisers) ? $advisers->implode(', ') : 'All' }}</span>
+      </td>
+    </tr>
   </table>
 
   <p>&nbsp;</p>

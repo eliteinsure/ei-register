@@ -177,7 +177,7 @@ return [
                     'options' => ['Received', 'Not Received'],
                     'classes' => [
                         'Received' => 'text-shark',
-                        'Not Received' => 'text-red-500',
+                        'Not Received' => 'text-red-600',
                     ],
                 ],
                 'id' => [
@@ -185,7 +185,7 @@ return [
                     'options' => ['Received', 'Not Received'],
                     'classes' => [
                         'Received' => 'text-shark',
-                        'Not Received' => 'text-red-500',
+                        'Not Received' => 'text-red-600',
                     ],
                 ],
             ],

@@ -53,7 +53,6 @@ class Form extends Component
     {
         $this->input = [
             'launch_date' => '',
-            'update_date' => '',
         ];
     }
 
