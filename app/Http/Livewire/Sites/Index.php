@@ -72,12 +72,16 @@ class Index extends Component
 
         $this->siteId = $id;
 
+        abort_if($this->site->histories()->count(), 403, 'Could not delete software. Please make sure that there are no software histories with this software.');
+
         $this->showDelete = true;
     }
 
     public function delete(DeleteSite $action)
     {
         abort_unless(auth()->user()->hasRole('admin'), 403);
+
+        abort_if($this->site->histories()->count(), 403, 'Could not delete software. Please make sure that there are no software histories with this software.');
 
         $action->delete($this->site);
 
