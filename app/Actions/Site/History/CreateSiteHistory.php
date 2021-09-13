@@ -16,6 +16,10 @@ class CreateSiteHistory
 
         $siteHistory = $site->histories()->create($data);
 
+        $site->update([
+            'update_date' => $site->histories()->latest('update_date')->first()->update_date,
+        ]);
+
         return $siteHistory;
     }
 }

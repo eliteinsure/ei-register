@@ -15,5 +15,9 @@ class UpdateSiteHistory
         $data = Validator::make($input, $this->siteHistoryRules(), [], $this->siteHistoryAttributes())->validate();
 
         $siteHistory->update($data);
+
+        $siteHistory->site()->first()->update([
+            'update_date' => $siteHistory->site()->first()->histories()->latest('update_date')->first()->update_date,
+        ]);
     }
 }
