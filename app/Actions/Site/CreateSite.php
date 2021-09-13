@@ -14,10 +14,6 @@ class CreateSite
     {
         $data = Validator::make($input, $this->siteRules(), [], $this->siteAttributes())->validate();
 
-        if (! $data['update_date']) {
-            $data['update_date'] = null;
-        }
-
         $site = Site::create($data);
 
         return $site;

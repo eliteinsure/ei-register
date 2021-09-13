@@ -18,11 +18,12 @@
           <x-date-picker id="launch_date" wire:model.defer="input.launch_date" />
           <x-jet-input-error for="launch_date" class="mt-2" />
         </div>
-        <div class="form-input">
-          <x-jet-label for="update_date" value="Date Last Updated" />
-          <x-date-picker id="update_date" wire:model.defer="input.update_date" />
-          <x-jet-input-error for="update_date" class="mt-2" />
-        </div>
+        @if ($siteId && isset($input['update_date']))
+          <div class="form-input">
+            <x-jet-label for="update_date" value="Date Last Updated" />
+            <div id="update_date">{{ \Illuminate\Support\Carbon::parse($input['update_date'])->format('d/m/Y') }}</div>
+          </div>
+        @endif
         <div class="form-input">
           <x-jet-label for="description" value="Description" />
           <x-textarea id="description" class="block w-full mt-1 resize-y"

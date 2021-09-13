@@ -29,9 +29,20 @@ class Index extends Component
 
     public $lastTab;
 
+    public $showPdf = false;
+
     public function getAdviserProperty()
     {
         return Adviser::findOrFail($this->adviserId);
+    }
+
+    public function getPdfUrlProperty()
+    {
+        if (! $this->adviserId) {
+            return '';
+        }
+
+        return route('reports.advisers.pdf', ['adviser' => $this->adviserId, 'now' => time()]);
     }
 
     public function render()
@@ -114,5 +125,12 @@ class Index extends Component
             'style' => 'success',
             'message' => 'Adviser has been deleted.',
         ]);
+    }
+
+    public function showPdf($id)
+    {
+        $this->adviserId = $id;
+
+        $this->showPdf = true;
     }
 }

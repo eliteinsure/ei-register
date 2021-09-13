@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Livewire\Sites;
+namespace App\Http\Livewire\Sites\History;
 
-use App\Actions\Site\DeleteSite;
 use App\Models\Site;
 use App\Traits\WithColumnSorter;
 use Exception;
@@ -17,6 +16,8 @@ class Index extends Component
 
     public $siteId;
 
+    public $historyId;
+
     public $search;
 
     public $showDelete = false;
@@ -28,16 +29,26 @@ class Index extends Component
         return Site::findOrFail($this->siteId);
     }
 
+    public function getSiteHistoryProperty()
+    {
+        return $this->site->histories()->findOrFail($this->historyId);
+    }
+
+    public function mount($siteId)
+    {
+        $this->siteId = $siteId;
+    }
+
     public function render()
     {
-        $query = Site::when($this->search, function ($query) {
+        $query = $this->site->histories()->when($this->search, function ($query) {
             return $query->where(function ($query) {
-                $stringColumns = ['name', 'url', 'description'];
+                $stringColumns = ['updates', 'developer', 'version'];
 
-                $dateColumns = ['launch_date', 'update_date'];
+                $dateColumns = ['update_date'];
 
                 foreach ($stringColumns as $column) {
-                    $query->orWhere($column, 'like', '%' . $this->search . '%');
+                    $query->orWhere($column, 'like %' . $this->search . '%');
                 }
 
                 foreach ($dateColumns as $column) {
@@ -54,9 +65,9 @@ class Index extends Component
 
         $query = $this->sortQuery($query);
 
-        $sites = $query->paginate();
+        $histories = $query->paginate();
 
-        return view('livewire.sites.index', compact('sites'));
+        return view('livewire.sites.history.index', compact('histories'));
     }
 
     public function updatingSearch()
@@ -70,26 +81,26 @@ class Index extends Component
     {
         abort_unless(auth()->user()->hasRole('admin'), 403);
 
-        $this->siteId = $id;
-
-        abort_if($this->site->histories()->count(), 403, 'Could not delete software. Please make sure that there are no software histories with this software.');
+        $this->historyId = $id;
 
         $this->showDelete = true;
     }
 
-    public function delete(DeleteSite $action)
+    public function delete()
     {
         abort_unless(auth()->user()->hasRole('admin'), 403);
 
-        abort_if($this->site->histories()->count(), 403, 'Could not delete software. Please make sure that there are no software histories with this software.');
+        $this->siteHistory->delete();
 
-        $action->delete($this->site);
-
-        $this->showDelete = false;
+        $this->site->update([
+            'update_date' => $this->site->histories()->latest('update_date')->first()->update_date,
+        ]);
 
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
-            'message' => 'Software has been deleted.',
+            'message' => 'Software history has been deleted.',
         ]);
+
+        $this->showDelete = false;
     }
 }

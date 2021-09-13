@@ -17,6 +17,11 @@
           <x-date-picker id="created_to" wire:model.defer="input.created_to" />
           <x-jet-input-error for="created_to" class="mt-2" />
         </div>
+        <div class="form-input">
+          <x-jet-label for="advisers" value="Advisers" />
+          <x-lookup.multi id="advisers" wire:model.defer="input.advisers" />
+          <x-jet-input-error for="advisers" class="mt-2" />
+        </div>
       </div>
     </x-slot>
     <x-slot name="footer">
