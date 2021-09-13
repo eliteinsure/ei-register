@@ -92,6 +92,10 @@ class Index extends Component
 
         $this->siteHistory->delete();
 
+        $this->site->update([
+            'update_date' => $this->site->histories()->latest('update_date')->first()->update_date,
+        ]);
+
         $this->dispatchBrowserEvent('banner-message', [
             'style' => 'success',
             'message' => 'Software history has been deleted.',
