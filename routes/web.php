@@ -5,6 +5,7 @@ use App\Http\Controllers\CirController;
 use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\SiteHistoryController;
 use App\Http\Controllers\SiteManualController;
 use App\Http\Controllers\TestUploadController;
 use App\Http\Controllers\UserController;
@@ -54,6 +55,14 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         'show' => 'sites.manuals.show',
     ]);
 
+    Route::resource('software.history', SiteHistoryController::class)->only([
+        'index',
+    ])->parameters([
+        'software' => 'site',
+    ])->names([
+        'index' => 'sites.history.index',
+    ]);
+
     Route::resource('advisers', AdviserController::class)->only([
         'index',
     ]);
@@ -70,6 +79,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
         Route::group(['as' => 'sites.', 'prefix' => 'software'], function () {
             Route::get('/', [SiteController::class, 'report'])->name('index');
+        });
+
+        Route::group(['as' => 'advisers.', 'prefix' => 'advisers'], function () {
+            Route::get('/{adviser}', [AdviserController::class, 'pdf'])->name('pdf');
         });
     });
 
