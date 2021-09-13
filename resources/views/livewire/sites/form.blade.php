@@ -20,8 +20,7 @@
         </div>
         <div class="form-input">
           <x-jet-label for="update_date" value="Date Last Updated" />
-          <x-date-picker id="update_date" wire:model.defer="input.update_date" />
-          <x-jet-input-error for="update_date" class="mt-2" />
+          <div id="update_date">{{ isset($input['update_date']) ? \Illuminate\Support\Carbon::parse($input['update_date'])->format('d/m/Y') : null }}</div>
         </div>
         <div class="form-input">
           <x-jet-label for="description" value="Description" />
