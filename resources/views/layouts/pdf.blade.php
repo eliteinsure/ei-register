@@ -45,7 +45,7 @@
     </table>
   </htmlpageheader>
 
-  <htmlpagefooter name="page-footer-first">
+  <htmlpagefooter name="page-footer">
     <table class="table-footer">
       <tr>
         <td colspan="2" class="text-sm text-justify" style="padding-left: 0.5in; padding-right: 0.5in;">
@@ -58,27 +58,6 @@
           recipient under contract or otherwise.
         </td>
       </tr>
-      <tr>
-        <td class="text-xs">&nbsp;</td>
-      </tr>
-      <tr>
-        <td class="footer-logo">
-          <img src="{{ asset('images/horizontal-logo.png') }}"
-            width="2.12in" />
-        </td>
-        <td class="footer-page">
-          <a
-            href="{{ config('services.company.url') }}"
-            class="footer-link"
-            target="_blank">{{ config('services.company.web') }}</a>&nbsp;|&nbsp;Page
-          {PAGENO}
-        </td>
-      </tr>
-    </table>
-  </htmlpagefooter>
-
-  <htmlpagefooter name="page-footer">
-    <table class="table-footer">
       <tr>
         <td class="footer-logo">
           <img src="{{ asset('images/horizontal-logo.png') }}"
