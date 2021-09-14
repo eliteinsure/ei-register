@@ -14,7 +14,7 @@
 
 @page :first {
     header: page-header-first;
-    footer: page-footer-first;
+    /* footer: page-footer-first; */
 }
 
 .margin {
