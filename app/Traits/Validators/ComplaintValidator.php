@@ -29,7 +29,6 @@ trait ComplaintValidator
                 }),
             ],
             'tier.1.handed_over_at' => ['required', 'date_format:Y-m-d'],
-            'tier.1.notes' => ['nullable', 'string'],
         ];
 
         if ($update) {
@@ -46,7 +45,6 @@ trait ComplaintValidator
                 ],
                 'tier.2.handed_over_at' => ['required_if:tier.1.status,Failed', 'date_format:Y-m-d'],
                 'tier.2.status' => ['required_if:tier.1.status,Failed', 'in:' . implode(',', config('services.complaint.tier.2.status'))],
-                'tier.2.notes' => ['nullable', 'string'],
             ]);
         }
 
