@@ -31,13 +31,11 @@ class Adviser extends Model
 
         $now = Carbon::now()->startOfDay();
 
-        if ($date >= $now) {
+        if ($date < $now) {
             return 'text-red-600';
         }
 
-        $month = $now->copy()->subMonth()->startOfDay();
-
-        if ($date->between($month, $now)) {
+        if($date == $now){
             return 'text-green-600';
         }
 
