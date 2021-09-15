@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Adviser;
+use App\Models\ComplaintNote;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -67,5 +68,10 @@ class Complaint extends Model
     public function staff()
     {
         return $this->belongsTo(Adviser::class, 'tier->2->staff_id');
+    }
+
+    public function notes()
+    {
+        return $this->hasMany(ComplaintNote::class);
     }
 }
