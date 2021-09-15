@@ -69,8 +69,15 @@
     </tr>
     <tr>
       <td class="p-2">Notes:</td>
-      <td class="py-2 pr-2 w-third" colspan="4">{{ $complaint->tier['1']['notes'] ?? '' }}</td>
+      <td class="py-2 pr-2 w-third" colspan="4">&nbsp;</td>
     </tr>
+    @foreach ($complaint->notes()->where('tier', 1)->latest('created_at')->get()
+      as $note)
+      <tr>
+        <td class="p-2">{{ $note->created_at->format('d/m/Y') }}</td>
+        <td class="py-2 pr-2 w-third" colspan="4">{{ $note->notes }}</td>
+      </tr>
+    @endforeach
   </table>
 
   @if (isset($complaint->tier['2']))
@@ -98,8 +105,15 @@
       </tr>
       <tr>
         <td class="p-2">Notes:</td>
-        <td class="py-2 pr-2 w-third" colspan="4">{{ $complaint->tier['2']['notes'] ?? '' }}</td>
+        <td class="py-2 pr-2 w-third" colspan="4">&nbsp;</td>
       </tr>
+      @foreach ($complaint->notes()->where('tier', 1)->latest('created_at')->get()
+      as $note)
+        <tr>
+          <td class="p-2">{{ $note->created_at->format('d/m/Y') }}</td>
+          <td class="py-2 pr-2 w-third" colspan="4">{{ $note->notes }}</td>
+        </tr>
+      @endforeach
     </table>
   @endif
 @endsection
