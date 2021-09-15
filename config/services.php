@@ -270,6 +270,7 @@ return [
             'CIGNA',
             'Accuro',
             'NZFunds',
+            'NIB',
             'N/A',
         ],
         'natures' => [
