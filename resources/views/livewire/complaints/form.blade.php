@@ -80,8 +80,10 @@
 
               @if ($complaintId)
                 <div class="flex items-center justify-between mt-1">
-                  <x-jet-button type="button" wire:click="createTier1Note">Add</x-jet-button>
-                  <x-jet-action-message on="tier1NotesCreated">Notes added.</x-jet-action-message>
+                  @if (auth()->user()->hasRole('admin'))
+                    <x-jet-button type="button" wire:click="createTier1Note">Add</x-jet-button>
+                    <x-jet-action-message on="tier1NotesCreated">Notes added.</x-jet-action-message>
+                  @endif
                   <x-jet-button type="button" wire:click="$emitTo('complaints.notes', 'show', {{ $complaintId }}, 1)">View Notes</x-jet-button>
                 </div>
               @endif
@@ -124,8 +126,10 @@
 
               @if ($complaintId)
                 <div class="flex items-center justify-between mt-1">
-                  <x-jet-button type="button" wire:click="createTier2Note">Add</x-jet-button>
-                  <x-jet-action-message on="tier2NotesCreated">Notes added.</x-jet-action-message>
+                  @if (auth()->user()->hasRole('admin'))
+                    <x-jet-button type="button" wire:click="createTier2Note">Add</x-jet-button>
+                    <x-jet-action-message on="tier2NotesCreated">Notes added.</x-jet-action-message>
+                  @endif
                   <x-jet-button type="button" wire:click="$emitTo('complaints.notes', 'show', {{ $complaintId }}, 2)">View Notes</x-jet-button>
                 </div>
               @endif
