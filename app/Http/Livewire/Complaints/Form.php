@@ -128,6 +128,10 @@ class Form extends Component
             'updated_at',
         ])->all();
 
+        $this->tier1NotesInput = [];
+
+        $this->tier2NotesInput = [];
+
         $complainant = json_encode([[
             'value' => $this->input['complainant'],
             'label' => $this->input['complainant'],
