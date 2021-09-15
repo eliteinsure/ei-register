@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Complaints;
 
 use App\Actions\Complaint\CreateComplaint;
+use App\Actions\Complaint\CreateComplaintNote;
 use App\Actions\Complaint\UpdateComplaint;
 use App\Models\Adviser;
 use App\Models\Complaint;
@@ -17,6 +18,12 @@ class Form extends Component
     public $complaintId;
 
     public $input;
+
+    public $tier1NotesInput;
+
+    public $tier2NotesInput;
+
+    public $notesTier;
 
     public $showModal = false;
 
@@ -88,6 +95,10 @@ class Form extends Component
                 ],
             ],
         ];
+
+        $this->tier1NotesInput = [];
+
+        $this->tier2NotesInput = [];
 
         $this->dispatchBrowserEvent('complainant-lookup-value');
 
@@ -212,7 +223,11 @@ class Form extends Component
     {
         abort_unless(auth()->user()->hasRole('admin'), 403);
 
-        $action->create($this->input);
+        $this->tier1NotesInput['tier'] = 1;
+
+        $this->notesTier = 1;
+
+        $action->create($this->input, $this->tier1NotesInput);
 
         $this->emitTo('complaints.index', 'render');
 
@@ -238,5 +253,35 @@ class Form extends Component
             'style' => 'success',
             'message' => 'Complaint has been updated.',
         ]);
+    }
+
+    public function createTier1Note(CreateComplaintNote $action)
+    {
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+
+        $this->notesTier = 1;
+
+        $this->tier1NotesInput['tier'] = 1;
+
+        $action->create($this->tier1NotesInput, $this->complaint);
+
+        $this->emit('tier1NotesCreated');
+
+        $this->tier1NotesInput = [];
+    }
+
+    public function createTier2Note(CreateComplaintNote $action)
+    {
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+
+        $this->notesTier = 2;
+
+        $this->tier2NotesInput['tier'] = 2;
+
+        $action->create($this->tier2NotesInput, $this->complaint);
+
+        $this->emit('tier2NotesCreated');
+
+        $this->tier2NotesInput = [];
     }
 }
