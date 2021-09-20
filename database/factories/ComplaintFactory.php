@@ -30,13 +30,9 @@ class ComplaintFactory extends Factory
             'acknowledged_at' => $this->faker->date(),
             'nature' => Arr::random(config('services.complaint.natures')),
             'tier' => [
-                '1' => [
-                    'adviser_id' => strval(Adviser::factory()->create(['status' => 'Active'])->id),
-                    'handed_over_at' => $this->faker->date(),
-                    'status' => Arr::random(config('services.complaint.tier.1.status')),
-                    'stated_at' => $this->faker->date(),
-                    'notes' => $this->faker->sentence,
-                ],
+                'tier' => Arr::random(config('services.complaint.tier.tier')),
+                'handler' => Arr::random(config('services.complaint.tier.handlers')),
+                'status' => Arr::random(config('services.complaint.tier.status')),
             ],
         ];
     }
@@ -46,7 +42,7 @@ class ComplaintFactory extends Factory
         return $this->state(function (array $attributes) {
             $tier = $attributes['tier'];
 
-            $tier['1']['status'] = 'Failed';
+            $tier['status'] = 'Failed';
 
             return [
                 'tier' => $tier,
@@ -65,19 +61,11 @@ class ComplaintFactory extends Factory
                 $complaint->insurer = Arr::random(config('services.complaint.insurers'));
             }
 
-            if ('Failed' != $complaint->tier['1']['status']) {
-                return;
-            }
-
             $tier = $complaint->tier;
 
-            $tier['2'] = [
-                'staff_position' => Arr::random(config('services.complaint.tier.2.staffPositions')),
-                'staff_id' => strval(Adviser::factory()->create(['status' => 'Active'])->id),
-                'handed_over_at' => $this->faker->date(),
-                'status' => Arr::random(config('services.complaint.tier.2.status')),
-                'notes' => $this->faker->sentence,
-            ];
+            if ('Adviser' == $tier['handler']) {
+                $tier['adviser_id'] = strval(Adviser::factory()->create(['status' => 'Active'])->id);
+            }
 
             $complaint->tier = $tier;
         });

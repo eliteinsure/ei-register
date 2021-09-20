@@ -43,17 +43,7 @@ class TestSeeder extends Seeder
         }
 
         foreach (range(1, 100) as $item) {
-            $data = Complaint::factory()->make([
-                'complainant' => $faker->randomElement($complainants),
-            ])->toArray();
-
-            $data['tier'][1]['adviser_id'] = strval(Adviser::inRandomOrder()->first()->id);
-
-            if (isset($data['tier'][2]['staff_id'])) {
-                $data['tier'][2]['staff_id'] = strval(Adviser::inRandomOrder()->first()->id);
-            }
-
-            $complaint = Complaint::create($data);
+            $complaint = Complaint::factory()->create();
 
             ComplaintNote::factory()->create([
                 'complaint_id' => $complaint->id,
