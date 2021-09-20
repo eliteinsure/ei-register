@@ -30,29 +30,15 @@ class Complaint extends Model
 
     public function getStatusAttribute()
     {
-        if ('Failed' == $this->tier['1']['status']) {
-            return 'Tier 2 - ' . $this->tier['2']['status'];
-        }
-
-        if ('Pending' == $this->tier['1']['status']) {
-            return $this->tier['1']['status'];
-        }
-
-        return 'Tier 1 - ' . $this->tier['1']['status'];
+        return 'Tier ' . $this->tier['tier'] . ' - ' . $this->tier['status'];
     }
 
     public function getDayCounterAttribute()
     {
-        if ('Resolved' == ($this->tier['1']['status'] ?? '')) {
+        if ('Resolved' == ($this->tier['status'] ?? '')) {
             return $this->acknowledged_at->diffInDaysFiltered(function (Carbon $date) {
                 return ! $date->isWeekend();
-            }, Carbon::parse($this->tier['1']['stated_at']));
-        }
-
-        if ('Resolved' == ($this->tier['2']['status'] ?? '')) {
-            return $this->acknowledged_at->diffInDaysFiltered(function (Carbon $date) {
-                return ! $date->isWeekend();
-            }, Carbon::parse($this->tier['2']['handed_over_at']));
+            }, isset($this->tier['completed_at']) ? Carbon::parse($this->tier['completed_at']) : null);
         }
 
         return $this->acknowledged_at->diffInDaysFiltered(function (Carbon $date) {
@@ -62,12 +48,7 @@ class Complaint extends Model
 
     public function adviser()
     {
-        return $this->belongsTo(Adviser::class, 'tier->1->adviser_id');
-    }
-
-    public function staff()
-    {
-        return $this->belongsTo(Adviser::class, 'tier->2->staff_id');
+        return $this->belongsTo(Adviser::class, 'tier->adviser_id');
     }
 
     public function notes()

@@ -35,7 +35,7 @@ class Adviser extends Model
             return 'text-red-600';
         }
 
-        if($date == $now){
+        if ($date == $now) {
             return 'text-green-600';
         }
 
@@ -66,14 +66,9 @@ class Adviser extends Model
         }
     }
 
-    public function adviserComplaints()
+    public function complaints()
     {
-        return $this->hasMany(Complaint::class, 'tier->1->adviser_id');
-    }
-
-    public function staffComplaints()
-    {
-        return $this->hasMany(Complaint::class, 'tier->2->staff_id');
+        return $this->hasMany(Complaint::class, 'tier->adviser_id');
     }
 
     public function claims()

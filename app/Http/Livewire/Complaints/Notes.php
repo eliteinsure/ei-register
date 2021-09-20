@@ -12,8 +12,6 @@ class Notes extends Component
 
     public $complaintId;
 
-    public $tier;
-
     public $showModal = false;
 
     protected $listeners = ['show'];
@@ -28,17 +26,15 @@ class Notes extends Component
         $notes = collect([]);
 
         if ($this->complaintId) {
-            $notes = $this->complaint->notes()->where('tier', $this->tier)->paginate(2);
+            $notes = $this->complaint->notes()->paginate();
         }
 
         return view('livewire.complaints.notes', compact('notes'));
     }
 
-    public function show($complaintId, $tier)
+    public function show($complaintId)
     {
         $this->complaintId = $complaintId;
-
-        $this->tier = $tier;
 
         $this->showModal = true;
     }

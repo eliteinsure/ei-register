@@ -19,11 +19,7 @@ class Form extends Component
 
     public $input;
 
-    public $tier1NotesInput;
-
-    public $tier2NotesInput;
-
-    public $notesTier;
+    public $tierNotesInput;
 
     public $showModal = false;
 
@@ -31,9 +27,9 @@ class Form extends Component
         'labels' => [],
         'insurers' => [],
         'natures' => [],
-        'tier.1.status' => [],
-        'tier.2.staffPositions' => [],
-        'tier.2.status' => [],
+        'tier.tier' => [],
+        'tier.handlers' => [],
+        'tier.status' => [],
     ];
 
     protected $listeners = ['add', 'edit'];
@@ -73,10 +69,8 @@ class Form extends Component
 
     public function updated($name, $value)
     {
-        if ('input.tier.1.status' == $name && 'Failed' != $value) {
-            unset($this->input['tier'][2]);
-
-            $this->input['tier'][2]['handed_over_at'] = '';
+        if ('input.tier.handler' == $name && 'Adviser' != $value) {
+            unset($this->input['tier']['adviser_id']);
         }
     }
 
@@ -86,19 +80,11 @@ class Form extends Component
             'received_at' => '',
             'acknowledged_at' => '',
             'tier' => [
-                1 => [
-                    'handed_over_at' => '',
-                    'stated_at' => '',
-                ],
-                2 => [
-                    'handed_over_at' => '',
-                ],
+                'completed_at' => '',
             ],
         ];
 
-        $this->tier1NotesInput = [];
-
-        $this->tier2NotesInput = [];
+        $this->tierNotesInput = [];
 
         $this->dispatchBrowserEvent('complainant-lookup-value');
 
@@ -128,9 +114,7 @@ class Form extends Component
             'updated_at',
         ])->all();
 
-        $this->tier1NotesInput = [];
-
-        $this->tier2NotesInput = [];
+        $this->tierNotesInput = [];
 
         $complainant = json_encode([[
             'value' => $this->input['complainant'],
@@ -139,25 +123,16 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('complainant-lookup-value', $complainant);
 
-        $adviser = Adviser::find($this->input['tier'][1]['adviser_id']);
+        $adviser = Adviser::find($this->input['tier']['adviser_id'] ?? null);
 
-        $adviser = json_encode([[
-            'value' => $adviser->id,
-            'label' => $adviser->name . " ($adviser[type])",
-        ]]);
-
-        $this->dispatchBrowserEvent('adviser-lookup-value', $adviser);
-
-        $staff = Adviser::find($this->input['tier'][2]['staff_id'] ?? null);
-
-        if ($staff) {
-            $staff = json_encode([[
-                'value' => $staff->id,
-                'label' => $staff->name . " ($staff[type])",
+        if ($adviser) {
+            $adviser = json_encode([[
+                'value' => $adviser->id,
+                'label' => $adviser->name . " ($adviser[type])",
             ]]);
-        }
 
-        $this->dispatchBrowserEvent('staff-lookup-value', $staff);
+            $this->dispatchBrowserEvent('adviser-lookup-value', $adviser);
+        }
 
         $this->showModal = true;
     }
@@ -179,7 +154,8 @@ class Form extends Component
 
     public function adviserLookupSearch($search = '')
     {
-        $query = Adviser::where('status', 'Active')
+        $query = Adviser::where('type', 'Adviser')
+            ->where('status', 'Active')
             ->when($search, function ($query) use ($search) {
                 return $query->where('name', 'like', '%' . $search . '%');
             })->oldest('name');
@@ -192,23 +168,6 @@ class Form extends Component
         });
 
         $this->dispatchBrowserEvent('adviser-lookup-list', $advisers);
-    }
-
-    public function staffLookupSearch($search = '')
-    {
-        $query = Adviser::where('status', 'Active')
-            ->when($search, function ($query) use ($search) {
-                return $query->where('name', 'like', '%' . $search . '%');
-            })->oldest('name');
-
-        $staffs = $query->get()->map(function ($staff) {
-            return [
-                'value' => $staff['id'],
-                'label' => $staff['name'] . " ($staff[type])",
-            ];
-        });
-
-        $this->dispatchBrowserEvent('staff-lookup-list', $staffs);
     }
 
     public function dehydrate()
@@ -227,11 +186,7 @@ class Form extends Component
     {
         abort_unless(auth()->user()->hasRole('admin'), 403);
 
-        $this->tier1NotesInput['tier'] = 1;
-
-        $this->notesTier = 1;
-
-        $action->create($this->input, $this->tier1NotesInput);
+        $action->create($this->input, $this->tierNotesInput);
 
         $this->emitTo('complaints.index', 'render');
 
@@ -259,33 +214,14 @@ class Form extends Component
         ]);
     }
 
-    public function createTier1Note(CreateComplaintNote $action)
+    public function createTierNote(CreateComplaintNote $action)
     {
         abort_unless(auth()->user()->hasRole('admin'), 403);
 
-        $this->notesTier = 1;
+        $action->create($this->tierNotesInput, $this->complaint);
 
-        $this->tier1NotesInput['tier'] = 1;
+        $this->emit('tierNotesCreated');
 
-        $action->create($this->tier1NotesInput, $this->complaint);
-
-        $this->emit('tier1NotesCreated');
-
-        $this->tier1NotesInput = [];
-    }
-
-    public function createTier2Note(CreateComplaintNote $action)
-    {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
-
-        $this->notesTier = 2;
-
-        $this->tier2NotesInput['tier'] = 2;
-
-        $action->create($this->tier2NotesInput, $this->complaint);
-
-        $this->emit('tier2NotesCreated');
-
-        $this->tier2NotesInput = [];
+        $this->tierNotesInput = [];
     }
 }

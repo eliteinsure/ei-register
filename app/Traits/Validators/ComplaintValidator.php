@@ -6,9 +6,9 @@ use Illuminate\Validation\Rule;
 
 trait ComplaintValidator
 {
-    public function complaintRules($input, $update = false)
+    public function complaintRules($input)
     {
-        $rules = [
+        return [
             'complainant' => ['required', 'string', 'max:255'],
             'label' => ['required', 'in:' . implode(',', config('services.complaint.labels'))],
             'policy_number' => ['required_if:label,Client', 'string', 'max:255'],
@@ -21,34 +21,20 @@ trait ComplaintValidator
             'received_at' => ['required', 'date_format:Y-m-d'],
             'acknowledged_at' => ['required', 'date_format:Y-m-d'],
             'nature' => ['required', 'in:' . implode(',', config('services.complaint.natures'))],
-            'tier.1' => ['required', 'array'],
-            'tier.1.adviser_id' => [
-                'required',
+            'tier' => ['required', 'array'],
+            'tier.tier' => ['required', 'in:' . implode(',', config('services.complaint.tier.tier'))],
+            'tier.handler' => ['required', 'in:' . implode(',', config('services.complaint.tier.handlers'))],
+            'tier.adviser_id' => [
+                'required_if:tier.handler,Adviser',
+                'nullable',
                 Rule::exists('advisers', 'id')->where(function ($query) {
-                    return $query->where('status', 'Active');
+                    return $query->where('type', 'Adviser')
+                        ->where('status', 'Active');
                 }),
             ],
-            'tier.1.handed_over_at' => ['required', 'date_format:Y-m-d'],
+            'tier.status' => ['required', 'in:' . implode(',', config('services.complaint.tier.status'))],
+            'tier.completed_at' => ['nullable', 'date_format:Y-m-d'],
         ];
-
-        if ($update) {
-            $rules = array_merge($rules, [
-                'tier.1.status' => ['required', 'in:' . implode(',', config('services.complaint.tier.1.status'))],
-                'tier.1.stated_at' => ['required', 'date_format:Y-m-d'],
-                'tier.2' => ['required_if:tier.1.status,Failed', 'array'],
-                'tier.2.staff_position' => ['required_if:tier.1.status,Failed', 'string', 'max:255'],
-                'tier.2.staff_id' => [
-                    'required_if:tier.1.status,Failed',
-                    Rule::exists('advisers', 'id')->where(function ($query) {
-                        return $query->where('status', 'Active');
-                    }),
-                ],
-                'tier.2.handed_over_at' => ['required_if:tier.1.status,Failed', 'date_format:Y-m-d'],
-                'tier.2.status' => ['required_if:tier.1.status,Failed', 'in:' . implode(',', config('services.complaint.tier.2.status'))],
-            ]);
-        }
-
-        return $rules;
     }
 
     public function complaintAttributes()
@@ -63,18 +49,11 @@ trait ComplaintValidator
             'acknowledged_at' => 'Date Acknowledged',
             'nature' => 'Nature of Complaint',
             'tier' => 'Tier',
-            'tier.1' => 'Tier 1',
-            'tier.1.adviser_id' => 'Adviser',
-            'tier.1.handed_over_at' => 'Date Handed Over',
-            'tier.1.status' => 'Status',
-            'tier.1.stated_at' => 'Date Stated',
-            'tier.1.notes' => 'Notes',
-            'tier.2' => 'Tier 2',
-            'tier.2.staff_position' => 'Management / Staff',
-            'tier.2.staff_name' => 'Staff Name',
-            'tier.2.handed_over_at' => 'Date Handed Over',
-            'tier.2.status' => 'Status',
-            'tier.2.notes' => 'Notes',
+            'tier.tier' => 'Tier',
+            'tier.handler' => 'Handled By',
+            'tier.adviser_id' => 'Adviser',
+            'tier.status' => 'Status',
+            'tier.completed_at' => 'Date Completed',
         ];
     }
 }

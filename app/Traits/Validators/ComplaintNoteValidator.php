@@ -8,7 +8,6 @@ trait ComplaintNoteValidator
     {
         return [
             'notes' => ['required', 'string'],
-            'tier' => ['required', 'in:1,2'],
         ];
     }
 
@@ -16,7 +15,6 @@ trait ComplaintNoteValidator
     {
         return [
             'notes' => 'Notes',
-            'tier' => 'Tier',
         ];
     }
 }
