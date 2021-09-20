@@ -37,7 +37,7 @@ class ComplaintFactory extends Factory
         ];
     }
 
-    public function tier1Failed()
+    public function tierFailed()
     {
         return $this->state(function (array $attributes) {
             $tier = $attributes['tier'];
