@@ -80,7 +80,6 @@ class Form extends Component
             'received_at' => '',
             'acknowledged_at' => '',
             'tier' => [
-                'stated_at' => '',
                 'completed_at' => '',
             ],
         ];

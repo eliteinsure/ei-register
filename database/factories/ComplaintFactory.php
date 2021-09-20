@@ -33,7 +33,6 @@ class ComplaintFactory extends Factory
                 'tier' => Arr::random(config('services.complaint.tier.tier')),
                 'handler' => Arr::random(config('services.complaint.tier.handlers')),
                 'status' => Arr::random(config('services.complaint.tier.status')),
-                'stated_at' => $this->faker->date(),
             ],
         ];
     }

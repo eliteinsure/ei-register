@@ -33,7 +33,6 @@ trait ComplaintValidator
                 }),
             ],
             'tier.status' => ['required', 'in:' . implode(',', config('services.complaint.tier.status'))],
-            'tier.stated_at' => ['required', 'date_format:Y-m-d'],
             'tier.completed_at' => ['nullable', 'date_format:Y-m-d'],
         ];
     }
@@ -54,7 +53,6 @@ trait ComplaintValidator
             'tier.handler' => 'Handled By',
             'tier.adviser_id' => 'Adviser',
             'tier.status' => 'Status',
-            'tier.stated_at' => 'Date Stated',
             'tier.completed_at' => 'Date Completed',
         ];
     }

@@ -70,11 +70,6 @@
               <x-jet-input-error for="tier.status" class="mt-2" />
             </div>
             <div class="form-input">
-              <x-jet-label for="stated_at" value="Date Stated" />
-              <x-date-picker id="stated_at" wire:model.defer="input.tier.stated_at" />
-              <x-jet-input-error for="tier.stated_at" class="mt-2" />
-            </div>
-            <div class="form-input">
               <x-jet-label for="completed_at" value="Date Completed" />
               <x-date-picker id="completed_at" wire:model.defer="input.tier.completed_at" />
               <x-jet-input-error for="tier.completed_at" class="mt-2" />
