@@ -84,7 +84,7 @@
                     <x-jet-button type="button" wire:click="createTier1Note">Add</x-jet-button>
                     <x-jet-action-message on="tier1NotesCreated">Notes added.</x-jet-action-message>
                   @endif
-                  <x-jet-button type="button" wire:click="$emitTo('complaints.notes', 'show', {{ $complaintId }}, 1)">View Notes</x-jet-button>
+                  <x-jet-button type="button" wire:click="$emitTo('complaints.notes', 'show', {{ $complaintId }})">View Notes</x-jet-button>
                 </div>
               @endif
             </div>
