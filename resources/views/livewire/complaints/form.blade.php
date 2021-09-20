@@ -1,12 +1,11 @@
 <div>
-  <x-form-modal wire:model="showModal" submit="submit" max-width="5xl" focusable>
+  <x-form-modal wire:model="showModal" submit="submit" max-width="3xl" focusable>
     <x-slot name="title">{{ $this->title }}</x-slot>
     <x-slot name="content">
       <div class="md:flex md:space-x-6">
-        <div class="md:w-1/3">
+        <div class="md:w-1/2">
           <div class="space-y-6">
             <div class="form-input">
-              <p class="text-sm font-medium text-shark mb-2">&nbsp;</p>
               <x-jet-label for="complainant" value="Complainant Name" />
               <x-lookup.text id="complainant" wire:model.defer="input.complainant" />
               <x-jet-input-error for="complainant" class="mt-2" />
@@ -47,90 +46,51 @@
             </div>
           </div>
         </div>
-        <div class="md:w-1/3">
+        <div class="md:w-1/2">
           <div class="space-y-6">
             <div class="form-input">
-              <p class="text-sm font-medium text-shark mt-6 md:mt-0 mb-2">TIER 1</p>
+              <x-jet-label for="tier" value="Tier" />
+              <x-select id="tier" class="block w-full mt-1" wire:model.defer="input.tier.tier" :options="$options['tier.tier']" />
+              <x-jet-input-error for="tier.tier" class="mt-2" />
+            </div>
+            <div class="form-input">
+              <x-jet-label for="handler" value="Handled By" />
+              <x-select id="handler" class="block w-full mt-1" wire:model.lazy="input.tier.handler" :options="$options['tier.handlers']" />
+              <x-jet-input-error for="tier.handler" class="mt-2" />
+            </div>
+            <div class="form-input {{ ($input['tier']['handler'] ?? '') == 'Adviser' ? null : 'hidden' }}">
               <x-jet-label for="adviser" value="Adviser" />
-              <x-lookup.select id="adviser" wire:model.defer="input.tier.1.adviser_id" />
-              <x-jet-input-error for="tier.1.adviser_id" class="mt-2" />
+              <x-lookup.select id="adviser" wire:model.defer="input.tier.adviser_id" />
+              <x-jet-input-error for="tier.adviser_id" class="mt-2" />
             </div>
             <div class="form-input">
-              <x-jet-label for="tier1_handed_over_at" value="Date Handed Over" />
-              <x-date-picker id="tier1_handed_over_at" wire:model.defer="input.tier.1.handed_over_at" />
-              <x-jet-input-error for="tier.1.handed_over_at" class="mt-2" />
+              <x-jet-label for="tier_status" value="Status" />
+              <x-select id="tier_status" class="block w-full mt-1" wire:model="input.tier.status"
+                :options="$options['tier.status']" />
+              <x-jet-input-error for="tier.status" class="mt-2" />
             </div>
-            <div class="form-input {{ $complaintId ? '' : 'hidden' }}">
-              <x-jet-label for="tier1_status" value="Status" />
-              <x-select id="tier1_status" class="block w-full mt-1" wire:model="input.tier.1.status"
-                :options="$options['tier.1.status']" />
-              <x-jet-input-error for="tier.1.status" class="mt-2" />
-            </div>
-            <div class="form-input {{ $complaintId ? '' : 'hidden' }}">
+            <div class="form-input">
               <x-jet-label for="stated_at" value="Date Stated" />
-              <x-date-picker id="stated_at" wire:model.defer="input.tier.1.stated_at" />
-              <x-jet-input-error for="tier.1.stated_at" class="mt-2" />
+              <x-date-picker id="stated_at" wire:model.defer="input.tier.stated_at" />
+              <x-jet-input-error for="tier.stated_at" class="mt-2" />
             </div>
             <div class="form-input">
-              <x-jet-label for="tier1_notes" value="Notes" />
-              <x-textarea id="tier1_notes" class="block w-full mt-1 resize-y" wire:model.defer="tier1NotesInput.notes" />
-              @if ($notesTier == 1)
-                <x-jet-input-error for="notes" class="mt-2" />
-              @endif
+              <x-jet-label for="completed_at" value="Date Completed" />
+              <x-date-picker id="completed_at" wire:model.defer="input.tier.completed_at" />
+              <x-jet-input-error for="tier.completed_at" class="mt-2" />
+            </div>
+            <div class="form-input">
+              <x-jet-label for="tier_notes" value="Notes" />
+              <x-textarea id="tier_notes" class="block w-full mt-1 resize-y" wire:model.defer="tierNotesInput.notes" />
+              <x-jet-input-error for="notes" class="mt-2" />
 
               @if ($complaintId)
                 <div class="flex items-center justify-between mt-1">
                   @if (auth()->user()->hasRole('admin'))
-                    <x-jet-button type="button" wire:click="createTier1Note">Add</x-jet-button>
-                    <x-jet-action-message on="tier1NotesCreated">Notes added.</x-jet-action-message>
+                    <x-jet-button type="button" wire:click="createTierNote">Add</x-jet-button>
+                    <x-jet-action-message on="tierNotesCreated">Notes added.</x-jet-action-message>
                   @endif
                   <x-jet-button type="button" wire:click="$emitTo('complaints.notes', 'show', {{ $complaintId }})">View Notes</x-jet-button>
-                </div>
-              @endif
-            </div>
-          </div>
-        </div>
-        <div class="md:w-1/3">
-          <div
-            class="space-y-6 {{ ($input['tier'][1]['status'] ?? '') == 'Failed' ? 'block' : 'hidden' }}">
-            <div class="form-input">
-              <p class="text-sm font-medium text-shark mt-6 md:mt-0 mb-2">TIER 2</p>
-              <x-jet-label for="staff_position" value="Management / Staff" />
-              <x-select id="staff_position" class="block w-full mt-1"
-                wire:model.defer="input.tier.2.staff_position"
-                :options="$options['tier.2.staffPositions']" />
-              <x-jet-input-error for="tier.2.staff_position" class="mt-2" />
-            </div>
-            <div class="form-input">
-              <x-jet-label for="staff" value="Staff Name" />
-              <x-lookup.text id="staff" wire:model.defer="input.tier.2.staff_id" />
-              <x-jet-input-error for="tier.2.staff_id" class="mt-2" />
-            </div>
-            <div class="form-input">
-              <x-jet-label for="tier2_handed_over_at" value="Date Handed Over" />
-              <x-date-picker id="tier2_handed_over_at" wire:model.defer="input.tier.2.handed_over_at" />
-              <x-jet-input-error for="tier.2.handed_over_at" class="mt-2" />
-            </div>
-            <div class="form-input">
-              <x-jet-label for="tier2_status" value="Status" />
-              <x-select id="tier2_status" class="block w-full mt-1" wire:model.defer="input.tier.2.status"
-                :options="$options['tier.2.status']" />
-              <x-jet-input-error for="tier.2.status" class="mt-2" />
-            </div>
-            <div class="form-input">
-              <x-jet-label for="tier2_notes" value="Notes" />
-              <x-textarea id="tier2_notes" class="block w-full mt-1 resize-y" wire:model.defer="tier2NotesInput.notes" />
-              @if ($notesTier == 2)
-                <x-jet-input-error for="notes" class="mt-2" />
-              @endif
-
-              @if ($complaintId)
-                <div class="flex items-center justify-between mt-1">
-                  @if (auth()->user()->hasRole('admin'))
-                    <x-jet-button type="button" wire:click="createTier2Note">Add</x-jet-button>
-                    <x-jet-action-message on="tier2NotesCreated">Notes added.</x-jet-action-message>
-                  @endif
-                  <x-jet-button type="button" wire:click="$emitTo('complaints.notes', 'show', {{ $complaintId }}, 2)">View Notes</x-jet-button>
                 </div>
               @endif
             </div>
