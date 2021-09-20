@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Complaint;
 use App\Models\ComplaintNote;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ComplaintNoteFactory extends Factory
@@ -24,6 +25,7 @@ class ComplaintNoteFactory extends Factory
     {
         return [
             'complaint_id' => Complaint::inRandomOrder()->firstOrCreate(Complaint::factory()->make()->toArray())->id,
+            'created_by' => User::inRandomOrder()->first()->id,
             'notes' => $this->faker->paragraph,
         ];
     }
