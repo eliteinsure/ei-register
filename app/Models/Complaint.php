@@ -30,15 +30,7 @@ class Complaint extends Model
 
     public function getStatusAttribute()
     {
-        if ('Failed' == $this->tier['1']['status']) {
-            return 'Tier 2 - ' . $this->tier['2']['status'];
-        }
-
-        if ('Pending' == $this->tier['1']['status']) {
-            return $this->tier['1']['status'];
-        }
-
-        return 'Tier 1 - ' . $this->tier['1']['status'];
+        return 'Tier ' . $this->tier['tier'] . ' - ' . $this->tier['status'];
     }
 
     public function getDayCounterAttribute()
@@ -62,12 +54,7 @@ class Complaint extends Model
 
     public function adviser()
     {
-        return $this->belongsTo(Adviser::class, 'tier->1->adviser_id');
-    }
-
-    public function staff()
-    {
-        return $this->belongsTo(Adviser::class, 'tier->2->staff_id');
+        return $this->belongsTo(Adviser::class, 'tier->adviser_id');
     }
 
     public function notes()
