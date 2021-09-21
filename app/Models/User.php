@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\ComplaintNote;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -60,4 +61,9 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function complaintNotes()
+    {
+        return $this->hasMany(ComplaintNote::class, 'created_by');
+    }
 }
