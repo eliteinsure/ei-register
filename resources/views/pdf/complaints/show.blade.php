@@ -46,74 +46,41 @@
 
   <p>&nbsp;</p>
 
-  <h1 class="section-title">&emsp;Tier 1</h1>
+  <h1 class="section-title">&emsp;Tier</h1>
 
   <table class="table-striped w-full">
     <tr>
-      <td class="p-2">Adviser:</td>
-      <td class="py-2">{{ $complaint->adviser->name }} ({{ $complaint->adviser->type }})</td>
+      <td class="p-2">Tier:</td>
+      <td class="py-2 w-quart">{{ $complaint->tier['tier'] }}</td>
       <td class="w-4">&nbsp;</td>
-      <td class="p-2">Date Handed Over:</td>
-      <td class="py-2 pr-2">
-        {{ \Illuminate\Support\Carbon::parse($complaint->tier['1']['handed_over_at'])->format('d/m/Y') }}
-      </td>
+      <td class="p-2">Handled By:</td>
+      <td class="py-2 pr-2 w-quart">{{ $complaint->tier['handler'] }}</td>
     </tr>
     <tr>
-      <td class="p-2">Status:</td>
-      <td class="py-2">{{ $complaint->tier['1']['status'] }}</td>
+      <td class="p-2">Adviser:</td>
+      <td class="py-2">{{ $complaint->tier['handler'] == 'Adviser' ? $complaint->adviser->name . '(' . $complaint->adviser->type . ')' : 'N/A' }}</td>
       <td class="w-4">&nbsp;</td>
-      <td class="p-2">Date Stated:</td>
-      <td class="py-2 pr-2">
-        {{ $complaint->tier['1']['stated_at'] ?? '' ? \Illuminate\Support\Carbon::parse($complaint->tier['1']['stated_at'])->format('d/m/Y') : '' }}
+      <td class="p-2">Status:</td>
+      <td class="py-2 pr-2">{{ $complaint->tier['status'] }}</td>
+    </tr>
+    <tr>
+      <td class="p-2">Date Completed:</td>
+      <td class="py-2">
+        {{ $complaint->tier['completed_at'] ?? '' ? \Illuminate\Support\Carbon::parse($complaint->tier['completed_at'])->format('d/m/Y') : '' }}
       </td>
+      <td colspan="3">&nbsp;</td>
     </tr>
     <tr>
       <td class="p-2">Notes:</td>
-      <td class="py-2 pr-2 w-third" colspan="4">&nbsp;</td>
+      <td class="py-2 pr-2" colspan="4">&nbsp;</td>
     </tr>
-    @foreach ($complaint->notes()->where('tier', 1)->latest('created_at')->get()
+    @foreach ($complaint->notes()->latest('created_at')->get()
       as $note)
       <tr>
-        <td class="p-2">{{ $note->created_at->format('d/m/Y') }}</td>
-        <td class="py-2 pr-2 w-third" colspan="4">{{ $note->notes }}</td>
+        <td class="p-2 align-top">{{ $note->created_at->format('d/m/Y') }}</td>
+        <td class="p-2 align-top">{{ $note->creator->name }}</td>
+        <td class="p-2 align-top" colspan="3">{{ $note->notes }}</td>
       </tr>
     @endforeach
   </table>
-
-  @if (isset($complaint->tier['2']))
-    <p>&nbsp;</p>
-
-    <h1 class="section-title">&emsp;Tier 2</h1>
-
-    <table class="table-striped w-full">
-      <tr>
-        <td class="p-2">Staff:</td>
-        <td class="py-2">{{ $complaint->tier['2']['staff_position'] }}</td>
-        <td class="w-4">&nbsp;</td>
-        <td class="p-2">Staff Name:</td>
-        <td class="py-2 pr-2">{{ $complaint->staff->name }} ({{ $complaint->staff->type }})
-        </td>
-      </tr>
-      <tr>
-        <td class="p-2">Date Handed Over:</td>
-        <td class="py-2">
-          {{ \Illuminate\Support\Carbon::parse($complaint->tier['2']['handed_over_at'])->format('d/m/Y') }}
-        </td>
-        <td class="w-4">&nbsp;</td>
-        <td class="p-2">Status:</td>
-        <td class="py-2 pr-2">{{ $complaint->tier['2']['status'] }}</td>
-      </tr>
-      <tr>
-        <td class="p-2">Notes:</td>
-        <td class="py-2 pr-2 w-third" colspan="4">&nbsp;</td>
-      </tr>
-      @foreach ($complaint->notes()->where('tier', 1)->latest('created_at')->get()
-      as $note)
-        <tr>
-          <td class="p-2">{{ $note->created_at->format('d/m/Y') }}</td>
-          <td class="py-2 pr-2 w-third" colspan="4">{{ $note->notes }}</td>
-        </tr>
-      @endforeach
-    </table>
-  @endif
 @endsection

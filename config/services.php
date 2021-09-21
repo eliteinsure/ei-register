@@ -282,7 +282,23 @@ return [
             'Conduct',
         ],
         'tier' => [
-            '1' => [
+            'tier' => [
+                1, 2,
+            ],
+            'handlers' => [
+                'Adviser',
+                'Management',
+                'Staff',
+            ],
+            'status' => [
+                'Pending',
+                'Resolved',
+                'Failed',
+                'Retracted',
+                'Invalid',
+                'Deadlock',
+            ],
+            /* '1' => [
                 'status' => [
                     'Pending',
                     'Resolved',
@@ -290,8 +306,8 @@ return [
                     'Retracted',
                     'Invalid',
                 ],
-            ],
-            '2' => [
+            ], */
+            /* '2' => [
                 'staffPositions' => [
                     'Managing Director',
                     'Executive Admin',
@@ -299,17 +315,8 @@ return [
                     'Admin ADR',
                     'SADR',
                 ],
-                'status' => [
-                    'Pending',
-                    'Resolved',
-                    'Failed',
-                    'Retracted',
-                    'Invalid',
-                    'Deadlock',
-                ],
-            ],
+            ], */
         ],
-
     ],
 
     'claim' => [

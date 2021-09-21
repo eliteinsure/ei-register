@@ -14,6 +14,8 @@ class CreateComplaintNote
     {
         $data = Validator::make($input, $this->complaintNoteRules(), [], $this->complaintNoteAttributes())->validate();
 
+        $data['created_by'] = auth()->user()->id;
+
         $note = $complaint->notes()->create($data);
 
         return $note;

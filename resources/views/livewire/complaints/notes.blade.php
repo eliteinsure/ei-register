@@ -1,5 +1,5 @@
 <x-jet-dialog-modal wire:model="showModal">
-  <x-slot name="title">Tier {{ $tier }} Notes</x-slot>
+  <x-slot name="title">Complaint Notes</x-slot>
   <x-slot name="content">
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -15,6 +15,10 @@
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
+                    Added By
+                  </th>
+                  <th scope="col"
+                    class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                     Notes
                   </th>
                 </tr>
@@ -24,6 +28,9 @@
                   <tr class="{{ $index % 2 ? 'bg-gray-50' : 'bg-white' }}">
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $note->created_at->format('d/m/Y') }}
+                    </td>
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
+                      {{ $note->creator->name }}
                     </td>
                     <td class="px-4 py-2 text-sm text-shark text-opacity-75">
                       {{ $note->notes }}

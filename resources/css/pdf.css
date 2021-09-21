@@ -158,6 +158,10 @@ li {
     text-align: justify;
 }
 
+.align-top {
+    vertical-align: top;
+}
+
 .text-sm {
     font-size: 0.85em;
 }

@@ -22,11 +22,11 @@ class CreateComplaint
 
         $notesData = Validator::make($notesInput, $complaintNoteRules, [], $this->complaintNoteAttributes())->validate();
 
-        $data['tier'][1]['status'] = 'Pending';
-
         $complaint = Complaint::create($data);
 
         if (isset($notesData['notes'])) {
+            $notesData['created_by'] = auth()->user()->id;
+
             $complaint->notes()->create($notesData);
         }
 
