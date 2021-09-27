@@ -14,7 +14,7 @@ class Notes extends Component
 
     public $showModal = false;
 
-    protected $listeners = ['show'];
+    protected $listeners = ['show', 'render'];
 
     public function getComplaintProperty()
     {
