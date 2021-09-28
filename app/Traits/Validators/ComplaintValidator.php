@@ -11,6 +11,8 @@ trait ComplaintValidator
         return [
             'complainant' => ['required', 'string', 'max:255'],
             'label' => ['required', 'in:' . implode(',', config('services.complaint.labels'))],
+            'complainee' => ['required', 'string', 'max:255'],
+            'complainee_label' => ['required', 'in:' . implode(',', config('services.complaint.labels'))],
             'policy_number' => ['required_if:label,Client', 'string', 'max:255'],
             'insurer' => [
                 Rule::requiredIf(function () use ($input) {
@@ -42,6 +44,8 @@ trait ComplaintValidator
         return [
             'complainant' => 'Complainant Name',
             'label' => 'Label',
+            'complainee' => 'Complainee Name',
+            'complainee_label' => 'Label',
             'policy_number' => 'Policy Number',
             'insurer' => 'Insurer',
             'received_at' => 'Date Received',
