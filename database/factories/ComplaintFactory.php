@@ -26,6 +26,8 @@ class ComplaintFactory extends Factory
         return [
             'complainant' => $this->faker->name(),
             'label' => Arr::random(config('services.complaint.labels')),
+            'complainee' => $this->faker->name(),
+            'complainee_label' => Arr::random(config('services.complaint.labels')),
             'received_at' => $this->faker->date(),
             'acknowledged_at' => $this->faker->date(),
             'nature' => Arr::random(config('services.complaint.natures')),

@@ -39,6 +39,10 @@
                   </th>
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
+                    <x-column-sorter column="complainee">Complainee Name</x-column-sorter>
+                  </th>
+                  <th scope="col"
+                    class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                     <x-column-sorter column="received_at">Date Received</x-column-sorter>
                   </th>
                   <th scope="col"
@@ -53,10 +57,10 @@
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                     Status
                   </th>
-                  <th scope="col"
+                  {{-- <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                     <x-column-sorter column="acknowledged_at">Days Counter</x-column-sorter>
-                  </th>
+                  </th> --}}
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                     <x-column-sorter column="nature">Nature of Complaint</x-column-sorter>
@@ -99,8 +103,11 @@
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $complaint->number }}
                     </td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
+                    <td class="px-4 py-2 text-sm text-shark text-opacity-75">
                       {{ $complaint->complainant }}
+                    </td>
+                    <td class="px-4 py-2 text-sm text-shark text-opacity-75">
+                      {{ $complaint->complainee }}
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $complaint->received_at->format('d/m/Y') }}
@@ -114,10 +121,10 @@
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $complaint->status }}
                     </td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
+                    {{-- <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ number_format($complaint->day_counter) }}
-                    </td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
+                    </td> --}}
+                    <td class="px-4 py-2 text-sm text-shark text-opacity-75">
                       {{ $complaint->nature }}
                     </td>
                     @if (auth()->user()->hasRole('admin'))
