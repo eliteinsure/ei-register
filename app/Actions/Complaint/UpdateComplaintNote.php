@@ -12,7 +12,9 @@ class UpdateComplaintNote
 
     public function update($input, ComplaintNote $note)
     {
-        $data = Validator::make($input, $this->complaintNoteRules(), [], $this->complaintNoteAttributes())->validate();
+        $data = Validator::make($input, $this->complaintNoteRules(true), [], $this->complaintNoteAttributes())->validate();
+
+        $data['created_by'] = auth()->user()->id;
 
         $note->update($data);
     }
