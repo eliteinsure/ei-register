@@ -18,7 +18,6 @@ class Complaint extends Model
 
     protected $casts = [
         'received_at' => 'date:Y-m-d',
-        'registered_at' => 'date:Y-m-d',
         'acknowledged_at' => 'date:Y-m-d',
         'tier' => 'array',
     ];
@@ -36,14 +35,18 @@ class Complaint extends Model
     public function getDayCounterAttribute()
     {
         if ('Resolved' == ($this->tier['status'] ?? '')) {
-            return $this->acknowledged_at->diffInDaysFiltered(function (Carbon $date) {
+            $counter = $this->acknowledged_at->diffInDaysFiltered(function (Carbon $date) {
                 return ! $date->isWeekend();
-            }, isset($this->tier['completed_at']) ? Carbon::parse($this->tier['completed_at']) : null);
+            }, isset($this->tier['completed_at']) ? Carbon::parse($this->tier['completed_at']) : null) - 1;
+
+            return $counter < 0 ? 0 : $counter;
         }
 
-        return $this->acknowledged_at->diffInDaysFiltered(function (Carbon $date) {
+        $counter = $this->acknowledged_at->diffInDaysFiltered(function (Carbon $date) {
             return ! $date->isWeekend();
-        });
+        }) - 1;
+
+        return $counter < 0 ? 0 : $counter;
     }
 
     public function adviser()
