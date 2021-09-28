@@ -42,6 +42,7 @@ class UpdateNotes extends Component
         $this->noteId = $noteId;
 
         $this->input = $this->note->only(['created_at', 'notes']);
+        $this->input['created_time'] = $this->note->created_at->format('H:i');
 
         $this->showModal = true;
     }
