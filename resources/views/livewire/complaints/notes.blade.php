@@ -28,6 +28,12 @@
                       class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                       Notes
                     </th>
+                    @if (auth()->user()->hasRole('admin'))
+                      <th scope="col"
+                        class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
+                        <span class="sr-only">Delete Action</span>
+                      </th>
+                    @endif
                   </tr>
                 </thead>
                 <tbody>
@@ -60,6 +66,14 @@
                       <td class="px-4 py-2 text-sm text-shark text-opacity-75">
                         {{ $note->notes }}
                       </td>
+                      @if (auth()->user()->hasRole('admin'))
+                        <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
+                          <button type="button" class="text-red-500 hover:text-red-700" title="Delete"
+                            wire:click="confirmDelete({{ $note->id }})">
+                            <x-heroicon-o-trash class="h-6 w-6" />
+                          </button>
+                        </td>
+                      @endif
                     </tr>
                   @endforeach
                 </tbody>
@@ -78,4 +92,14 @@
   </x-jet-dialog-modal>
 
   @livewire('complaints.update-notes')
+
+  <x-jet-confirmation-modal wire:model="showDelete">
+    <x-slot name="title">Delete Notes</x-slot>
+    <x-slot name="content">Are you sure to delete this notes?</x-slot>
+    <x-slot name="footer">
+      <x-jet-button type="button" wire:click="delete">Yes</x-jet-button>
+      <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showDelete', false)">No
+      </x-jet-secondary-button>
+    </x-slot>
+  </x-jet-confirmation-modal>
 </div>

@@ -12,13 +12,22 @@ class Notes extends Component
 
     public $complaintId;
 
+    public $noteId;
+
     public $showModal = false;
+
+    public $showDelete = false;
 
     protected $listeners = ['show', 'render'];
 
     public function getComplaintProperty()
     {
         return Complaint::find($this->complaintId);
+    }
+
+    public function getNoteProperty()
+    {
+        return $this->complaint->notes()->findOrFail($this->noteId);
     }
 
     public function render()
@@ -37,5 +46,23 @@ class Notes extends Component
         $this->complaintId = $complaintId;
 
         $this->showModal = true;
+    }
+
+    public function confirmDelete($id)
+    {
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+
+        $this->noteId = $id;
+
+        $this->showDelete = true;
+    }
+
+    public function delete()
+    {
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+
+        $this->note->delete();
+
+        $this->showDelete = false;
     }
 }
