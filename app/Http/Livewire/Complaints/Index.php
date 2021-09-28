@@ -42,7 +42,7 @@ class Index extends Component
     {
         $query = Complaint::when($this->search, function ($query) {
             return $query->where(function ($query) {
-                $stringColumns = ['id', 'complainant', 'label', 'policy_number', 'insurer', 'nature'];
+                $stringColumns = ['id', 'complainant', 'complainee', 'nature'];
 
                 $dateColumns = ['received_at', 'created_at', 'acknowledged_at'];
 

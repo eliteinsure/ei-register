@@ -17,6 +17,17 @@
               <x-jet-input-error for="label" class="mt-2" />
             </div>
             <div class="form-input">
+              <x-jet-label for="complainee" value="Complainee Name" />
+              <x-lookup.text id="complainee" wire:model.defer="input.complainee" />
+              <x-jet-input-error for="complainee" class="mt-2" />
+            </div>
+            <div class="form-input">
+              <x-jet-label for="complainee_label" value="Label" />
+              <x-select id="complainee_label" class="block w-full mt-1" wire:model.lazy="input.complainee_label"
+                :options="$options['labels']" />
+              <x-jet-input-error for="complainee_label" class="mt-2" />
+            </div>
+            <div class="form-input">
               <x-jet-label for="policy_number" value="Policy Number" />
               <x-jet-input type="text" id="policy_number" class="block w-full mt-1"
                 wire:model.defer="input.policy_number" />

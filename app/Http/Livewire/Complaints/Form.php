@@ -88,6 +88,8 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('complainant-lookup-value');
 
+        $this->dispatchBrowserEvent('complainee-lookup-value');
+
         $this->dispatchBrowserEvent('adviser-lookup-value');
 
         $this->dispatchBrowserEvent('staff-lookup-value');
@@ -123,6 +125,13 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('complainant-lookup-value', $complainant);
 
+        $complainee = json_encode([[
+            'value' => $this->input['complainee'],
+            'label' => $this->input['complainee'],
+        ]]);
+
+        $this->dispatchBrowserEvent('complainee-lookup-value', $complainee);
+
         $adviser = Adviser::find($this->input['tier']['adviser_id'] ?? null);
 
         if ($adviser) {
@@ -150,6 +159,21 @@ class Form extends Component
             });
 
         $this->dispatchBrowserEvent('complainant-lookup-list', $complainants);
+    }
+
+    public function complaineeLookupSearch($search = '')
+    {
+        $complainees = Complaint::select('complainee')->groupBy('complainee')
+            ->when($search, function ($query) use ($search) {
+                return $query->where('complainee', 'like', '%' . $search . '%');
+            })->oldest('complainee')->get()->map(function ($complaint) {
+                return [
+                    'value' => $complaint->complainee,
+                    'label' => $complaint->complainee,
+                ];
+            });
+
+        $this->dispatchBrowserEvent('complainee-lookup-list', $complainees);
     }
 
     public function adviserLookupSearch($search = '')
