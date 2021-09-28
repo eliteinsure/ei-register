@@ -5,7 +5,8 @@
       <div class="space-y-6">
         <div class="form-input">
           <x-jet-label for="created_at" value="Date Added" />
-          <x-jet-input type="text" value="{{ $input['created_at'] ? \Illuminate\Support\Carbon::parse($input['created_at'])->format('d/m/Y') : '' }}" :disabled="true" class="block w-full mt-1 bg-gray-100" />
+          <x-date-picker id="created_at" wire:model.defer="input.created_at" />
+          <x-jet-input-error for="created_at" class="mt-2" />
         </div>
         <div class="form-input">
           <x-jet-label for="notes" value="Notes" />

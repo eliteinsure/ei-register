@@ -14,7 +14,9 @@ class UpdateNotes extends Component
 
     public $showModal;
 
-    public $input;
+    public $input = [
+        'created_at' => '',
+    ];
 
     protected $listeners = ['show'];
 
