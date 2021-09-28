@@ -52,7 +52,7 @@
                         </td>
                       @endif
                       <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
-                        {{ $note->created_at->format('d/m/Y') }}
+                        {{ $note->created_at->format('d/m/Y h:i A') }}
                       </td>
                       <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                         {{ $note->creator->name }}

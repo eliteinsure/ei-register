@@ -12,6 +12,7 @@ trait ComplaintNoteValidator
 
         if ($update) {
             $rules['created_at'] = ['required', 'date_format:Y-m-d'];
+            $rules['created_time'] = ['nullable', 'date_format:H:i'];
         }
 
         return $rules;

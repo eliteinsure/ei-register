@@ -9,6 +9,11 @@
           <x-jet-input-error for="created_at" class="mt-2" />
         </div>
         <div class="form-input">
+          <x-jet-label for="created_time" value="Time Added" />
+          <x-jet-input type="time" id="created_time" class="block w-full mt-1" wire:model.defer="input.created_time" />
+          <x-jet-input-error for="created_time" class="mt-2" />
+        </div>
+        <div class="form-input">
           <x-jet-label for="notes" value="Notes" />
           <x-textarea id="notes" class="block w-full mt-1 resize-y" wire:model.defer="input.notes" />
           <x-jet-input-error for="notes" class="mt-2" />

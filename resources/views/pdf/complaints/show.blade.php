@@ -86,7 +86,7 @@
     @foreach ($complaint->notes()->latest('created_at')->get()
       as $note)
       <tr>
-        <td class="p-2 align-top">{{ $note->created_at->format('d/m/Y') }}</td>
+        <td class="p-2 align-top">{{ $note->created_at->format('d/m/Y h:i A') }}</td>
         <td class="p-2 align-top">{{ $note->creator->name }}</td>
         <td class="p-2 align-top" colspan="3">{{ $note->notes }}</td>
       </tr>
