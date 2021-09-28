@@ -125,10 +125,14 @@ class Form extends Component
 
         $this->dispatchBrowserEvent('complainant-lookup-value', $complainant);
 
-        $complainee = json_encode([[
-            'value' => $this->input['complainee'],
-            'label' => $this->input['complainee'],
-        ]]);
+        if ($this->input['complainee']) {
+            $complainee = json_encode([[
+                'value' => $this->input['complainee'],
+                'label' => $this->input['complainee'],
+            ]]);
+        } else {
+            $complainee = null;
+        }
 
         $this->dispatchBrowserEvent('complainee-lookup-value', $complainee);
 
