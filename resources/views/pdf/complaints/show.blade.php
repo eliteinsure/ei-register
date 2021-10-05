@@ -96,15 +96,15 @@
     @if ($complaint->notes()->count())
       <tr>
         <td class="p-2">Date Added</td>
-        <td class="py-2">Noted By</td>
-        <td class="py-2 pr-2 w-half">Notes</td>
+        <td class="p-2">Noted By</td>
+        <td class="p-2 w-half">Notes</td>
       </tr>
       @foreach ($complaint->notes()->latest('created_at')->get()
       as $note)
         <tr>
           <td class="p-2 align-top">{{ $note->created_at->format('d/m/Y h:i A') }}</td>
-          <td class="py-2 align-top">{{ $note->creator->name }}</td>
-          <td class="py-2 pr-2 align-top" colspan="3">{{ $note->notes }}</td>
+          <td class="p-2 align-top">{{ $note->creator->name }}</td>
+          <td class="p-2 align-top" colspan="3">{{ $note->notes }}</td>
         </tr>
       @endforeach
     @else
