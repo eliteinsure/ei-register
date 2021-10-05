@@ -80,6 +80,10 @@
       <td colspan="3">&nbsp;</td>
     </tr>
     <tr>
+      <td class="p-2">Summary:</td>
+      <td colspan="4" class="py-2 pr-2">{{ $complaint->tier['summary'] }}</td>
+    </tr>
+    <tr>
       <td class="p-2">Notes:</td>
       <td class="py-2 pr-2" colspan="4">&nbsp;</td>
     </tr>

@@ -35,6 +35,7 @@ trait ComplaintValidator
             ],
             'tier.status' => ['required', 'in:' . implode(',', config('services.complaint.tier.status'))],
             'tier.completed_at' => ['nullable', 'date_format:Y-m-d'],
+            'tier.summary' => ['nullable', 'string'],
         ];
     }
 
@@ -57,6 +58,7 @@ trait ComplaintValidator
             'tier.adviser_id' => $input['tier']['handler'],
             'tier.status' => 'Status',
             'tier.completed_at' => 'Date Completed',
+            'tier.summary' => 'Summary',
         ];
     }
 }

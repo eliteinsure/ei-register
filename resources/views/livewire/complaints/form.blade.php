@@ -86,6 +86,11 @@
               <x-jet-input-error for="tier.completed_at" class="mt-2" />
             </div>
             <div class="form-input">
+              <x-jet-label for="summary" value="Summary" />
+              <x-textarea id="summary" class="block w-full mt-1 resize-y" wire:model.defer="input.tier.summary"></x-textarea>
+              <x-jet-input-error for="tier.summary" class="mt-2" />
+            </div>
+            <div class="form-input">
               <x-jet-label for="tier_notes" value="Notes" />
               <x-textarea id="tier_notes" class="block w-full mt-1 resize-y" wire:model.defer="tierNotesInput.notes" />
               <x-jet-input-error for="notes" class="mt-2" />
