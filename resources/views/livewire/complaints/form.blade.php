@@ -69,8 +69,8 @@
               <x-select id="handler" class="block w-full mt-1" wire:model.lazy="input.tier.handler" :options="$options['tier.handlers']" />
               <x-jet-input-error for="tier.handler" class="mt-2" />
             </div>
-            <div class="form-input {{ ($input['tier']['handler'] ?? '') == 'Adviser' ? null : 'hidden' }}">
-              <x-jet-label for="adviser" value="Adviser" />
+            <div class="form-input {{ $input['tier']['handler'] ? null : 'hidden' }}">
+              <x-jet-label for="adviser" value="{{ $input['tier']['handler'] }}" />
               <x-lookup.select id="adviser" wire:model.defer="input.tier.adviser_id" />
               <x-jet-input-error for="tier.adviser_id" class="mt-2" />
             </div>
@@ -84,6 +84,11 @@
               <x-jet-label for="completed_at" value="Date Completed" />
               <x-date-picker id="completed_at" wire:model.defer="input.tier.completed_at" />
               <x-jet-input-error for="tier.completed_at" class="mt-2" />
+            </div>
+            <div class="form-input">
+              <x-jet-label for="summary" value="Summary" />
+              <x-textarea id="summary" class="block w-full mt-1 resize-y" wire:model.defer="input.tier.summary"></x-textarea>
+              <x-jet-input-error for="tier.summary" class="mt-2" />
             </div>
             <div class="form-input">
               <x-jet-label for="tier_notes" value="Notes" />
