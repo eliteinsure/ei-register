@@ -6,6 +6,7 @@
 
 @section('content')
   <p>&nbsp;</p>
+  <p>&nbsp;</p>
   <table class="table-striped w-full">
     <tr>
       <td class="p-2">Complaint Number:</td>
@@ -54,6 +55,7 @@
   </table>
 
   <p>&nbsp;</p>
+  <p>&nbsp;</p>
 
   <h1 class="section-title">&emsp;Tier</h1>
 
@@ -80,16 +82,35 @@
       <td colspan="3">&nbsp;</td>
     </tr>
     <tr>
-      <td class="p-2">Notes:</td>
-      <td class="py-2 pr-2" colspan="4">&nbsp;</td>
+      <td class="p-2">Summary:</td>
+      <td colspan="4" class="py-2 pr-2">{{ $complaint->tier['summary'] ?? '' }}</td>
     </tr>
-    @foreach ($complaint->notes()->latest('created_at')->get()
-      as $note)
+  </table>
+
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+
+  <h1 class="section-title">&emsp;Notes</h1>
+
+  <table class="table-striped w-full">
+    @if ($complaint->notes()->count())
       <tr>
-        <td class="p-2 align-top">{{ $note->created_at->format('d/m/Y h:i A') }}</td>
-        <td class="p-2 align-top">{{ $note->creator->name }}</td>
-        <td class="p-2 align-top" colspan="3">{{ $note->notes }}</td>
+        <td class="p-2">Date Added</td>
+        <td class="py-2">Noted By</td>
+        <td class="py-2 pr-2 w-half">Notes</td>
       </tr>
-    @endforeach
+      @foreach ($complaint->notes()->latest('created_at')->get()
+      as $note)
+        <tr>
+          <td class="p-2 align-top">{{ $note->created_at->format('d/m/Y h:i A') }}</td>
+          <td class="py-2 align-top">{{ $note->creator->name }}</td>
+          <td class="py-2 pr-2 align-top" colspan="3">{{ $note->notes }}</td>
+        </tr>
+      @endforeach
+    @else
+      <tr>
+        <td colspan="3" class="p-2">No available notes.</td>
+      </tr>
+    @endif
   </table>
 @endsection

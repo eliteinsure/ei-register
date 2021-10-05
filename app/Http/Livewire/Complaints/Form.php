@@ -69,8 +69,10 @@ class Form extends Component
 
     public function updated($name, $value)
     {
-        if ('input.tier.handler' == $name && 'Adviser' != $value) {
+        if ('input.tier.handler' == $name) {
             unset($this->input['tier']['adviser_id']);
+
+            $this->dispatchBrowserEvent('adviser-lookup-value');
         }
     }
 
@@ -81,6 +83,7 @@ class Form extends Component
             'acknowledged_at' => '',
             'tier' => [
                 'completed_at' => '',
+                'handler' => '',
             ],
         ];
 
@@ -182,7 +185,7 @@ class Form extends Component
 
     public function adviserLookupSearch($search = '')
     {
-        $query = Adviser::where('type', 'Adviser')
+        $query = Adviser::where('type', $this->input['tier']['handler'])
             ->where('status', 'Active')
             ->when($search, function ($query) use ($search) {
                 return $query->where('name', 'like', '%' . $search . '%');
