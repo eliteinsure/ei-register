@@ -27,10 +27,9 @@ trait ComplaintValidator
             'tier.tier' => ['required', 'in:' . implode(',', config('services.complaint.tier.tier'))],
             'tier.handler' => ['required', 'in:' . implode(',', config('services.complaint.tier.handlers'))],
             'tier.adviser_id' => [
-                'required_if:tier.handler,Adviser',
-                'nullable',
-                Rule::exists('advisers', 'id')->where(function ($query) {
-                    return $query->where('type', 'Adviser')
+                'required',
+                Rule::exists('advisers', 'id')->where(function ($query) use ($input) {
+                    return $query->where('type', $input['tier']['handler'])
                         ->where('status', 'Active');
                 }),
             ],
@@ -39,7 +38,7 @@ trait ComplaintValidator
         ];
     }
 
-    public function complaintAttributes()
+    public function complaintAttributes($input)
     {
         return [
             'complainant' => 'Complainant Name',
@@ -55,7 +54,7 @@ trait ComplaintValidator
             'tier' => 'Tier',
             'tier.tier' => 'Tier',
             'tier.handler' => 'Handled By',
-            'tier.adviser_id' => 'Adviser',
+            'tier.adviser_id' => $input['tier']['handler'],
             'tier.status' => 'Status',
             'tier.completed_at' => 'Date Completed',
         ];

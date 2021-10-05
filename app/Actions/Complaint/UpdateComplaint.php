@@ -12,7 +12,7 @@ class UpdateComplaint
 
     public function update($input, Complaint $complaint)
     {
-        $data = Validator::make($input, $this->complaintRules($input), [], $this->complaintAttributes())->validate();
+        $data = Validator::make($input, $this->complaintRules($input), [], $this->complaintAttributes($input))->validate();
 
         $complaint->update($data);
 

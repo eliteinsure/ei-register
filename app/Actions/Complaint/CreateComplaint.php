@@ -14,7 +14,7 @@ class CreateComplaint
 
     public function create($input, $notesInput)
     {
-        $data = Validator::make($input, $this->complaintRules($input), [], $this->complaintAttributes())->validate();
+        $data = Validator::make($input, $this->complaintRules($input), [], $this->complaintAttributes($input))->validate();
 
         $complaintNoteRules = $this->complaintNoteRules();
 

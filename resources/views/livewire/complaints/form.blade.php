@@ -69,8 +69,8 @@
               <x-select id="handler" class="block w-full mt-1" wire:model.lazy="input.tier.handler" :options="$options['tier.handlers']" />
               <x-jet-input-error for="tier.handler" class="mt-2" />
             </div>
-            <div class="form-input {{ ($input['tier']['handler'] ?? '') == 'Adviser' ? null : 'hidden' }}">
-              <x-jet-label for="adviser" value="Adviser" />
+            <div class="form-input {{ $input['tier']['handler'] ? null : 'hidden' }}">
+              <x-jet-label for="adviser" value="{{ $input['tier']['handler'] }}" />
               <x-lookup.select id="adviser" wire:model.defer="input.tier.adviser_id" />
               <x-jet-input-error for="tier.adviser_id" class="mt-2" />
             </div>
