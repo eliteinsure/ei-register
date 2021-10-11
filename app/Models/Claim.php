@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Adviser;
+use App\Models\ClaimNote;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
@@ -37,5 +38,10 @@ class Claim extends Model
     public function adviser()
     {
         return $this->belongsTo(Adviser::class);
+    }
+
+    public function notes()
+    {
+        return $this->hasMany(ClaimNote::class);
     }
 }

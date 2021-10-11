@@ -1,6 +1,6 @@
 <div>
   <x-jet-dialog-modal wire:model="showModal">
-    <x-slot name="title">Complaint Notes</x-slot>
+    <x-slot name="title">Claim Notes</x-slot>
     <x-slot name="content">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -50,7 +50,7 @@
                             </x-slot>
                             <x-slot name="content">
                               <x-jet-dropdown-link href="javascript:void(0)"
-                                wire:click="$emitTo('complaints.update-notes', 'show', {{ $complaintId }}, {{ $note->id }})">
+                                wire:click="$emitTo('claims.update-notes', 'show', {{ $claimId }}, {{ $note->id }})">
                                 Update
                               </x-jet-dropdown-link>
                             </x-slot>
@@ -91,7 +91,7 @@
     </x-slot>
   </x-jet-dialog-modal>
 
-  @livewire('complaints.update-notes')
+  @livewire('claims.update-notes')
 
   <x-jet-confirmation-modal wire:model="showDelete">
     <x-slot name="title">Delete Notes</x-slot>

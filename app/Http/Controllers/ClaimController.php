@@ -66,4 +66,18 @@ class ClaimController extends Controller
 
         return $pdf->stream('claims-report.pdf');
     }
+
+    public function pdf(Claim $claim)
+    {
+        $pdf = Pdf::loadView('pdf.claims.show', [
+            'title' => 'Claim',
+            'claim' => $claim,
+        ], [], [
+            'instanceConfigurator' => function ($mpdf) {
+                $mpdf->setAutoBottomMargin = 'stretch';
+            },
+        ]);
+
+        return $pdf->stream('claim.pdf');
+    }
 }
