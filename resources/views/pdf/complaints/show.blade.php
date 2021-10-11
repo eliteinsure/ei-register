@@ -92,25 +92,25 @@
 
   <h1 class="section-title">&emsp;Notes</h1>
 
-  <table class="table-striped w-full">
+  <div class="table-striped">
     @if ($complaint->notes()->count())
-      <tr>
-        <td class="p-2">Date Added</td>
-        <td class="p-2">Noted By</td>
-        <td class="p-2 w-half">Notes</td>
-      </tr>
+      <div>
+        <div class="float-left p-2 font-bold" style="width: 150px; min-width:150px; max-width: 150px;">Date Added</div>
+        <div class="float-left p-2 font-bold" style="width:125px; min-width:125px; max-width: 125px;">Noted By</div>
+        <div class="float-left p-2 font-bold" style="width:324px; min-width:324px; max-width: 324px;">Notes</div>
+      </div>
       @foreach ($complaint->notes()->latest('created_at')->get()
-      as $note)
-        <tr>
-          <td class="p-2 align-top">{{ $note->created_at->format('d/m/Y h:i A') }}</td>
-          <td class="p-2 align-top">{{ $note->creator->name }}</td>
-          <td class="p-2 align-top" colspan="3">{{ $note->notes }}</td>
-        </tr>
+      as $key => $note)
+        <div class="{{ $key % 2 == 0 ? 'bg-gray' : null }}">
+          <div class="float-left p-2" style="width:150px ; min-width:150px ; max-width:150px ;">{{ $note->created_at->format('d/m/Y h:i A') }}</div>
+          <div class="float-left p-2" style="width:125px ; min-width:125px ; max-width:125px ;">{{ $note->creator->name }}</div>
+          <div class="float-left p-2" style="width:324px ; min-width:324px ; max-width:324px ;">{{ $note->notes }}</div>
+        </div>
       @endforeach
     @else
-      <tr>
-        <td colspan="3" class="p-2">No available notes.</td>
-      </tr>
+      <div class="p-2">
+        No available notes.
+      </div>
     @endif
-  </table>
+  </div>
 @endsection
