@@ -20,11 +20,22 @@ class Index extends Component
 
     public $showDelete = false;
 
+    public $showPdf = false;
+
     protected $listeners = ['render'];
 
     public function getClaimProperty()
     {
         return Claim::findOrFail($this->claimId);
+    }
+
+    public function getPdfUrlProperty()
+    {
+        if (! $this->claimId) {
+            return '';
+        }
+
+        return route('reports.claims.pdf', ['claim' => $this->claimId, 'now' => time()]);
     }
 
     public function render()
@@ -109,5 +120,12 @@ class Index extends Component
             'style' => 'success',
             'message' => 'Claim has been deleted.',
         ]);
+    }
+
+    public function showPdf($id)
+    {
+        $this->claimId = $id;
+
+        $this->showPdf = true;
     }
 }

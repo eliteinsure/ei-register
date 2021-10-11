@@ -75,6 +75,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
         Route::group(['as' => 'claims.', 'prefix' => 'claims'], function () {
             route::get('/', [ClaimController::class, 'report'])->name('index');
+            route::get('/{claim}', [ClaimController::class, 'pdf'])->name('pdf');
         });
 
         Route::group(['as' => 'sites.', 'prefix' => 'software'], function () {

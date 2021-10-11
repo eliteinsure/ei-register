@@ -2,9 +2,9 @@
 
 namespace App\Traits\Validators;
 
-trait ComplaintNoteValidator
+trait ClaimNoteValidator
 {
-    public function complaintNoteRules($update = false)
+    public function claimNoteRules($update = false)
     {
         $rules = [
             'notes' => ['required', 'string'],
@@ -18,12 +18,12 @@ trait ComplaintNoteValidator
         return $rules;
     }
 
-    public function complaintNoteAttributes()
+    public function claimNoteAttributes()
     {
         return [
             'notes' => 'Notes',
             'created_at' => 'Date Added',
-            'created_time' => 'Time Added'
+            'created_time' => 'Time Added',
         ];
     }
 }

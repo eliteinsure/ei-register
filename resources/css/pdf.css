@@ -146,6 +146,18 @@ li {
     background-color: #f2f2f2;
 }
 
+.bg-gray {
+    background-color: #f2f2f2;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.float-left {
+    float: left;
+}
+
 .font-bold {
     font-weight: bold;
 }

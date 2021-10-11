@@ -6,9 +6,9 @@
       </div>
       <div>
         @role('admin')
-        <x-jet-button type="button" wire:click="$emitTo('claims.form', 'add')">
-          Register a Claim
-        </x-jet-button>
+          <x-jet-button type="button" wire:click="$emitTo('claims.form', 'add')">
+            Register a Claim
+          </x-jet-button>
         @endrole
       </div>
       <div>
@@ -116,6 +116,10 @@
                               View Details
                             @endif
                           </x-jet-dropdown-link>
+                          <x-jet-dropdown-link href="javascript:void(0)"
+                            wire:click="showPdf({{ $claim->id }})">
+                            View PDF
+                          </x-jet-dropdown-link>
                         </x-slot>
                       </x-jet-dropdown>
                     </td>
@@ -171,6 +175,16 @@
       </div>
     </div>
   </div>
+
+  <x-jet-dialog-modal wire:model="showPdf" max-width="5xl" focusable>
+    <x-slot name="title">Claim PDF</x-slot>
+    <x-slot name="content">
+      <iframe src="{{ $this->PdfUrl }}" class="w-full" style="height: 600px;"></iframe>
+    </x-slot>
+    <x-slot name="footer">
+      <x-jet-secondary-button type="button" wire:click="$set('showPdf', false)">Close</x-jet-secondary-button>
+    </x-slot>
+  </x-jet-dialog-modal>
 
   <x-jet-confirmation-modal wire:model="showDelete">
     <x-slot name="title">Delete Claim</x-slot>

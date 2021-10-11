@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Claims;
 
 use App\Actions\Claim\CreateClaim;
+use App\Actions\Claim\CreateClaimNote;
 use App\Actions\Claim\UpdateClaim;
 use App\Models\Adviser;
 use App\Models\Claim;
@@ -16,6 +17,8 @@ class Form extends Component
     public $claimId;
 
     public $input;
+
+    public $notesInput;
 
     public $showModal = false;
 
@@ -76,6 +79,8 @@ class Form extends Component
     {
         $this->input = [];
 
+        $this->notesInput = [];
+
         $this->dispatchBrowserEvent('client-lookup-value');
 
         $this->dispatchBrowserEvent('adviser-lookup-value');
@@ -87,7 +92,7 @@ class Form extends Component
     {
         abort_unless(auth()->user()->hasRole('admin'), 403);
 
-        $this->claimid = null;
+        $this->claimId = null;
 
         $this->resetInput();
 
@@ -103,6 +108,8 @@ class Form extends Component
             'created_at',
             'updated_at',
         ])->all();
+
+        $this->notesInput = [];
 
         $client = json_encode([[
             'value' => $this->input['client_name'],
@@ -182,7 +189,7 @@ class Form extends Component
     {
         abort_unless(auth()->user()->hasRole('admin'), 403);
 
-        $action->create($this->input);
+        $action->create($this->input, $this->notesInput);
 
         $this->emitTo('claims.index', 'render');
 
@@ -208,5 +215,16 @@ class Form extends Component
             'style' => 'success',
             'message' => 'Claim has been updated.',
         ]);
+    }
+
+    public function createClaimNote(CreateClaimNote $action)
+    {
+        abort_unless(auth()->user()->hasRole('admin'), 403);
+
+        $action->create($this->notesInput, $this->claim);
+
+        $this->emit('claimNotesCreated');
+
+        $this->notesInput = [];
     }
 }
