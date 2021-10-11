@@ -23,6 +23,7 @@ trait ComplaintNoteValidator
         return [
             'notes' => 'Notes',
             'created_at' => 'Date Added',
+            'created_time' => 'Time Added'
         ];
     }
 }
