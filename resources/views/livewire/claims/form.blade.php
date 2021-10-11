@@ -42,6 +42,22 @@
             :options="$options['status']" />
           <x-jet-input-error for="status" class="mt-2" />
         </div>
+
+        <div class="form-input">
+          <x-jet-label for="claim_notes" value="Notes" />
+          <x-textarea id="claim_notes" class="block w-full mt-1 resize-y" wire:model.defer="notesInput.notes" />
+          <x-jet-input-error for="notes" class="mt-2" />
+
+          @if ($claimId)
+            <div class="flex items-center justify-between mt-1">
+              @if (auth()->user()->hasRole('admin'))
+                <x-jet-button type="button" wire:click="createClaimNote">Add</x-jet-button>
+                <x-jet-action-message on="claimNotesCreated">Notes added.</x-jet-action-message>
+              @endif
+              <x-jet-button type="button" wire:click="$emitTo('claims.notes', 'show', {{ $claimId }})">View Notes</x-jet-button>
+            </div>
+          @endif
+        </div>
       </div>
     </x-slot>
     <x-slot name="footer">
