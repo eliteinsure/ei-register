@@ -112,6 +112,8 @@ class Index extends Component
     {
         abort_unless(auth()->user()->hasRole('admin'), 403);
 
+        $this->claim->notes()->delete();
+
         $this->claim->delete();
 
         $this->showDelete = false;

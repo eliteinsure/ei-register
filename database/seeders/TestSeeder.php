@@ -4,9 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\Adviser;
 use App\Models\Claim;
+use App\Models\ClaimNote;
 use App\Models\Complaint;
 use App\Models\ComplaintNote;
 use App\Models\User;
+use App\Models\VulnerableClient;
+use App\Models\VulnerableClientNote;
 use App\Traits\Validators\AdviserRequirementValidator;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\UserSeeder;
@@ -49,8 +52,18 @@ class TestSeeder extends Seeder
                 'complaint_id' => $complaint->id,
             ]);
 
-            Claim::factory()->create([
+            $claim = Claim::factory()->create([
                 'adviser_id' => Adviser::where('type', 'Adviser')->inRandomOrder()->first()->id,
+            ]);
+
+            ClaimNote::factory()->create([
+                'claim_id' => $claim->id,
+            ]);
+
+            $vulnerableClient = VulnerableClient::factory()->create();
+
+            VulnerableClientNote::factory()->create([
+                'vulnerable_client_id' => $vulnerableClient->id,
             ]);
         }
 
