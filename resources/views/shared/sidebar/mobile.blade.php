@@ -84,7 +84,11 @@
 
         <x-jet-responsive-nav-link href="{{ route('cir.login') }}" icon="heroicon-o-document-report"
           :active="false" target="_blank">
-          Claims
+          CIR
+        </x-jet-responsive-nav-link>
+
+        <x-jet-responsive-nav-link href="{{ route('vulnerable-clients.index') }}" icon="heroicon-o-exclamation" :active="request()->routeis('vulnerable-clients.index')">
+          Vulnerable Clients
         </x-jet-responsive-nav-link>
 
         <x-jet-responsive-nav-link href="{{ route('sites.index') }}"
