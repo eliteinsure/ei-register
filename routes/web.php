@@ -9,6 +9,7 @@ use App\Http\Controllers\SiteHistoryController;
 use App\Http\Controllers\SiteManualController;
 use App\Http\Controllers\TestUploadController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VulnerableClientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +41,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::group(['as' => 'cir.', 'prefix' => 'cir'], function () {
         Route::get('login', [CirController::class, 'login'])->name('login');
     });
+
+    Route::resource('vulnerable-clients', VulnerableClientController::class)->only([
+        'index',
+    ]);
 
     Route::resource('software', SiteController::class)->only([
         'index',
@@ -74,8 +79,13 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         });
 
         Route::group(['as' => 'claims.', 'prefix' => 'claims'], function () {
-            route::get('/', [ClaimController::class, 'report'])->name('index');
-            route::get('/{claim}', [ClaimController::class, 'pdf'])->name('pdf');
+            Route::get('/', [ClaimController::class, 'report'])->name('index');
+            Route::get('/{claim}', [ClaimController::class, 'pdf'])->name('pdf');
+        });
+
+        Route::group(['as' => 'vulnerable-clients.', 'prefix' => 'vulnerable-clients'], function () {
+            Route::get('/', [VulnerableClientController::class, 'report'])->name('index');
+            Route::get('{vulnerableClient}', [VulnerableClientController::class, 'pdf'])->name('pdf');
         });
 
         Route::group(['as' => 'sites.', 'prefix' => 'software'], function () {

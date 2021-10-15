@@ -340,6 +340,10 @@ return [
         'url' => env('CIR_URL'),
     ],
 
+    'vulnerableClients' => [
+        'natures' => ['Physical', 'Mental', 'Age', 'Language Barrier', 'Emotional', 'Physical'],
+    ],
+
     'site' => [
         'manual' => [
             'mimes' => ['txt', 'pdf', 'doc', 'docx', 'ppt', 'pptx', 'mp4', 'mov', 'avi', 'wmv', 'mkv'],
