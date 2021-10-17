@@ -8,19 +8,14 @@
     <x-slot name="content">
       <div class="space-y-6">
         <div class="form-input">
-          <x-jet-label for="created_from" value="Date Created From" />
-          <x-date-picker id="created_from" wire:model.defer="input.created_from" />
-          <x-jet-input-error for="created_from" class="mt-2" />
+          <x-jet-label for="issued_from" value="Date Issued From" />
+          <x-date-picker id="issued_from" wire:model.defer="input.issued_from" />
+          <x-jet-input-error for="issued_from" class="mt-2" />
         </div>
         <div class="form-input">
-          <x-jet-label for="created_to" value="Date Created To" />
-          <x-date-picker id="created_to" wire:model.defer="input.created_to" />
-          <x-jet-input-error for="created_to" class="mt-2" />
-        </div>
-        <div class="form-input">
-          <x-jet-label for="advisers" value="Advisers" />
-          <x-lookup.multi id="advisers" wire:model.defer="input.advisers" />
-          <x-jet-input-error for="advisers" class="mt-2" />
+          <x-jet-label for="issued_to" value="Date Issued To" />
+          <x-date-picker id="issued_to" wire:model.defer="input.issued_to" />
+          <x-jet-input-error for="issued_to" class="mt-2" />
         </div>
       </div>
     </x-slot>
@@ -34,7 +29,7 @@
   <x-focus-error />
 
   <x-jet-dialog-modal wire:model="showPdf" max-width="5xl" focusable>
-    <x-slot name="title">Claim Report</x-slot>
+    <x-slot name="title">Vulnerable Client Report</x-slot>
     <x-slot name="content">
       <iframe src="{{ $pdfUrl }}" class="w-full" style="height: 600px;"></iframe>
     </x-slot>
