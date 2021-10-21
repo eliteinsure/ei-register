@@ -81,8 +81,6 @@ class Form extends Component
 
         $this->notesInput = [];
 
-        $this->dispatchBrowserEvent('client-lookup-value');
-
         $this->dispatchBrowserEvent('adviser-lookup-value');
 
         $this->dispatchBrowserEvent('type-lookup-value');
@@ -111,11 +109,6 @@ class Form extends Component
 
         $this->notesInput = [];
 
-        $client = json_encode([[
-            'value' => $this->input['client_name'],
-            'label' => $this->input['client_name'],
-        ]]);
-
         $adviser = Adviser::find($this->input['adviser_id']);
 
         $adviser = json_encode([[
@@ -132,26 +125,9 @@ class Form extends Component
             ];
         })->toJson();
 
-        $this->dispatchBrowserEvent('client-lookup-value', $client);
-
         $this->dispatchBrowserEvent('type-lookup-value', $type);
 
         $this->showModal = true;
-    }
-
-    public function clientLookupSearch($search = '')
-    {
-        $clients = Claim::select('client_name')->groupBy('client_name')
-            ->when($search, function ($query) use ($search) {
-                return $query->where('client_name', 'like', '%' . $search . '%');
-            })->oldest('client_name')->get()->map(function ($claim) {
-                return [
-                    'value' => $claim->client_name,
-                    'label' => $claim->client_name,
-                ];
-            });
-
-        $this->dispatchBrowserEvent('client-lookup-list', $clients);
     }
 
     public function adviserLookupSearch($search = '')

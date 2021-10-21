@@ -68,8 +68,6 @@ class Form extends Component
         ];
 
         $this->notesInput = [];
-
-        $this->dispatchBrowserEvent('client-lookup-value');
     }
 
     public function add()
@@ -95,29 +93,7 @@ class Form extends Component
 
         $this->notesInput = [];
 
-        $client = json_encode([[
-            'value' => $this->input['name'],
-            'label' => $this->input['name'],
-        ]]);
-
-        $this->dispatchBrowserEvent('client-lookup-value', $client);
-
         $this->showModal = true;
-    }
-
-    public function clientLookupSearch($search = '')
-    {
-        $clients = VulnerableClient::select('name')->groupBy('name')
-            ->when($search, function ($query) use ($search) {
-                return $query->where('name', 'like', '%' . $search . '%');
-            })->oldest('name')->get()->map(function ($client) {
-                return [
-                    'value' => $client->name,
-                    'label' => $client->name,
-                ];
-            });
-
-        $this->dispatchBrowserEvent('client-lookup-list', $clients);
     }
 
     public function dehydrate()
