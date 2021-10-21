@@ -5,7 +5,7 @@
       <div class="space-y-6">
         <div class="form-input">
           <x-jet-label for="client" value="Name" />
-          <x-lookup.text id="client" wire:model.defer="input.name" />
+          <x-jet-input type="text" id="client" class="block w-full mt-1" wire:model.defer="input.name" />
           <x-jet-input-error for="name" class="mt-2" />
         </div>
         <div class="form-input">
