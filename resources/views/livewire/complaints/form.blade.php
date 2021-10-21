@@ -7,7 +7,7 @@
           <div class="space-y-6">
             <div class="form-input">
               <x-jet-label for="complainant" value="Complainant Name" />
-              <x-lookup.text id="complainant" wire:model.defer="input.complainant" />
+              <x-jet-input type="text" id="complainant" class="block w-full mt-1" wire:model.defer="input.complainant" />
               <x-jet-input-error for="complainant" class="mt-2" />
             </div>
             <div class="form-input">
@@ -18,7 +18,7 @@
             </div>
             <div class="form-input">
               <x-jet-label for="complainee" value="Complainee Name" />
-              <x-lookup.text id="complainee" wire:model.defer="input.complainee" />
+              <x-jet-input type="text" id="complainee" class="block w-full mt-1" wire:model.defer="input.complainee" />
               <x-jet-input-error for="complainee" class="mt-2" />
             </div>
             <div class="form-input">
