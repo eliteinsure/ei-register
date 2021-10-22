@@ -59,7 +59,7 @@
               <tbody>
                 @foreach ($histories as $index => $history)
                   <tr class="{{ $index % 2 ? 'bg-gray-50' : 'bg-white' }}">
-                    <td class="px-4 py-2 whitespace-nowrap text-left text-sm">
+                    <td class="px-4 py-2 whitespace-nowrap text-left text-sm align-top">
                       <x-jet-dropdown align="top-left" content-classes="py-1 bg-white divide-y divide-gray-200">
                         <x-slot name="trigger">
                           <button type="button"
@@ -78,20 +78,20 @@
                       </x-jet-dropdown>
 
                     </td>
-                    <td class="px-4 py-2 text-sm text-shark text-opacity-75">
-                      {{ $history->updates }}
+                    <td class="px-4 py-2 text-sm text-shark text-opacity-75 align-top">
+                      {!! nl2br($history->updates) !!}
                     </td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75 align-top">
                       {{ $history->update_date->format('d/m/Y') }}
                     </td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75 align-top">
                       {{ $history->developer }}
                     </td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
+                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75 align-top">
                       {{ $history->version }}
                     </td>
                     @if (auth()->user()->hasRole('admin'))
-                      <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
+                      <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75 align-top">
                         <button type="button" class="text-red-500 hover:text-red-700" title="Delete"
                           wire:click="confirmDelete({{ $history->id }})">
                           <x-heroicon-o-trash class="h-6 w-6" />
