@@ -17,6 +17,8 @@ class Form extends Component
 
     public $input;
 
+    public $permissionToggle;
+
     public $showModal = false;
 
     public $roles;
@@ -56,7 +58,9 @@ class Form extends Component
 
     public function resetInput()
     {
-        $this->input = [];
+        $this->input = [
+            'permissions' => [],
+        ];
     }
 
     public function add()
@@ -78,9 +82,39 @@ class Form extends Component
 
         $this->input = collect($this->user)->only(['name', 'email'])->all();
 
-        $this->input['role'] = $this->user->getRoleNames()->first();
+        $this->input['permissions'] = $this->user->getPermissionNames()->all();
 
         $this->showModal = true;
+    }
+
+    public function updatedPermissionToggle($value)
+    {
+        if ($value) {
+            foreach (config('services.permissions') as $parentPermissionName => $parentPermission) {
+                $this->input['permissions'][] = $parentPermissionName;
+
+                foreach ($parentPermission as $childPermissionName => $childPermission) {
+                    $this->input['permissions'][] = $parentPermissionName . '.' . $childPermissionName;
+                }
+            }
+        } else {
+            $this->input['permissions'] = [];
+        }
+    }
+
+    public function updatePermissions($value)
+    {
+        if (in_array($value, $this->input['permissions'])) {
+            foreach (config('services.permissions.' . $value) as $name => $title) {
+                $this->input['permissions'][] = $value . '.' . $name;
+            }
+        } else {
+            $permissions = collect($this->input['permissions'])->filter(function ($item) use ($value) {
+                return ! Str::startsWith($item, $value . '.');
+            })->values()->all();
+
+            $this->input['permissions'] = $permissions;
+        }
     }
 
     public function dehydrate()

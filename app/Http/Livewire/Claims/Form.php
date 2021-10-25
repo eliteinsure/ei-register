@@ -113,7 +113,7 @@ class Form extends Component
 
         $adviser = json_encode([[
             'value' => $adviser->id,
-            'label' => $adviser->name,
+            'label' => $adviser->name . ' (' . $adviser->status . ')',
         ]]);
 
         $this->dispatchBrowserEvent('adviser-lookup-value', $adviser);
@@ -133,8 +133,7 @@ class Form extends Component
     public function adviserLookupSearch($search = '')
     {
         $query = Adviser::where(function ($query) {
-            $query->where('status', 'Active')
-                ->where('type', 'Adviser');
+            $query->where('type', 'Adviser');
         })->when($search, function ($query) use ($search) {
             return $query->where('name', 'like', '%' . $search . '%');
         })->oldest('name');
@@ -142,7 +141,7 @@ class Form extends Component
         $advisers = $query->get()->map(function ($adviser) {
             return [
                 'value' => $adviser['id'],
-                'label' => $adviser['name'],
+                'label' => $adviser['name'] . ' (' . $adviser['status'] . ')',
             ];
         });
 
