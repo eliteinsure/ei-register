@@ -37,6 +37,57 @@ return [
 
     'roles' => ['admin', 'user'],
 
+    'permissions' => [
+        'users' => [],
+        'complaints' => [
+            'create' => 'Register',
+            'update' => 'Update',
+            'delete' => 'Delete',
+            'view-pdf' => 'View PDF',
+            'generate-report' => 'Generate Report',
+        ],
+        'claims' => [
+            'create' => 'Register',
+            'update' => 'Update',
+            'delete' => 'Delete',
+            'view-pdf' => 'View PDF',
+            'generate-report' => 'Generate Report',
+        ],
+        'cir' => [],
+        'vulnerable-clients' => [
+            'create' => 'Register',
+            'update' => 'Update',
+            'delete' => 'Delete',
+            'view-pdf' => 'View PDF',
+            'generate-report' => 'Generate Report',
+        ],
+        'software' => [
+            'create' => 'Register',
+            'update' => 'Update',
+            'delete' => 'Delete',
+            'generate-report' => 'Generate Report',
+        ],
+        'software-manuals' => [
+            'create' => 'Add',
+            'download' => 'Preview / Download',
+            'delete' => 'Delete',
+        ],
+        'software-history' => [
+            'create' => 'Register',
+            'update' => 'Update',
+            'delete' => 'Delete',
+        ],
+        'advisers' => [
+            'create' => 'Register',
+            'update' => 'Update',
+            'delete' => 'Delete',
+            'view-pdf' => 'View PDF',
+        ],
+        'adviser-requirements' => [
+            'update' => 'Update',
+        ],
+    ],
+
     'adviser' => [
         'types' => ['Adviser', 'Staff', 'Management'],
         'status' => ['Active', 'Pending', 'Terminated'],
