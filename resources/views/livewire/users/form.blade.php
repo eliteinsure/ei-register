@@ -24,11 +24,34 @@
           <x-jet-input type="password" id="password_confirmation" class="block w-full mt-1"
             wire:model.defer="input.password_confirmation" />
         </div>
-        <div class="form-input">
-          <x-jet-label for="role" value="Role" />
-          <x-select id="role" class="block w-full mt-1" wire:model.defer="input.role"
-            :options="$roles" />
-          <x-jet-input-error for="role" class="mt-2" />
+        <div class="form-input space-y-1">
+          <div class="flex items-center justify-between">
+            <x-jet-label value="Permissions" />
+            <label class="flex items-center">
+              <x-jet-checkbox wire:model.lazy="permissionToggle" />
+              <span class="ml-2 text-sm text-shark">Toggle All</span>
+            </label>
+          </div>
+          <div class="h-40 max-h-40 overflow-y-scroll p-2 border rounded">
+            @foreach (config('services.permissions') as $parentPermissionName => $parentPermission)
+              <label class="inline-flex items-center" wire:key={{ $loop->index }}>
+                <x-jet-checkbox value="{{ $parentPermissionName }}" wire:model.lazy="input.permissions" wire:change="updatePermissions($event.target.value)" />
+                <span class="ml-2 text-sm text-shark">{{ Str::title(Str::replace('-', ' ', $parentPermissionName)) }}</span>
+              </label>
+              <br>
+              @foreach ($parentPermission as $childPermissionName => $childPermission)
+                @if (in_array($parentPermissionName, $input['permissions']))
+                  <label class="ml-3 inline-flex items-center" wire:key="{{ $loop->parent->index . '.' . $loop->index }}">
+                    <x-jet-checkbox value="{{ $parentPermissionName . '.' . $childPermissionName }}" wire:model.defer="input.permissions" />
+                    <span class="ml-2 text-sm text-shark">{{ $childPermission }}</span>
+                  </label>
+                  @if ($loop->last)
+                    <br>
+                  @endif
+                @endif
+              @endforeach
+            @endforeach
+          </div>
         </div>
       </div>
     </x-slot>

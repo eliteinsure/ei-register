@@ -32,10 +32,6 @@
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                     <x-column-sorter column="users.email">Email</x-column-sorter>
                   </th>
-                  <th scope="col"
-                    class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
-                    <x-column-sorter column="roles.name">Role</x-column-sorter>
-                  </th>
                   <th scope="col" class="relative px-4 py-3">
                     <span class="sr-only">Delete Action</span>
                   </th>
@@ -66,9 +62,6 @@
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $user->email }}
-                    </td>
-                    <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75 uppercase">
-                      {{ $user->role }}
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75 uppercase">
                       <button type="button" class="text-red-500 hover:text-red-700" title="Delete"
