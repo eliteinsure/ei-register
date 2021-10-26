@@ -83,7 +83,7 @@ return [
             'generate-report' => 'Generate Report',
         ],
         'software-manuals' => [
-            'create' => 'Add',
+            'upload' => 'Add',
             'download' => 'Preview / Download',
             'delete' => 'Delete',
         ],
