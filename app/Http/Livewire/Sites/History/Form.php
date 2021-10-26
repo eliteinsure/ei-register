@@ -25,11 +25,7 @@ class Form extends Component
 
     public function getTitleProperty()
     {
-        if ($this->historyId) {
-            return auth()->user()->hasRole('admin') ? 'Update Software History' : 'Software History Detials';
-        } else {
-            return 'Register a Software History';
-        }
+        return $this->historyId ? 'Update Software History' : 'Register a Software History';
     }
 
     public function getSiteProperty()
@@ -70,7 +66,7 @@ class Form extends Component
 
     public function add()
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('software-history.create'), 403);
 
         $this->historyId = null;
 
@@ -81,6 +77,8 @@ class Form extends Component
 
     public function edit($id)
     {
+        abort_unless(auth()->user()->hasPermissionTo('software-history.update'), 403);
+
         $this->historyId = $id;
 
         $this->input = collect($this->siteHistory)->except([
@@ -119,14 +117,12 @@ class Form extends Component
 
     public function submit()
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
-
         $this->historyId ? $this->update(new UpdateSiteHistory()) : $this->create(new CreateSiteHistory());
     }
 
     public function create(CreateSiteHistory $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('software-history.create'), 403);
 
         $action->create($this->input, $this->site);
 
@@ -142,7 +138,7 @@ class Form extends Component
 
     public function update(UpdateSiteHistory $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('software-history.update'), 403);
 
         $action->update($this->input, $this->siteHistory);
 

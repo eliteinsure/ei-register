@@ -101,7 +101,7 @@ class Index extends Component
 
     public function confirmDelete($id)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('claims.delete'), 403);
 
         $this->claimId = $id;
 
@@ -110,7 +110,7 @@ class Index extends Component
 
     public function delete()
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('claims.delete'), 403);
 
         $this->claim->notes()->delete();
 
@@ -126,6 +126,8 @@ class Index extends Component
 
     public function showPdf($id)
     {
+        abort_unless(auth()->user()->hasPermissionTo('claims.view-pdf'), 403);
+
         $this->claimId = $id;
 
         $this->showPdf = true;

@@ -49,6 +49,8 @@ class Manual extends Component
 
     public function show($id)
     {
+        abort_unless(auth()->user()->hasPermissionTo('software-manuals'), 403);
+
         $this->siteId = $id;
 
         $this->showModal = true;
@@ -65,7 +67,7 @@ class Manual extends Component
 
     public function submit(UploadManual $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('software-manuals.upload'), 403);
 
         $action->upload([
             'name' => $this->input['name'] ?? '',
@@ -77,7 +79,7 @@ class Manual extends Component
 
     public function confirmDelete($id)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('software-manuals.delete'), 403);
 
         $this->manualId = $id;
 
@@ -86,7 +88,7 @@ class Manual extends Component
 
     public function delete(DeleteManual $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('software-manuals.delete'), 403);
 
         $action->delete($this->manual);
 

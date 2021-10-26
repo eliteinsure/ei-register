@@ -22,15 +22,17 @@ class UpdateUser
 
         $data = Validator::make($input, $rules, [], $this->userAttributes())->validate();
 
-        $role = $data['role'];
+        $permissions = $data['permissions'];
 
-        unset($data['role']);
+        unset($data['permissions']);
 
-        $data['password'] = Hash::make($data['password']);
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        }
 
         $user->update($data);
 
-        $user->syncRoles([$role]);
+        $user->syncPermissions([$permissions]);
 
         return $user;
     }

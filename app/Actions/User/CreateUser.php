@@ -15,15 +15,15 @@ class CreateUser
     {
         $data = Validator::make($input, $this->userRules(), [], $this->userAttributes())->validate();
 
-        $role = $data['role'];
+        $permissions = $data['permissions'];
 
-        unset($data['role']);
+        unset($data['permissions']);
 
         $data['password'] = Hash::make($data['password']);
 
         $user = User::create($data);
 
-        $user->assignRole($role);
+        $user->syncPermissions($permissions);
 
         return $user;
     }

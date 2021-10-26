@@ -45,6 +45,8 @@ class Report extends Component
 
     public function show()
     {
+        abort_unless(auth()->user()->hasPermissionTo('software.generate-report'), 403);
+
         $this->resetInput();
 
         $this->showModal = true;
@@ -52,6 +54,8 @@ class Report extends Component
 
     public function generate(GenerateSiteReport $action)
     {
+        abort_unless(auth()->user()->hasPermissionTo('software.generate-report'), 403);
+
         $this->pdfUrl = $action->generate($this->input);
 
         $this->showPdf = true;

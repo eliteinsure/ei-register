@@ -43,29 +43,33 @@
           <x-jet-input-error for="status" class="mt-2" />
         </div>
 
-        <div class="form-input">
-          <x-jet-label for="claim_notes" value="Notes" />
-          <x-textarea id="claim_notes" class="block w-full mt-1 resize-y" wire:model.defer="notesInput.notes" />
-          <x-jet-input-error for="notes" class="mt-2" />
+        @if (auth()->user()->hasPermissionTo('claim-notes'))
+          <div class="form-input">
+            @if (auth()->user()->hasPermissionTo('claim-notes.create'))
+              <x-jet-label for="claim_notes" value="Notes" />
+              <x-textarea id="claim_notes" class="block w-full mt-1 resize-y" wire:model.defer="notesInput.notes" />
+              <x-jet-input-error for="notes" class="mt-2" />
+            @endif
 
-          @if ($claimId)
-            <div class="flex items-center justify-between mt-1">
-              @if (auth()->user()->hasRole('admin'))
-                <x-jet-button type="button" wire:click="createClaimNote">Add</x-jet-button>
-                <x-jet-action-message on="claimNotesCreated">Notes added.</x-jet-action-message>
-              @endif
-              <x-jet-button type="button" wire:click="$emitTo('claims.notes', 'show', {{ $claimId }})">View Notes</x-jet-button>
-            </div>
-          @endif
-        </div>
+            @if ($claimId)
+              <div class="flex items-center justify-between mt-1">
+                @if (auth()->user()->hasPermissionTo('claim-notes.create'))
+                  <x-jet-button type="button" wire:click="createClaimNote">Add</x-jet-button>
+                  <x-jet-action-message on="claimNotesCreated">Notes added.</x-jet-action-message>
+                @endif
+                <x-jet-button type="button" wire:click="$emitTo('claims.notes', 'show', {{ $claimId }})">View Notes</x-jet-button>
+              </div>
+            @endif
+          </div>
+        @endif
       </div>
     </x-slot>
     <x-slot name="footer">
-      @if (auth()->user()->hasRole('admin'))
+      @if (auth()->user()->getPermissionNames()->intersect(['claims.create', 'claims.update'])->count())
         <x-jet-button type="submit">{{ isset($claimId) ? 'Update' : 'Register' }}</x-jet-button>
       @endif
       <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showModal', false)">
-        @if (auth()->user()->hasRole('admin'))
+        @if (auth()->user()->getPermissionNames()->intersect(['claims.create', 'claims.update'])->count())
           Cancel
         @else
           Close
