@@ -41,7 +41,7 @@
               <br>
               @foreach ($parentPermission as $childPermissionName => $childPermission)
                 @if (in_array($parentPermissionName, $input['permissions']))
-                  <label class="ml-3 inline-flex items-center" wire:key="{{ $loop->parent->index . '.' . $loop->index }}">
+                  <label class="ml-6 inline-flex items-center" wire:key="{{ $loop->parent->index . '.' . $loop->index }}">
                     <x-jet-checkbox value="{{ $parentPermissionName . '.' . $childPermissionName }}" wire:model.defer="input.permissions" />
                     <span class="ml-2 text-sm text-shark">{{ $childPermission }}</span>
                   </label>
@@ -52,6 +52,7 @@
               @endforeach
             @endforeach
           </div>
+          <x-jet-input-error for="permissions" class="mt-2" />
         </div>
       </div>
     </x-slot>
