@@ -23,7 +23,7 @@ class Form extends Component
     public function getTitleProperty()
     {
         if ($this->siteId) {
-            return auth()->user()->hasRole('admin') ? 'Update Software' : 'Software Detials';
+            return auth()->user()->hasPermissionTo('software.update') ? 'Update Software' : 'Software Detials';
         } else {
             return 'Register a Software';
         }
@@ -58,7 +58,7 @@ class Form extends Component
 
     public function add()
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('software.create'), 403);
 
         $this->siteId = null;
 
@@ -84,8 +84,6 @@ class Form extends Component
 
     public function submit()
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
-
         $this->siteId ? $this->update(new UpdateSite()) : $this->create(new CreateSite());
     }
 
@@ -105,7 +103,7 @@ class Form extends Component
 
     public function update(UpdateSite $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('software.update'), 403);
 
         $action->update($this->input, $this->site);
 

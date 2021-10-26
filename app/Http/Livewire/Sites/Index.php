@@ -68,7 +68,7 @@ class Index extends Component
 
     public function confirmDelete($id)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('software.delete'), 403);
 
         $this->siteId = $id;
 
@@ -79,7 +79,7 @@ class Index extends Component
 
     public function delete(DeleteSite $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('software.delete'), 403);
 
         abort_if($this->site->histories()->count(), 403, 'Could not delete software. Please make sure that there are no software histories with this software.');
 
