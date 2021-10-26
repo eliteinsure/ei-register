@@ -5,14 +5,16 @@
         <x-jet-input type="text" placeholder="Search..." wire:model.debounce="search" />
       </div>
       <div>
-        @role('admin')
-        <x-jet-button type="button" wire:click="$emitTo('complaints.form', 'add')">
-          Register a Complaint
-        </x-jet-button>
-        @endrole
+        @if (auth()->user()->hasPermissionTo('complaints.create'))
+          <x-jet-button type="button" wire:click="$emitTo('complaints.form', 'add')">
+            Register a Complaint
+          </x-jet-button>
+        @endif
       </div>
       <div>
-        @livewire('complaints.report')
+        @if (auth()->user()->hasPermissionTo('complaints.generate-report'))
+          @livewire('complaints.report')
+        @endif
       </div>
     </div>
 
@@ -65,7 +67,7 @@
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                     <x-column-sorter column="nature">Nature of Complaint</x-column-sorter>
                   </th>
-                  @if (auth()->user()->hasRole('admin'))
+                  @if (auth()->user()->hasPermissionTo('complaints.delete'))
                     <th scope="col"
                       class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                       <span class="sr-only">Delete Action</span>
@@ -87,16 +89,19 @@
                         <x-slot name="content">
                           <x-jet-dropdown-link href="javascript:void(0)"
                             wire:click="$emitTo('complaints.form', 'edit', {{ $complaint->id }})">
-                            @if (auth()->user()->hasRole('admin'))
+                            @if (auth()->user()->hasPermissionTo('complaints.update'))
                               Update
-                            @else
+                            @elseif(auth()->user()->hasPermissionTo('complaints'))
                               View Details
                             @endif
                           </x-jet-dropdown-link>
-                          <x-jet-dropdown-link href="javascript:void(0)"
-                            wire:click="showPdf({{ $complaint->id }})">
-                            View PDF
-                          </x-jet-dropdown-link>
+
+                          @if (auth()->user()->hasPermissionTo('complaints.view-pdf'))
+                            <x-jet-dropdown-link href="javascript:void(0)"
+                              wire:click="showPdf({{ $complaint->id }})">
+                              View PDF
+                            </x-jet-dropdown-link>
+                          @endif
                         </x-slot>
                       </x-jet-dropdown>
                     </td>
@@ -127,7 +132,7 @@
                     <td class="px-4 py-2 text-sm text-shark text-opacity-75">
                       {{ $complaint->nature }}
                     </td>
-                    @if (auth()->user()->hasRole('admin'))
+                    @if (auth()->user()->hasPermissionTo('complaints.delete'))
                       <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                         <button type="button" class="text-red-500 hover:text-red-700" title="Delete"
                           wire:click="confirmDelete({{ $complaint->id }})">

@@ -90,21 +90,26 @@
               <x-textarea id="summary" class="block w-full mt-1 resize-y" wire:model.defer="input.tier.summary"></x-textarea>
               <x-jet-input-error for="tier.summary" class="mt-2" />
             </div>
-            <div class="form-input">
-              <x-jet-label for="tier_notes" value="Notes" />
-              <x-textarea id="tier_notes" class="block w-full mt-1 resize-y" wire:model.defer="tierNotesInput.notes" />
-              <x-jet-input-error for="notes" class="mt-2" />
 
-              @if ($complaintId)
-                <div class="flex items-center justify-between mt-1">
-                  @if (auth()->user()->hasRole('admin'))
-                    <x-jet-button type="button" wire:click="createTierNote">Add</x-jet-button>
-                    <x-jet-action-message on="tierNotesCreated">Notes added.</x-jet-action-message>
-                  @endif
-                  <x-jet-button type="button" wire:click="$emitTo('complaints.notes', 'show', {{ $complaintId }})">View Notes</x-jet-button>
-                </div>
-              @endif
-            </div>
+            @if (auth()->user()->hasPermissionTo('complaint-notes'))
+              <div class="form-input">
+                @if (auth()->user()->hasPermissionTo('complaint-notes.create'))
+                  <x-jet-label for="tier_notes" value="Notes" />
+                  <x-textarea id="tier_notes" class="block w-full mt-1 resize-y" wire:model.defer="tierNotesInput.notes" />
+                  <x-jet-input-error for="notes" class="mt-2" />
+                @endif
+
+                @if ($complaintId)
+                  <div class="flex items-center justify-between mt-1">
+                    @if (auth()->user()->hasPermissionTo('complaint-notes.create'))
+                      <x-jet-button type="button" wire:click="createTierNote">Add</x-jet-button>
+                      <x-jet-action-message on="tierNotesCreated">Notes added.</x-jet-action-message>
+                    @endif
+                    <x-jet-button type="button" wire:click="$emitTo('complaints.notes', 'show', {{ $complaintId }})">View Notes</x-jet-button>
+                  </div>
+                @endif
+              </div>
+            @endif
           </div>
         </div>
       </div>
