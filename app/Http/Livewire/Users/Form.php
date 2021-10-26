@@ -61,6 +61,8 @@ class Form extends Component
         $this->input = [
             'permissions' => [],
         ];
+
+        $this->permissionToggle = null;
     }
 
     public function add()
@@ -83,6 +85,8 @@ class Form extends Component
         $this->input = collect($this->user)->only(['name', 'email'])->all();
 
         $this->input['permissions'] = $this->user->getPermissionNames()->all();
+
+        $this->permissionToggle = null;
 
         $this->showModal = true;
     }
