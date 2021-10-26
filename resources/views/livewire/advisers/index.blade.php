@@ -4,11 +4,13 @@
       <div>
         <x-jet-input type="text" placeholder="Search..." wire:model.debounce="search" />
       </div>
-      <div>
-        <x-jet-button type="button" wire:click="$emitTo('advisers.form', 'add')">
-          Register an Adviser / Staff
-        </x-jet-button>
-      </div>
+      @if (auth()->user()->hasPermissionTo('advisers.create'))
+        <div>
+          <x-jet-button type="button" wire:click="$emitTo('advisers.form', 'add')">
+            Register an Adviser / Staff
+          </x-jet-button>
+        </div>
+      @endif
     </div>
 
     @if ($advisers->count())
@@ -85,7 +87,7 @@
                       </x-column-sorter>
                     </th>
                     <th scope="col"
-                      class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider {{ !auth()->user()->hasRole('admin')
+                      class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider {{ !auth()->user()->hasPermissionTo('advisers.delete')
     ? 'sm:rounded-tr-lg'
     : null }}">
                       <x-column-sorter column="status">
@@ -98,7 +100,7 @@
                         @foreach ($requirement as $subRequirementKey => $subRequirement)
                           <th scope="col"
                             class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider {{ $loop->last &&
-!auth()->user()->hasRole('admin')
+!auth()->user()->hasPermissionTo('advisers.delete')
     ? 'sm:rounded-tr-lg'
     : null }}">
                             {{ $subRequirement['label'] }}
@@ -107,7 +109,7 @@
                       @endif
                     @endforeach
                   @endif
-                  @if (auth()->user()->hasRole('admin'))
+                  @if (auth()->user()->hasPermissionTo('advisers.delete'))
                     <th scope="col" class="relative px-4 py-3 sm:rounded-tr-lg">
                       <span class="sr-only">Delete Action</span>
                     </th>
@@ -128,20 +130,24 @@
                         <x-slot name="content">
                           <x-jet-dropdown-link href="javascript:void(0)"
                             wire:click="$emitTo('advisers.form', 'edit', {{ $adviser->id }})">
-                            @if (auth()->user()->hasRole('admin'))
+                            @if (auth()->user()->hasPermissionTo('advisers.update'))
                               Update
                             @else
                               View Details
                             @endif
                           </x-jet-dropdown-link>
-                          <x-jet-dropdown-link href="javascript:void(0)"
-                            wire:click="$emitTo('advisers.requirement', 'show', {{ $adviser->id }})">
-                            Requirements
-                          </x-jet-dropdown-link>
-                          <x-jet-dropdown-link href="javascript:void(0)"
-                            wire:click="showPdf({{ $adviser->id }})">
-                            View PDF
-                          </x-jet-dropdown-link>
+                          @if (auth()->user()->hasPermissionTo('adviser-requirements'))
+                            <x-jet-dropdown-link href="javascript:void(0)"
+                              wire:click="$emitTo('advisers.requirement', 'show', {{ $adviser->id }})">
+                              Requirements
+                            </x-jet-dropdown-link>
+                          @endif
+                          @if (auth()->user()->hasPermissionTo('advisers.view-pdf'))
+                            <x-jet-dropdown-link href="javascript:void(0)"
+                              wire:click="showPdf({{ $adviser->id }})">
+                              View PDF
+                            </x-jet-dropdown-link>
+                          @endif
                         </x-slot>
                       </x-jet-dropdown>
                     </td>
@@ -178,7 +184,7 @@
                       @endforeach
                     @endif
 
-                    @if (auth()->user()->hasRole('admin'))
+                    @if (auth()->user()->hasPermissionTo('advisers.delete'))
                       <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                         <button type="button" class="text-red-500 hover:text-red-700" title="Delete"
                           wire:click="confirmDelete({{ $adviser->id }})">

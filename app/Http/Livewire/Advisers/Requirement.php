@@ -74,6 +74,8 @@ class Requirement extends Component
 
     public function show($id)
     {
+        abort_unless(auth()->user()->hasPermissionTo('adviser-requirements'), 403);
+
         $this->adviserId = $id;
 
         $this->input = [];
@@ -99,7 +101,7 @@ class Requirement extends Component
 
     public function submit(UpdateAdviserRequirement $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('adviser-requirements.update'), 403);
 
         $action->update($this->input, $this->adviser);
 
