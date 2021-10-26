@@ -31,7 +31,7 @@ class Form extends Component
     public function getTitleProperty()
     {
         if ($this->clientId) {
-            return auth()->user()->hasRole('admin') ? 'Update Vulnerable Client' : 'Vulnerable Client Details';
+            return auth()->user()->hasPermissionTo('vulnerable-clients.update') ? 'Update Vulnerable Client' : 'Vulnerable Client Details';
         } else {
             return 'Registers a Vulnerable Client';
         }
@@ -72,7 +72,7 @@ class Form extends Component
 
     public function add()
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('vulnerable-clients.create'), 403);
 
         $this->clientId = null;
 
@@ -103,14 +103,12 @@ class Form extends Component
 
     public function submit()
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
-
         $this->clientId ? $this->update(new UpdateVulnerableClient()) : $this->create(new CreateVulnerableClient());
     }
 
     public function create(CreateVulnerableClient $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('vulnerable-clients.create'), 403);
 
         $action->create($this->input, $this->notesInput);
 
@@ -126,7 +124,7 @@ class Form extends Component
 
     public function update(UpdateVulnerableClient $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('vulnerable-clients.update'), 403);
 
         $action->update($this->input, $this->client);
 
@@ -142,7 +140,7 @@ class Form extends Component
 
     public function createVulnerableClientNote(CreateVulnerableClientNote $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('vulnerable-client-notes.create'), 403);
 
         $action->create($this->notesInput, $this->client);
 

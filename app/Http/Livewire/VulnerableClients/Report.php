@@ -43,6 +43,8 @@ class Report extends Component
 
     public function show()
     {
+        abort_unless(auth()->user()->hasPermissionTo('vulnerable-clients.generate-report'), 403);
+
         $this->resetInput();
 
         $this->showModal = true;
@@ -50,6 +52,8 @@ class Report extends Component
 
     public function generate(GenerateVulnerableClientReport $action)
     {
+        abort_unless(auth()->user()->hasPermissionTo('vulnerable-clients.generate-report'), 403);
+
         $this->pdfUrl = $action->generate($this->input);
 
         $this->showPdf = true;
