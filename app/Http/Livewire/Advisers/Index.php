@@ -85,22 +85,13 @@ class Index extends Component
         $this->resetSort();
     }
 
-    public function edit($id)
-    {
-        $this->adviserId = $id;
-
-        $this->emitTo('advisers.form', 'edit', $this->adviser->id);
-    }
-
     public function confirmDelete($id)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('advisers.delete'), 403);
 
         $this->adviserId = $id;
 
-        abort_if($this->adviser->adviserComplaints()->count(), 403, 'Could not delete adviser. Please make sure that there are no complaints with this adviser / staff.');
-
-        abort_if($this->adviser->staffComplaints()->count(), 403, 'Could not delete adviser. Please make sure that there are no complaints with this adviser / staff.');
+        abort_if($this->adviser->complaints()->count(), 403, 'Could not delete adviser. Please make sure that there are no complaints with this adviser / staff.');
 
         abort_if($this->adviser->claims()->count(), 403, 'Could not delete adviser. Please make sure that there are no claims with this adviser / staff.');
 
@@ -109,11 +100,9 @@ class Index extends Component
 
     public function delete()
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('advisers.delete'), 403);
 
-        abort_if($this->adviser->adviserComplaints()->count(), 403, 'Could not delete adviser. Please make sure that there are no complaints with this adviser / staff.');
-
-        abort_if($this->adviser->staffComplaints()->count(), 403, 'Could not delete adviser. Please make sure that there are no complaints with this adviser / staff.');
+        abort_if($this->adviser->complaints()->count(), 403, 'Could not delete adviser. Please make sure that there are no complaints with this adviser / staff.');
 
         abort_if($this->adviser->claims()->count(), 403, 'Could not delete adviser. Please make sure that there are no claims with this adviser / staff.');
 
@@ -129,6 +118,8 @@ class Index extends Component
 
     public function showPdf($id)
     {
+        abort_unless(auth()->user()->hasPermissionTo('advisers.view-pdf'), 403);
+
         $this->adviserId = $id;
 
         $this->showPdf = true;

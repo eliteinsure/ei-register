@@ -14,7 +14,8 @@ trait UserValidator
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
-            'role' => ['required', 'in:' . implode(',', config('services.roles'))],
+            'permissions' => ['nullable', 'array'],
+            'permissions.*' => ['exists:permissions,name'],
         ];
     }
 
@@ -24,7 +25,8 @@ trait UserValidator
             'name' => 'Name',
             'email' => 'Email',
             'password' => 'Password',
-            'role' => 'Role',
+            'permissions' => 'Permissions',
+            'permissions.*' => 'Permission',
         ];
     }
 }

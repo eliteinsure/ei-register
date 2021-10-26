@@ -5,15 +5,17 @@
         <x-jet-input type="text" placeholder="Search..." wire:model.debounce="search" />
       </div>
       <div>
-        @role('admin')
+        @if (auth()->user()->hasPermissionTo('vulnerable-clients.create'))
           <x-jet-button type="button" wire:click="$emitTo('vulnerable-clients.form', 'add')">
             Register a Vulnerable Client
           </x-jet-button>
-        @endrole
+        @endif
       </div>
-      <div>
-        @livewire('vulnerable-clients.report')
-      </div>
+      @if (auth()->user()->hasPermissionTo('vulnerable-clients.generate-report'))
+        <div>
+          @livewire('vulnerable-clients.report')
+        </div>
+      @endif
     </div>
 
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -58,7 +60,7 @@
                     </x-column-sorter>
                   </th>
 
-                  @if (auth()->user()->hasRole('admin'))
+                  @if (auth()->user()->hasPermissionTo('vulnerable-clients.delete'))
                     <th scope="col"
                       class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                       <span class="sr-only">Delete Action</span>
@@ -80,16 +82,18 @@
                         <x-slot name="content">
                           <x-jet-dropdown-link href="javascript:void(0)"
                             wire:click="$emitTo('vulnerable-clients.form', 'edit', {{ $client->id }})">
-                            @if (auth()->user()->hasRole('admin'))
+                            @if (auth()->user()->hasPermissionTo('vulnerable-clients.update'))
                               Update
                             @else
                               View Details
                             @endif
                           </x-jet-dropdown-link>
-                          <x-jet-dropdown-link href="javascript:void(0)"
-                            wire:click="showPdf({{ $client->id }})">
-                            View PDF
-                          </x-jet-dropdown-link>
+                          @if (auth()->user()->hasPermissionTo('vulnerable-clients.view-pdf'))
+                            <x-jet-dropdown-link href="javascript:void(0)"
+                              wire:click="showPdf({{ $client->id }})">
+                              View PDF
+                            </x-jet-dropdown-link>
+                          @endif
                         </x-slot>
                       </x-jet-dropdown>
                     </td>
@@ -110,7 +114,7 @@
                       {{ $client->nature }}
                     </td>
 
-                    @if (auth()->user()->hasRole('admin'))
+                    @if (auth()->user()->hasPermissionTo('vulnerable-clients.delete'))
                       <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                         <button type="button" class="text-red-500 hover:text-red-700" title="Delete"
                           wire:click="confirmDelete({{ $client->id }})">

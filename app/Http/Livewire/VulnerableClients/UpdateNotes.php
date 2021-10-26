@@ -37,6 +37,8 @@ class UpdateNotes extends Component
 
     public function show($clientId, $noteId)
     {
+        abort_unless(auth()->user()->hasPermissionTo('vulnerable-client-notes.update'), 403);
+
         $this->clientId = $clientId;
 
         $this->noteId = $noteId;
@@ -49,7 +51,7 @@ class UpdateNotes extends Component
 
     public function submit(UpdateVulnerableClientNote $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('vulnerable-client-notes.update'), 403);
 
         $action->update($this->input, $this->note);
 

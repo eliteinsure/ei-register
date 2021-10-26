@@ -79,7 +79,7 @@ class Index extends Component
 
     public function confirmDelete($id)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('software-history.delete'), 403);
 
         $this->historyId = $id;
 
@@ -88,12 +88,14 @@ class Index extends Component
 
     public function delete()
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('software-history.delete'), 403);
 
         $this->siteHistory->delete();
 
+        $siteHistory = $this->site->histories()->latest('update_date')->first();
+
         $this->site->update([
-            'update_date' => $this->site->histories()->latest('update_date')->first()->update_date,
+            'update_date' => $siteHistory ? $siteHistory->update_date : null,
         ]);
 
         $this->dispatchBrowserEvent('banner-message', [

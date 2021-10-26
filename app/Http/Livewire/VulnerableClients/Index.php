@@ -86,7 +86,7 @@ class Index extends Component
 
     public function confirmDelete($id)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('vulnerable-clients.delete'), 403);
 
         $this->clientId = $id;
 
@@ -95,7 +95,7 @@ class Index extends Component
 
     public function delete()
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('vulnerable-clients.delete'), 403);
 
         $this->client->notes()->delete();
 
@@ -111,6 +111,8 @@ class Index extends Component
 
     public function showPdf($id)
     {
+        abort_unless(auth()->user()->hasPermissionTo('vulnerable-clients.view-pdf'), 403);
+
         $this->clientId = $id;
 
         $this->showPdf = true;

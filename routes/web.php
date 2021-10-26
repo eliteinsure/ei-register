@@ -32,25 +32,25 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
     Route::resource('complaints', ComplaintController::class)->only([
         'index',
-    ]);
+    ])->middleware(['permission:complaints']);
 
     Route::resource('claims', ClaimController::class)->only([
         'index',
-    ]);
+    ])->middleware(['permission:claims']);
 
     Route::group(['as' => 'cir.', 'prefix' => 'cir'], function () {
-        Route::get('login', [CirController::class, 'login'])->name('login');
+        Route::get('login', [CirController::class, 'login'])->name('login')->middleware(['permission:cir']);
     });
 
     Route::resource('vulnerable-clients', VulnerableClientController::class)->only([
         'index',
-    ]);
+    ])->middleware(['permission:vulnerable-clients']);
 
     Route::resource('software', SiteController::class)->only([
         'index',
     ])->names([
         'index' => 'sites.index',
-    ]);
+    ])->middleware(['permission:software']);
 
     Route::resource('software.manuals', SiteManualController::class)->only([
         'show',
@@ -58,7 +58,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         'software' => 'site',
     ])->names([
         'show' => 'sites.manuals.show',
-    ]);
+    ])->middleware(['permission:software-manuals']);
 
     Route::resource('software.history', SiteHistoryController::class)->only([
         'index',
@@ -66,38 +66,38 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
         'software' => 'site',
     ])->names([
         'index' => 'sites.history.index',
-    ]);
+    ])->middleware(['permission:software-history']);
 
     Route::resource('advisers', AdviserController::class)->only([
         'index',
-    ]);
+    ])->middleware(['permission:advisers']);
 
     Route::group(['as' => 'reports.', 'prefix' => 'reports'], function () {
         Route::group(['as' => 'complaints.', 'prefix' => 'complaints'], function () {
-            Route::get('/', [ComplaintController::class, 'report'])->name('index');
-            Route::get('/{complaint}', [ComplaintController::class, 'pdf'])->name('pdf');
+            Route::get('/', [ComplaintController::class, 'report'])->name('index')->middleware(['permission:complaints.generate-report']);
+            Route::get('/{complaint}', [ComplaintController::class, 'pdf'])->name('pdf')->middleware(['permission:complaints.view-pdf']);
         });
 
         Route::group(['as' => 'claims.', 'prefix' => 'claims'], function () {
-            Route::get('/', [ClaimController::class, 'report'])->name('index');
-            Route::get('/{claim}', [ClaimController::class, 'pdf'])->name('pdf');
+            Route::get('/', [ClaimController::class, 'report'])->name('index')->middleware(['permission:claims.generate-report']);
+            Route::get('/{claim}', [ClaimController::class, 'pdf'])->name('pdf')->middleware(['permission:claims.view-pdf']);
         });
 
         Route::group(['as' => 'vulnerable-clients.', 'prefix' => 'vulnerable-clients'], function () {
-            Route::get('/', [VulnerableClientController::class, 'report'])->name('index');
-            Route::get('{vulnerableClient}', [VulnerableClientController::class, 'pdf'])->name('pdf');
+            Route::get('/', [VulnerableClientController::class, 'report'])->name('index')->middleware(['permission:vulnerable-clients.generate-report']);
+            Route::get('{vulnerableClient}', [VulnerableClientController::class, 'pdf'])->name('pdf')->middleware(['permission:vulnerable-clients.view-pdf']);
         });
 
         Route::group(['as' => 'sites.', 'prefix' => 'software'], function () {
-            Route::get('/', [SiteController::class, 'report'])->name('index');
+            Route::get('/', [SiteController::class, 'report'])->name('index')->middleware(['permission:software.generate-report']);
         });
 
         Route::group(['as' => 'advisers.', 'prefix' => 'advisers'], function () {
-            Route::get('/{adviser}', [AdviserController::class, 'pdf'])->name('pdf');
+            Route::get('/{adviser}', [AdviserController::class, 'pdf'])->name('pdf')->middleware(['permission:advisers.view-pdf']);
         });
     });
 
     Route::resource('users', UserController::class)->only([
         'index',
-    ])->middleware('role:admin');
+    ])->middleware(['permission:users']);
 });

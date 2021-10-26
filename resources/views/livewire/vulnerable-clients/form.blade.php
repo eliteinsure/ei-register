@@ -32,29 +32,34 @@
           <x-jet-input-error for="nature" class="mt-2" />
         </div>
 
-        <div class="form-input">
-          <x-jet-label for="client_notes" value="Notes" />
-          <x-textarea id="client_notes" class="block w-full mt-1 resize-y" wire:model.defer="notesInput.notes" />
-          <x-jet-input-error for="notes" class="mt-2" />
+        @if (auth()->user()->hasPermissionTo('vulnerable-client-notes'))
+          <div class="form-input">
+            @if (auth()->user()->hasPermissionTo('vulnerable-client-notes.create'))
+              <x-jet-label for="client_notes" value="Notes" />
+              <x-textarea id="client_notes" class="block w-full mt-1 resize-y" wire:model.defer="notesInput.notes" />
+              <x-jet-input-error for="notes" class="mt-2" />
+            @endif
 
-          @if ($clientId)
-            <div class="flex items-center justify-between mt-1">
-              @if (auth()->user()->hasRole('admin'))
-                <x-jet-button type="button" wire:click="createVulnerableClientNote">Add</x-jet-button>
-                <x-jet-action-message on="vulnerableClientNotesCreated">Notes added.</x-jet-action-message>
-              @endif
-              <x-jet-button type="button" wire:click="$emitTo('vulnerable-clients.notes', 'show', {{ $clientId }})">View Notes</x-jet-button>
-            </div>
-          @endif
-        </div>
+            @if ($clientId)
+              <div class="flex items-center justify-between mt-1">
+                @if (auth()->user()->hasPermissionTo('vulnerable-client-notes.create'))
+                  <x-jet-button type="button" wire:click="createVulnerableClientNote">Add</x-jet-button>
+                  <x-jet-action-message on="vulnerableClientNotesCreated">Notes added.</x-jet-action-message>
+                @endif
+
+                <x-jet-button type="button" wire:click="$emitTo('vulnerable-clients.notes', 'show', {{ $clientId }})">View Notes</x-jet-button>
+              </div>
+            @endif
+          </div>
+        @endif
       </div>
     </x-slot>
     <x-slot name="footer">
-      @if (auth()->user()->hasRole('admin'))
+      @if (auth()->user()->getPermissionNames()->intersect(['vulnerable-clients.creat', 'vulnerable-clients.update'])->count())
         <x-jet-button type="submit">{{ isset($clientId) ? 'Update' : 'Register' }}</x-jet-button>
       @endif
       <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showModal', false)">
-        @if (auth()->user()->hasRole('admin'))
+        @if (auth()->user()->getPermissionNames()->intersect(['vulnerable-clients.creat', 'vulnerable-clients.update'])->count())
           Cancel
         @else
           Close

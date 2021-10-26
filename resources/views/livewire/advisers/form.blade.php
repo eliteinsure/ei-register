@@ -41,11 +41,11 @@
       </div>
     </x-slot>
     <x-slot name="footer">
-      @if (auth()->user()->hasRole('admin'))
+      @if (auth()->user()->getPermissionNames()->intersect(['advisers.create', 'advisers.update'])->count())
         <x-jet-button type="submit">{{ isset($adviserId) ? 'Update' : 'Register' }}</x-jet-button>
       @endif
       <x-jet-secondary-button type="button" class="ml-2" wire:click="$set('showModal', false)">
-        @if (auth()->user()->hasRole('admin'))
+        @if (auth()->user()->getPermissionNames()->intersect(['advisers.create', 'advisers.update'])->count())
           Cancel
         @else
           Close

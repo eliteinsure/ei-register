@@ -34,7 +34,7 @@ class Form extends Component
     public function getTitleProperty()
     {
         if ($this->claimId) {
-            return auth()->user()->hasRole('admin') ? 'Update Claim' : 'Claim Details';
+            return auth()->user()->hasPermissionTo('claims.update') ? 'Update Claim' : 'Claim Details';
         } else {
             return 'Register a Claim';
         }
@@ -88,7 +88,7 @@ class Form extends Component
 
     public function add()
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('claims.create'), 403);
 
         $this->claimId = null;
 
@@ -113,7 +113,7 @@ class Form extends Component
 
         $adviser = json_encode([[
             'value' => $adviser->id,
-            'label' => $adviser->name,
+            'label' => $adviser->name . ' (' . $adviser->status . ')',
         ]]);
 
         $this->dispatchBrowserEvent('adviser-lookup-value', $adviser);
@@ -133,8 +133,7 @@ class Form extends Component
     public function adviserLookupSearch($search = '')
     {
         $query = Adviser::where(function ($query) {
-            $query->where('status', 'Active')
-                ->where('type', 'Adviser');
+            $query->where('type', 'Adviser');
         })->when($search, function ($query) use ($search) {
             return $query->where('name', 'like', '%' . $search . '%');
         })->oldest('name');
@@ -142,7 +141,7 @@ class Form extends Component
         $advisers = $query->get()->map(function ($adviser) {
             return [
                 'value' => $adviser['id'],
-                'label' => $adviser['name'],
+                'label' => $adviser['name'] . ' (' . $adviser['status'] . ')',
             ];
         });
 
@@ -156,14 +155,12 @@ class Form extends Component
 
     public function submit()
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
-
         $this->claimId ? $this->update(new UpdateClaim()) : $this->create(new CreateClaim());
     }
 
     public function create(CreateClaim $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('claims.create'), 403);
 
         $action->create($this->input, $this->notesInput);
 
@@ -179,7 +176,7 @@ class Form extends Component
 
     public function update(UpdateClaim $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('claims.update'), 403);
 
         $action->update($this->input, $this->claim);
 
@@ -195,7 +192,7 @@ class Form extends Component
 
     public function createClaimNote(CreateClaimNote $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('claim-notes.create'), 403);
 
         $action->create($this->notesInput, $this->claim);
 

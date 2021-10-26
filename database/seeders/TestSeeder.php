@@ -27,7 +27,7 @@ class TestSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        $this->call([RoleSeeder::class, UserSeeder::class]);
+        $this->call([RoleSeeder::class, UserSeeder::class, PermissionSeeder::class]);
 
         $user = User::factory()->create();
 
