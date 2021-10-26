@@ -16,48 +16,60 @@
             Dashboard
           </x-jet-nav-link>
 
-          <x-jet-nav-link href="{{ route('complaints.index') }}"
-            :active="request()->routeIs('complaints.index')"
-            icon="heroicon-o-shield-exclamation">
-            Complaints
-          </x-jet-nav-link>
+          @if (auth()->user()->hasPermissionTo('complaints'))
+            <x-jet-nav-link href="{{ route('complaints.index') }}"
+              :active="request()->routeIs('complaints.index')"
+              icon="heroicon-o-shield-exclamation">
+              Complaints
+            </x-jet-nav-link>
+          @endif
 
-          <x-jet-nav-link href="{{ route('claims.index') }}"
-            :active="request()->routeIs('claims.index')"
-            icon="heroicon-o-clipboard-list">
-            Claims
-          </x-jet-nav-link>
+          @if (auth()->user()->hasPermissionTo('claims'))
+            <x-jet-nav-link href="{{ route('claims.index') }}"
+              :active="request()->routeIs('claims.index')"
+              icon="heroicon-o-clipboard-list">
+              Claims
+            </x-jet-nav-link>
+          @endif
 
-          <x-jet-nav-link href="{{ route('cir.login') }}"
-            :active="false"
-            icon="heroicon-o-document-report"
-            target="_blank">
-            CIR
-          </x-jet-nav-link>
+          @if (auth()->user()->hasPermissionTo('cir'))
+            <x-jet-nav-link href="{{ route('cir.login') }}"
+              :active="false"
+              icon="heroicon-o-document-report"
+              target="_blank">
+              CIR
+            </x-jet-nav-link>
+          @endif
 
-          <x-jet-nav-link href="{{ route('vulnerable-clients.index') }}" :active="request()->routeIs('vulnerable-clients.index')" icon="heroicon-o-exclamation">
-            Vulnerable Clients
-          </x-jet-nav-link>
+          @if (auth()->user()->hasPermissionTo('vulnerable-clients'))
+            <x-jet-nav-link href="{{ route('vulnerable-clients.index') }}" :active="request()->routeIs('vulnerable-clients.index')" icon="heroicon-o-exclamation">
+              Vulnerable Clients
+            </x-jet-nav-link>
+          @endif
 
-          <x-jet-nav-link href="{{ route('sites.index') }}"
-            :active="request()->routeIs('sites.index')"
-            icon="heroicon-o-globe">
-            Software
-          </x-jet-nav-link>
+          @if (auth()->user()->hasPermissionTo('software'))
+            <x-jet-nav-link href="{{ route('sites.index') }}"
+              :active="request()->routeIs('sites.index')"
+              icon="heroicon-o-globe">
+              Software
+            </x-jet-nav-link>
+          @endif
 
-          <x-jet-nav-link href="{{ route('advisers.index') }}"
-            :active="request()->routeIs('advisers.index')"
-            icon="heroicon-o-users">
-            Advisers / Staffs
-          </x-jet-nav-link>
+          @if (auth()->user()->hasPermissionTo('advisers'))
+            <x-jet-nav-link href="{{ route('advisers.index') }}"
+              :active="request()->routeIs('advisers.index')"
+              icon="heroicon-o-users">
+              Advisers / Staffs
+            </x-jet-nav-link>
+          @endif
 
-          @role('admin')
+          @if (auth()->user()->hasPermissionTo('users'))
             <x-jet-nav-link href="{{ route('users.index') }}"
               :active="request()->routeIs('users.index')"
               icon="heroicon-o-user-circle">
               Users
             </x-jet-nav-link>
-          @endrole
+          @endif
 
           <form method="POST" action="{{ route('logout') }}">
             @csrf
