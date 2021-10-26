@@ -91,7 +91,7 @@
                             wire:click="$emitTo('complaints.form', 'edit', {{ $complaint->id }})">
                             @if (auth()->user()->hasPermissionTo('complaints.update'))
                               Update
-                            @elseif(auth()->user()->hasPermissionTo('complaints'))
+                            @else
                               View Details
                             @endif
                           </x-jet-dropdown-link>

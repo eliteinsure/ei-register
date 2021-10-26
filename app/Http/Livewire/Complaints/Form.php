@@ -94,7 +94,7 @@ class Form extends Component
 
     public function add()
     {
-        abort_unless(auth()->user()->hasPermissionTo('comlaints.create'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('complaints.create'), 403);
 
         $this->complaintId = null;
 
