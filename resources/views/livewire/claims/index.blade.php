@@ -5,15 +5,17 @@
         <x-jet-input type="text" placeholder="Search..." wire:model.debounce="search" />
       </div>
       <div>
-        @role('admin')
+        @if (auth()->user()->hasPermissionTo('claims.create'))
           <x-jet-button type="button" wire:click="$emitTo('claims.form', 'add')">
             Register a Claim
           </x-jet-button>
-        @endrole
+        @endif
       </div>
-      <div>
-        @livewire('claims.report')
-      </div>
+      @if (auth()->user()->hasPermissionTo('claims.generate-report'))
+        <div>
+          @livewire('claims.report')
+        </div>
+      @endif
     </div>
 
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -88,7 +90,7 @@
                     </x-column-sorter>
                   </th>
 
-                  @if (auth()->user()->hasRole('admin'))
+                  @if (auth()->user()->hasPermissionTo('claims.delete'))
                     <th scope="col"
                       class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                       <span class="sr-only">Delete Action</span>
@@ -110,16 +112,18 @@
                         <x-slot name="content">
                           <x-jet-dropdown-link href="javascript:void(0)"
                             wire:click="$emitTo('claims.form', 'edit', {{ $claim->id }})">
-                            @if (auth()->user()->hasRole('admin'))
+                            @if (auth()->user()->hasPermissionTo('claims.update'))
                               Update
                             @else
                               View Details
                             @endif
                           </x-jet-dropdown-link>
-                          <x-jet-dropdown-link href="javascript:void(0)"
-                            wire:click="showPdf({{ $claim->id }})">
-                            View PDF
-                          </x-jet-dropdown-link>
+                          @if (auth()->user()->hasPermissionTo('claims.view-pdf'))
+                            <x-jet-dropdown-link href="javascript:void(0)"
+                              wire:click="showPdf({{ $claim->id }})">
+                              View PDF
+                            </x-jet-dropdown-link>
+                          @endif
                         </x-slot>
                       </x-jet-dropdown>
                     </td>
@@ -155,7 +159,7 @@
                       {{ number_format($claim->day_counter) }}
                     </td>
 
-                    @if (auth()->user()->hasRole('admin'))
+                    @if (auth()->user()->hasPermissionTo('claims.delete'))
                       <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                         <button type="button" class="text-red-500 hover:text-red-700" title="Delete"
                           wire:click="confirmDelete({{ $claim->id }})">

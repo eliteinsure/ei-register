@@ -74,7 +74,7 @@ class Form extends Component
 
     public function add()
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('advisers.create'), 403);
 
         $this->adviserId = null;
 
@@ -85,6 +85,8 @@ class Form extends Component
 
     public function edit($id)
     {
+        abort_unless(auth()->user()->hasPermissionTo('advisers.update'), 403);
+
         $this->adviserId = $id;
 
         $this->input = collect($this->adviser)->except(['id', 'created_at', 'updated_at'])->all();
@@ -99,14 +101,12 @@ class Form extends Component
 
     public function submit()
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
-
         $this->adviserId ? $this->update(new UpdateAdviser()) : $this->create(new CreateAdviser());
     }
 
     public function create(CreateAdviser $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('advisers.create'), 403);
 
         $action->create($this->input);
 
@@ -122,7 +122,7 @@ class Form extends Component
 
     public function update(UpdateAdviser $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('advisers.update'), 403);
 
         $action->update($this->input, $this->adviser);
 

@@ -43,6 +43,8 @@ class Notes extends Component
 
     public function show($complaintId)
     {
+        abort_unless(auth()->user()->hasPermissionTo('complaint-notes'), 403);
+
         $this->complaintId = $complaintId;
 
         $this->showModal = true;
@@ -50,7 +52,7 @@ class Notes extends Component
 
     public function confirmDelete($id)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('complaint-notes.delete'), 403);
 
         $this->noteId = $id;
 
@@ -59,7 +61,7 @@ class Notes extends Component
 
     public function delete()
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('complaint-notes.delete'), 403);
 
         $this->note->delete();
 

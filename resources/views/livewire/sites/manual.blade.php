@@ -2,7 +2,7 @@
   <x-jet-dialog-modal wire:model="showModal" focusable>
     <x-slot name="title">Software Manuals</x-slot>
     <x-slot name="content">
-      @if (auth()->user()->hasRole('admin'))
+      @if (auth()->user()->hasPermissionTo('software-manuals.upload'))
         <form wire:submit.prevent="submit">
           <div class="md:flex md:items-start md:-mx-3 space-y-6 md:space-y-0">
             <div class="form-input md:flex-1 md:px-3">
@@ -26,12 +26,16 @@
       <ul class="bg-white shadow overflow-hidden sm:rounded-md mt-6 divide-y divide-gray-200">
         @forelse ($manuals as $manual)
           <li class="flex items-center hover:bg-gray-50 px-4 py-2">
-            <a href="{{ route('sites.manuals.show', ['site' => $siteId, 'manual' => $manual->id]) }}"
-              class="flex-1 text-sm font-medium text-tblue flex items-center" target="_blank">
+            <a href="{{ auth()->user()->hasPermissionTo('software-manuals.download')
+    ? route('sites.manuals.show', ['site' => $siteId, 'manual' => $manual->id])
+    : 'javascript:void(0);' }}"
+              class="flex-1 text-sm font-medium {{ auth()->user()->hasPermissionTo('software-manuals.download')
+    ? 'text-tblue'
+    : 'text-shark cursor-default' }} flex items-center" target="_blank">
               @svg($manual->file_icon, 'flex-shrink-0 h-6 w-6 text-tblue')
               <span class="ml-4 flex-1">{{ $manual->name }}</span>
             </a>
-            @if (auth()->user()->hasRole('admin'))
+            @if (auth()->user()->hasPermissionTo('software-manuals.delete'))
               <div class="ml-4 flex-shrink-0">
                 <button type="button" class="text-red-600 hover:text-red-700" title="Delete"
                   wire:click="confirmDelete({{ $manual->id }})">

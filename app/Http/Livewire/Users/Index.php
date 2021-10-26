@@ -22,15 +22,11 @@ class Index extends Component
 
     public function render()
     {
-        $query = User::leftJoin('model_has_roles', function ($join) {
-            $join->on('users.id', '=', 'model_has_roles.model_id')
-                ->where('model_has_roles.model_type', 'App\\Models\\User');
-        })->leftJoin('roles', 'roles.id', '=', 'model_has_roles.role_id')
-            ->select('users.id', 'users.name', 'users.email', 'roles.name as role')
+        $query = User::select('users.id', 'users.name', 'users.email')
             ->where('users.id', '!=', auth()->user()->id)
             ->when($this->search, function ($query) {
                 return $query->where(function ($query) {
-                    $stringColumns = ['users.name', 'users.email', 'roles.name'];
+                    $stringColumns = ['users.name', 'users.email'];
 
                     foreach ($stringColumns as $column) {
                         $query->orWhere($column, 'like', '%' . $this->search . '%');

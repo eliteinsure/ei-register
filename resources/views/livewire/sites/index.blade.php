@@ -5,15 +5,17 @@
         <x-jet-input type="text" placeholder="Search..." wire:model.debounce="search" />
       </div>
       <div>
-        @role('admin')
-        <x-jet-button type="button" wire:click="$emitTo('sites.form', 'add')">
-          Register a Software
-        </x-jet-button>
-        @endrole
+        @if (auth()->user()->hasPermissionTo('software.create'))
+          <x-jet-button type="button" wire:click="$emitTo('sites.form', 'add')">
+            Register a Software
+          </x-jet-button>
+        @endif
       </div>
-      <div>
-        @livewire('sites.report')
-      </div>
+      @if (auth()->user()->hasPermissionTo('software.generate-report'))
+        <div>
+          @livewire('sites.report')
+        </div>
+      @endif
     </div>
 
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -51,7 +53,7 @@
                       Date Last Updated
                     </x-column-sorter>
                   </th>
-                  @if (auth()->user()->hasRole('admin'))
+                  @if (auth()->user()->hasPermissionTo('software.delete'))
                     <th scope="col"
                       class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                       <span class="sr-only">Delete Action</span>
@@ -73,22 +75,25 @@
                         <x-slot name="content">
                           <x-jet-dropdown-link href="javascript:void(0)"
                             wire:click="$emitTo('sites.form', 'edit', {{ $site->id }})">
-                            @if (auth()->user()->hasRole('admin'))
+                            @if (auth()->user()->hasPermissionTo('software.update'))
                               Update
                             @else
                               View Details
                             @endif
                           </x-jet-dropdown-link>
-                          <x-jet-dropdown-link href="javascript:void(0)"
-                            wire:click="$emitTo('sites.manual', 'show', {{ $site->id }})">
-                            View Manuals
-                          </x-jet-dropdown-link>
-                          <x-jet-dropdown-link href="{{ route('sites.history.index', ['site' => $site->id]) }}">
-                            History
-                          </x-jet-dropdown-link>
+                          @if (auth()->user()->hasPermissionTo('software-manuals'))
+                            <x-jet-dropdown-link href="javascript:void(0)"
+                              wire:click="$emitTo('sites.manual', 'show', {{ $site->id }})">
+                              View Manuals
+                            </x-jet-dropdown-link>
+                          @endif
+                          @if (auth()->user()->hasPermissionTo('software-history'))
+                            <x-jet-dropdown-link href="{{ route('sites.history.index', ['site' => $site->id]) }}">
+                              History
+                            </x-jet-dropdown-link>
+                          @endif
                         </x-slot>
                       </x-jet-dropdown>
-
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $site->name }}
@@ -105,7 +110,7 @@
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                       {{ $site->update_date ? $site->update_date->format('d/m/Y') : '' }}
                     </td>
-                    @if (auth()->user()->hasRole('admin'))
+                    @if (auth()->user()->hasPermissionTo('software.delete'))
                       <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                         <button type="button" class="text-red-500 hover:text-red-700" title="Delete"
                           wire:click="confirmDelete({{ $site->id }})">

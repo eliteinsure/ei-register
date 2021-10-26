@@ -37,7 +37,7 @@ class Form extends Component
     public function getTitleProperty()
     {
         if ($this->complaintId) {
-            return auth()->user()->hasRole('admin') ? 'Update Complaint' : 'Complaint Detials';
+            return auth()->user()->hasPermissionTo('complaints.update') ? 'Update Complaint' : 'Complaint Detials';
         } else {
             return 'Register a Complaint';
         }
@@ -94,7 +94,7 @@ class Form extends Component
 
     public function add()
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('complaints.create'), 403);
 
         $this->complaintId = null;
 
@@ -154,14 +154,12 @@ class Form extends Component
 
     public function submit()
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
-
         $this->complaintId ? $this->update(new UpdateComplaint()) : $this->create(new CreateComplaint());
     }
 
     public function create(CreateComplaint $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('complaints.create'), 403);
 
         $action->create($this->input, $this->tierNotesInput);
 
@@ -177,7 +175,7 @@ class Form extends Component
 
     public function update(UpdateComplaint $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('complaints.update'), 403);
 
         $action->update($this->input, $this->complaint);
 
@@ -193,7 +191,7 @@ class Form extends Component
 
     public function createTierNote(CreateComplaintNote $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('complaint-notes.create'), 403);
 
         $action->create($this->tierNotesInput, $this->complaint);
 

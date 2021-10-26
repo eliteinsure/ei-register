@@ -4,13 +4,13 @@
       <div>
         <x-jet-input type="text" placeholder="Search..." wire:model.debounce="search" />
       </div>
-      <div>
-        @role('admin')
-        <x-jet-button type="button" wire:click="$emitTo('sites.history.form', 'add')">
-          Register a History
-        </x-jet-button>
-        @endrole
-      </div>
+      @if (auth()->user()->hasPermissionTo('software-history.create'))
+        <div>
+          <x-jet-button type="button" wire:click="$emitTo('sites.history.form', 'add')">
+            Register a History
+          </x-jet-button>
+        </div>
+      @endif
     </div>
 
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -21,9 +21,11 @@
             <table class="min-w-full divide-y divide-gray-200 sm:rounded-lg">
               <thead class="bg-gray-50 sm:rounded-t-lg">
                 <tr>
-                  <th scope="col" class="relative px-4 py-3 sm:rounded-tl-lg">
-                    <span class="sr-only">Actions</span>
-                  </th>
+                  @if (auth()->user()->hasPermissionTo('software-history.update'))
+                    <th scope="col" class="relative px-4 py-3 sm:rounded-tl-lg">
+                      <span class="sr-only">Actions</span>
+                    </th>
+                  @endif
                   <th scope="col"
                     class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                     <x-column-sorter column="updates">
@@ -48,7 +50,7 @@
                       Version
                     </x-column-sorter>
                   </th>
-                  @if (auth()->user()->hasRole('admin'))
+                  @if (auth()->user()->hasPermissionTo('software-history.delete'))
                     <th scope="col"
                       class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                       <span class="sr-only">Delete Action</span>
@@ -59,25 +61,24 @@
               <tbody>
                 @foreach ($histories as $index => $history)
                   <tr class="{{ $index % 2 ? 'bg-gray-50' : 'bg-white' }}">
-                    <td class="px-4 py-2 whitespace-nowrap text-left text-sm align-top">
-                      <x-jet-dropdown align="top-left" content-classes="py-1 bg-white divide-y divide-gray-200">
-                        <x-slot name="trigger">
-                          <button type="button"
-                            class="text-lmara hover:text-dsgreen" title="Actions">
-                            <x-heroicon-o-dots-vertical class="h-6 w-6" />
-                          </button>
-                        </x-slot>
-                        <x-slot name="content">
-                          <x-jet-dropdown-link href="javascript:void(0)"
-                            wire:click="$emitTo('sites.history.form', 'edit', {{ $history->id }})">
-                            @if (auth()->user()->hasRole('admin'))
+                    @if (auth()->user()->hasPermissionTo('software-history.update'))
+                      <td class="px-4 py-2 whitespace-nowrap text-left text-sm align-top">
+                        <x-jet-dropdown align="top-left" content-classes="py-1 bg-white divide-y divide-gray-200">
+                          <x-slot name="trigger">
+                            <button type="button"
+                              class="text-lmara hover:text-dsgreen" title="Actions">
+                              <x-heroicon-o-dots-vertical class="h-6 w-6" />
+                            </button>
+                          </x-slot>
+                          <x-slot name="content">
+                            <x-jet-dropdown-link href="javascript:void(0)" wire:click="$emitTo('sites.history.form', 'edit', {{ $history->id }})">
                               Update
-                            @endif
-                          </x-jet-dropdown-link>
-                        </x-slot>
-                      </x-jet-dropdown>
+                            </x-jet-dropdown-link>
+                          </x-slot>
+                        </x-jet-dropdown>
+                      </td>
+                    @endif
 
-                    </td>
                     <td class="px-4 py-2 text-sm text-shark text-opacity-75 align-top">
                       {!! nl2br($history->updates) !!}
                     </td>
@@ -90,7 +91,8 @@
                     <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75 align-top">
                       {{ $history->version }}
                     </td>
-                    @if (auth()->user()->hasRole('admin'))
+
+                    @if (auth()->user()->hasPermissionTo('software-history.delete'))
                       <td class="px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75 align-top">
                         <button type="button" class="text-red-500 hover:text-red-700" title="Delete"
                           wire:click="confirmDelete({{ $history->id }})">

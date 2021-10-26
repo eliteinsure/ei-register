@@ -37,6 +37,72 @@ return [
 
     'roles' => ['admin', 'user'],
 
+    'permissions' => [
+        'users' => [],
+        'complaints' => [
+            'create' => 'Register',
+            'update' => 'Update',
+            'delete' => 'Delete',
+            'view-pdf' => 'View PDF',
+            'generate-report' => 'Generate Report',
+        ],
+        'complaint-notes' => [
+            'create' => 'Add',
+            'update' => 'Update',
+            'delete' => 'Delete',
+        ],
+        'claims' => [
+            'create' => 'Register',
+            'update' => 'Update',
+            'delete' => 'Delete',
+            'view-pdf' => 'View PDF',
+            'generate-report' => 'Generate Report',
+        ],
+        'claim-notes' => [
+            'create' => 'Add',
+            'update' => 'Update',
+            'delete' => 'Delete',
+        ],
+        'cir' => [],
+        'vulnerable-clients' => [
+            'create' => 'Register',
+            'update' => 'Update',
+            'delete' => 'Delete',
+            'view-pdf' => 'View PDF',
+            'generate-report' => 'Generate Report',
+        ],
+        'vulnerable-client-notes' => [
+            'create' => 'Add',
+            'update' => 'Update',
+            'delete' => 'Delete',
+        ],
+        'software' => [
+            'create' => 'Register',
+            'update' => 'Update',
+            'delete' => 'Delete',
+            'generate-report' => 'Generate Report',
+        ],
+        'software-manuals' => [
+            'upload' => 'Add',
+            'download' => 'Preview / Download',
+            'delete' => 'Delete',
+        ],
+        'software-history' => [
+            'create' => 'Register',
+            'update' => 'Update',
+            'delete' => 'Delete',
+        ],
+        'advisers' => [
+            'create' => 'Register',
+            'update' => 'Update',
+            'delete' => 'Delete',
+            'view-pdf' => 'View PDF',
+        ],
+        'adviser-requirements' => [
+            'update' => 'Update',
+        ],
+    ],
+
     'adviser' => [
         'types' => ['Adviser', 'Staff', 'Management'],
         'status' => ['Active', 'Pending', 'Terminated'],
