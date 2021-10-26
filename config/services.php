@@ -46,12 +46,22 @@ return [
             'view-pdf' => 'View PDF',
             'generate-report' => 'Generate Report',
         ],
+        'complaint-notes' => [
+            'create' => 'Add',
+            'update' => 'Update',
+            'delete' => 'Delete',
+        ],
         'claims' => [
             'create' => 'Register',
             'update' => 'Update',
             'delete' => 'Delete',
             'view-pdf' => 'View PDF',
             'generate-report' => 'Generate Report',
+        ],
+        'claim-notes' => [
+            'create' => 'Add',
+            'update' => 'Update',
+            'delete' => 'Delete',
         ],
         'cir' => [],
         'vulnerable-clients' => [
@@ -60,6 +70,11 @@ return [
             'delete' => 'Delete',
             'view-pdf' => 'View PDF',
             'generate-report' => 'Generate Report',
+        ],
+        'vulnerable-client-notes' => [
+            'create' => 'Add',
+            'update' => 'Update',
+            'delete' => 'Delete',
         ],
         'software' => [
             'create' => 'Register',
