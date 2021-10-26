@@ -10,7 +10,7 @@
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                   <tr>
-                    @if (auth()->user()->hasRole('admin'))
+                    @if (auth()->user()->hasPermissionTo('claim-notes.update'))
                       <th scope="col"
                         class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                         &nbsp;
@@ -28,7 +28,7 @@
                       class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                       Notes
                     </th>
-                    @if (auth()->user()->hasRole('admin'))
+                    @if (auth()->user()->hasPermissionTo('claim-notes.delete'))
                       <th scope="col"
                         class="px-4 py-3 text-left text-xs font-medium text-shark uppercase tracking-wider">
                         <span class="sr-only">Delete Action</span>
@@ -39,7 +39,7 @@
                 <tbody>
                   @foreach ($notes as $index => $note)
                     <tr class="{{ $index % 2 ? 'bg-gray-50' : 'bg-white' }}">
-                      @if (auth()->user()->hasRole('admin'))
+                      @if (auth()->user()->hasPermissionTo('claim-notes.update'))
                         <td class="align-top px-4 py-2 whitespace-nowrap text-left text-sm">
                           <x-jet-dropdown align="bottom" content-classes="py-1 bg-white divide-y divide-gray-200">
                             <x-slot name="trigger">
@@ -66,7 +66,7 @@
                       <td class="align-top px-4 py-2 text-sm text-shark text-opacity-75">
                         {{ $note->notes }}
                       </td>
-                      @if (auth()->user()->hasRole('admin'))
+                      @if (auth()->user()->hasPermissionTo('claim-notes.delete'))
                         <td class="align-top px-4 py-2 whitespace-nowrap text-sm text-shark text-opacity-75">
                           <button type="button" class="text-red-500 hover:text-red-700" title="Delete"
                             wire:click="confirmDelete({{ $note->id }})">

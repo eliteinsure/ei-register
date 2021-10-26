@@ -37,6 +37,8 @@ class UpdateNotes extends Component
 
     public function show($claimId, $noteId)
     {
+        abort_unless(auth()->user()->hasPermissionTo('claim-notes.update'), 403);
+
         $this->claimId = $claimId;
 
         $this->noteId = $noteId;
@@ -49,7 +51,7 @@ class UpdateNotes extends Component
 
     public function submit(UpdateClaimNote $action)
     {
-        abort_unless(auth()->user()->hasRole('admin'), 403);
+        abort_unless(auth()->user()->hasPermissionTo('claim-notes.update'), 403);
 
         $action->update($this->input, $this->note);
 
