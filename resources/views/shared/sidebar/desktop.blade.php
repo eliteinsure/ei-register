@@ -41,6 +41,15 @@
             </x-jet-nav-link>
           @endif
 
+          @if (auth()->user()->hasPermissionTo('ir'))
+            <x-jet-nav-link href="{{ route('ir.login') }}"
+              :active="false"
+              icon="heroicon-o-document-report"
+              target="_blank">
+              IR
+            </x-jet-nav-link>
+          @endif
+
           @if (auth()->user()->hasPermissionTo('vulnerable-clients'))
             <x-jet-nav-link href="{{ route('vulnerable-clients.index') }}" :active="request()->routeIs('vulnerable-clients.index')" icon="heroicon-o-exclamation">
               Vulnerable Clients
