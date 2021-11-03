@@ -4,6 +4,7 @@ use App\Http\Controllers\AdviserController;
 use App\Http\Controllers\CirController;
 use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\IrController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\SiteHistoryController;
 use App\Http\Controllers\SiteManualController;
@@ -40,6 +41,10 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
 
     Route::group(['as' => 'cir.', 'prefix' => 'cir'], function () {
         Route::get('login', [CirController::class, 'login'])->name('login')->middleware(['permission:cir']);
+    });
+
+    Route::group(['as' => 'ir.', 'prefix' => 'ir'], function () {
+        Route::get('login', [IrController::class, 'login'])->name('login')->middleware(['permission:ir']);
     });
 
     Route::resource('vulnerable-clients', VulnerableClientController::class)->only([
