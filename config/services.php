@@ -64,6 +64,7 @@ return [
             'delete' => 'Delete',
         ],
         'cir' => [],
+        'ir' => [],
         'vulnerable-clients' => [
             'create' => 'Register',
             'update' => 'Update',

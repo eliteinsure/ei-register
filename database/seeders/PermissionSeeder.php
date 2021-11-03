@@ -16,12 +16,12 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         foreach (config('services.permissions') as $parentPermissionName => $parentPermission) {
-            Permission::create([
+            Permission::firstOrCreate([
                 'name' => $parentPermissionName,
             ]);
 
             foreach ($parentPermission as $childPermissionName => $childPermission) {
-                Permission::create([
+                Permission::firstOrCreate([
                     'name' => $parentPermissionName . '.' . $childPermissionName,
                 ]);
             }
